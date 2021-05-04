@@ -1,1 +1,10 @@
 /* Styling for site-wide elements */
+
+:root {
+  --color-primary: #B2D385;
+  --color-secondary: #93B1A7;
+  --color-accent: #C5EDAC;
+
+  --color-background: #EEEEEE;
+  --color-container: #DBCFB0;
+}
