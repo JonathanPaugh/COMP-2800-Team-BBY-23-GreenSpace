@@ -1,1 +1,5 @@
 /* Styling for site-wide elements */
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
