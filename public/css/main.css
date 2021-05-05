@@ -1,9 +1,4 @@
 /* Styling for site-wide elements */
-
-body {
-    font-family: 'Poppins', sans-serif;
-}
-
 :root {
   --color-primary: #B2D385;
   --color-secondary: #93B1A7;
@@ -11,4 +6,20 @@ body {
 
   --color-background: #EEEEEE;
   --color-container: #DBCFB0;
+}
+
+html,
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-accent);
+  text-decoration: none;
 }
