@@ -78,7 +78,7 @@
         }
 
         function displayReplies() {
-            database.collection("threads").doc(id).collection("replies").get().then(replies => {
+            database.collection("threads").doc(id).collection("replies").orderBy("date", "asc").get().then(replies => {
                 replies.docs.forEach(reply => {
                     createReply(reply.data().content, reply.data().user);
                 });
@@ -109,7 +109,8 @@
             withUser(user => {
                 database.collection("threads").doc(id).collection("replies").add({
                     content: $(".submit-content").val(),
-                    user: user.id
+                    user: user.id,
+                    date: new Date()
                 }).then(() => {
                     redirect("/public/thread.html");
                 });
