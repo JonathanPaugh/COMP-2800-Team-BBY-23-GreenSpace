@@ -31,6 +31,6 @@ Git
 Sourcetree
 Figma
 
-Team Members:
+#Team Members
 
 Jonathan Paugh, Anna An, Angel Zhong
