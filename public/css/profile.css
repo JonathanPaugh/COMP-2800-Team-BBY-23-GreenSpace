@@ -1,5 +1,8 @@
 body {
+    background-color:white;
     color: white;
+    background-image: url(/public/image/leave4.jpeg);
+    object-fit: cover;
 }
 
 #logo {
@@ -134,3 +137,30 @@ body {
     grid-column: 1/span 1;
     border-style: solid;
 }
+
+/* .text-post-div {
+    background-color:rgba(255, 255, 255, 0.568);
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    height: 20%;
+    border-radius: 25px;
+    border-style: solid rgba(255, 255, 255, 0.568);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
+} */
+#blog-textarea {
+    width: 95%;
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    background-color: #f8f8f8;
+    resize:vertical;
+    overflow: auto;
+}
+.btn1-blog {
+    size: 50px;
+}
+  
