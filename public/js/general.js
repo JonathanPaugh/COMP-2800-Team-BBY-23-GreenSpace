@@ -34,6 +34,26 @@ function redirect(path) {
     window.location.assign(`${path}${window.location.search}`);
 }
 
+// Redirects to login page if not logged in
+function requireLogin() {
+    firebase.auth().onAuthStateChanged(user => {
+        if (!user) {
+            redirect("login.html");
+        }
+    });
+}
+
+// Gets user then invokes callback with user data when data is obtained
+function withUser(callback) {
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            database.collection("users").doc(user.uid).get().then(callback);
+        } else {
+            console.log("Cannot get user");
+        }
+    });
+}
+
 // Fetches a file and returns file data
 function fetchFile(path, callback) {
     fetch(`${window.location.origin}/public/${path}`)

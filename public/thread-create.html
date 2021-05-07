@@ -17,28 +17,35 @@
             background-size: 100% 160%;
             background-repeat: no-repeat;
         }
-
-
     </style>
 </head>
 
 <body>
 
     <div class="container-fluid">
-        <div class="forum-threads"></div>
-        <div class="forum-create">
-            <a href="/public/thread-create.html"><button class="btn btn-lg btn-light m-5">Create Post</button></a>
+        <div class="card m-5">
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Create Thread</label>
+                    <input type="text" class="form-control thread-topic" placeholder="Topic">
+                    <div class="m-2"></div>
+                    <textarea class="form-control thread-content" rows="7"></textarea>
+                </div>
+            </div>
+            <div class="card-footer d-flex flex-row-reverse">
+                <button class="btn btn-success thread-post">Post</button>
+            </div>
         </div>
     </div>
 
     <!-- Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
-        </script>
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
-        </script>
+    </script>
 
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
@@ -52,30 +59,21 @@
     <!-- Scripts -->
     <script>
         $(document).ready(() => {
-            displayThreads();
+            $(".thread-post").click(post);
         });
 
-        function displayThreads() {
-            database.collection("threads").get().then(threads => {
-                threads.docs.forEach(thread => {
-                    createThread(thread.data().topic, thread.id);
+        function post() {
+            withUser(user => {
+                database.collection("threads").add({
+                    topic: $(".thread-topic").val(),
+                    content: $(".thread-content").val(),
+                    user: user.id
+                }).then(doc => {
+                    setUrlQuery("id", doc.id);
+                    redirect("/public/thread.html");
                 });
             });
         }
-
-        function createThread(topic, id) {
-            fetchTemplate("forum-thread.html", data => {
-                let thread = $(data).appendTo(".forum-threads");
-                thread.find(".thread-topic").html(topic);
-                thread.find(".thread-id").attr("id", id).click(gotoThread);
-            });
-        }
-
-        function gotoThread() {
-            setUrlQuery("id", $(this).attr("id"));
-            redirect("/public/thread.html");
-        }
-
     </script>
 </body>
 
