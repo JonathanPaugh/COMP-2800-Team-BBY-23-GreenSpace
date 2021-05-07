@@ -1,15 +1,12 @@
 body {
-    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)), url('/public/image/bg_img_2.jpg');
-    background-size: 100% 160%;
-    background-repeat: no-repeat;
     color: white;
 }
 
 #logo {
     width: 50px;
 }
+
 .item1 {
-    font-family: 'Poppins', sans-serif;
     text-align: center;
     max-width: 260px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
@@ -17,16 +14,19 @@ body {
     margin-left: 20px;
     background-color: rgba(252, 243, 237, 0.3);
 }
+
 .user-short-intro {
     margin: 0 auto 20px auto;
 }
+
 .profile-img {
     display: inline-block;
     position: relative;
     object-fit: cover;
 }
-.profile-img img{
-    display:block;
+
+.profile-img img {
+    display: block;
     margin-bottom: 16px;
     margin-left: auto;
     margin-right: auto;
@@ -34,7 +34,7 @@ body {
 
 .profile-img i {
     position: absolute;
-    top: 46%;  
+    top: 46%;
     left: 46%;
     transform: translate(-46%, -46%);
     display: none;
@@ -42,17 +42,17 @@ body {
 }
 
 .profile-img:hover img {
-    opacity: 0.8;    
+    opacity: 0.8;
 }
 
 .profile-img:hover i {
     display: block;
     z-index: 20;
-    opacity: 0.6;   
+    opacity: 0.6;
 }
 
 .user-name {
-    font-size:1.3em;
+    font-size: 1.3em;
     font-weight: 900;
 }
 
@@ -70,58 +70,66 @@ body {
     background-color: seashell;
 } */
 
-.wrapper{
+.wrapper {
     display: grid;
     grid-row: 1/ span 1;
-    grid-template-columns: 30% 65% 5%; 
+    grid-template-columns: 30% 65% 5%;
     /* grid-template-rows: 100px; */
     grid-column-gap: 10px;
-  }
+}
 
 .item2 {
-  /* background: #ce8888; */
-  display: grid;
-  grid-template-rows: 75% 15%;
-  grid-row-gap: 10px;
+    /* background: #ce8888; */
+    display: grid;
+    grid-template-rows: 75% 15%;
+    grid-row-gap: 10px;
 }
 
-.sub-item1{
+.sub-item1 {
     background: #ce8888;
 }
-.sub-item2{
+
+.sub-item2 {
     display: flex;
     flex-direction: row;
-    background: red;
 }
 
 .sub-btn1 {
     width: 33.33%;
+    border: none;
+    margin: 2px;
 }
+
 .content {
     display: grid;
-    grid-template-columns: 30% 65% 5%; 
+    grid-template-columns: 30% 65% 5%;
     height: 40vh;
     grid-column-gap: 10px;
     text-align: center;
 }
+
 .text {
     grid-column: 2/span 1;
     color: black;
-    background:skyblue;
+    background: skyblue;
 }
-.selection{
+
+.selection {
     grid-column: 1/span 1;
     margin-left: 20px;
-    background:red;
+    background: red;
 }
+
 #post-titles {
     padding-top: 20px;
 }
+
 .text-sub-container {
     background-color: sandybrown;
-    display:grid;
+    display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
+
 .t-s-item1 {
     grid-column: 1/span 1;
     border-style: solid;

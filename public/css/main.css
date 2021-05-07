@@ -1,25 +1,31 @@
 /* Styling for site-wide elements */
 :root {
-  --color-primary: #B2D385;
-  --color-secondary: #93B1A7;
-  --color-accent: #C5EDAC;
+    --color-primary: #B2D385;
+    --color-secondary: #93B1A7;
+    --color-accent: #C5EDAC;
 
-  --color-background: #EEEEEE;
-  --color-container: #DBCFB0;
+    --color-background: #EEEEEE;
+    --color-container: #DBCFB0;
 }
 
 html,
 body {
+    background-color: #93B1A7;
     margin: 0;
     font-family: 'Poppins', sans-serif;
 }
 
+button, .btn {
+    background-color: #DBCFB0;
+    border-radius: 20px;
+}
+
 a {
-  color: var(--color-primary);
-  text-decoration: none;
+    color: var(--color-primary);
+    text-decoration: none;
 }
 
 a:hover {
-  color: var(--color-accent);
-  text-decoration: none;
+    color: var(--color-accent);
+    text-decoration: none;
 }
