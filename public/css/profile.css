@@ -1,7 +1,7 @@
 body {
     background-color:white;
     color: white;
-    background-image: url(/public/image/leave4.jpeg);
+    background-image: url(/image/leave4.jpeg);
     object-fit: cover;
 }
 

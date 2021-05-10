@@ -56,7 +56,7 @@ function withUser(callback) {
 
 // Fetches a file and returns file data
 function fetchFile(path, callback) {
-    fetch(`${window.location.origin}/public/${path}`)
+    fetch(`${window.location.origin}/${path}`)
         .then(response => response.text())
         .then(callback);
 }
