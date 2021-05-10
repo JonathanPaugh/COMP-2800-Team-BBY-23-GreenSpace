@@ -4,7 +4,7 @@ const express = require("express");
 const fs = require("fs");
 
 const app = express();
-const port = 8000;
+const port = process.env.PORT || 3000;
 
 app.use("/", express.static("public/"))
 app.use("/js", express.static("public/js"))
@@ -18,6 +18,6 @@ app.get("/", (req, res) => {
     res.send(file);
 });
 
-app.listen(port, function () {
+app.listen(port, () => {
     console.log(`Server Started: ${port}`);
 });

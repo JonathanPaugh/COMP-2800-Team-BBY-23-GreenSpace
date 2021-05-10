@@ -1,0 +1,24 @@
+{
+  "name": "green-space",
+  "version": "1.0.0",
+  "description": "A web application targeting people interested or involved in community gardening focusing on the social aspect to help people learn and share their experiences while providing helpful feedback.",
+  "main": "app.js",
+  "dependencies": {
+    "aws-sdk": "^2.903.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JonathanPaugh/green-space.git"
+  },
+  "author": "Jonathan Paugh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JonathanPaugh/green-space/issues"
+  },
+  "homepage": "https://github.com/JonathanPaugh/green-space#readme"
+}
