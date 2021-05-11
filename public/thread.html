@@ -19,7 +19,6 @@
 </head>
 
 <body>
-
     <div class="container-fluid">
         <div class="thread-post"></div>
         <div class="thread-replies"></div>
@@ -106,7 +105,8 @@
             });
         }
 
-        function reply() {            
+        function reply() {
+            requireLogin();    
             withUser(user => {
                 database.collection("threads").doc(id).collection("replies").add({
                     content: $(".submit-content").val(),

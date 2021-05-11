@@ -18,7 +18,7 @@ $(document).ready(() => {
     if (!$("body").hasClass("hide-navbar-top")) 
     {
         fetchTemplate("navbar-top.html", data => {
-            $("head").append(createElement("link").attr("rel", "stylesheet").attr("href", "./css/navbar-top.css"));
+            $("head").append(createElement("link").attr("rel", "stylesheet").attr("href", "/css/navbar-top.css"));
             $("body").prepend(data);
         });
     }
@@ -27,7 +27,7 @@ $(document).ready(() => {
     if (!$("body").hasClass("hide-navbar-bottom")) 
     {
         fetchTemplate("navbar-bottom.html", data => {
-            $("head").append(createElement("link").attr("rel", "stylesheet").attr("href", "./css/navbar-bottom.css"));
+            $("head").append(createElement("link").attr("rel", "stylesheet").attr("href", "/css/navbar-bottom.css"));
             $("script").first().before(data);
         });
     }

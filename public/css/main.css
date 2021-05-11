@@ -10,13 +10,18 @@
 
 html,
 body {
-    background-color: #93B1A7;
     margin: 0;
+    background-color: var(--color-secondary);
     font-family: 'Poppins', sans-serif;
 }
 
 button, .btn {
-    background-color: #DBCFB0;
+    background-color: var(--color-primary);
+    border-radius: 20px;
+}
+
+button:hover, .btn:hover {
+    background-color: var(--color-accent);
     border-radius: 20px;
 }
 
@@ -28,4 +33,13 @@ a {
 a:hover {
     color: var(--color-accent);
     text-decoration: none;
+}
+
+.unselectable {
+    user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
 }

@@ -21,7 +21,7 @@
 <body>
 
     <div class="container-fluid">
-        <div class="card m-5">
+        <div class="card m-5 thread-create">
             <div class="card-body">
                 <div class="form-group">
                     <label>Create Thread</label>
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="card-footer d-flex flex-row-reverse">
-                <button class="btn btn-success thread-post">Post</button>
+                <button class="btn w-25 thread-post">Post</button>
             </div>
         </div>
     </div>
@@ -57,6 +57,7 @@
     <!-- Scripts -->
     <script>
         $(document).ready(() => {
+            requireLogin();
             $(".thread-post").click(post);
         });
 
