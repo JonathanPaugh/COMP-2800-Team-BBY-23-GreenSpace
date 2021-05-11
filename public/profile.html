@@ -52,6 +52,8 @@
     <div class="selection"></div>
     <div class="text">
         <h5 id="post-titles">My Posts</h5>
+        <div class="blogs-containter"></div>
+
         <!-- <div class="modal-body">
                   <form>
                     <div class="form-group">
@@ -71,12 +73,12 @@
             <label for="blog-text-title">Blog Title: </label>
             <textarea class="form-control" id="blog-textarea" rows="3"></textarea>
         </div>
-        <button>Post</button>
+        <!-- <button>Post</button>
         <p>Our company, Veggie Farms, has evolved from a small vegetable nursery into a world-class vegetable wholesaler with facilities in three states. We specialize in organic, grass-fed and hormone-free vegetables. We don't use any pesticides or synthetic fertilizers. Our organic vegetable garden is located in the heart of the Midwest. Our greenhouse is located in Ohio. Our meat, eggs, dairy, honey, fish and poultry are all grown in our Cincinnati location. The company is operated by the Schuster family and is led by CEO Frank Schuster.</p>
         <h5 id="post-titles">My Reviews</h5>
         <p>The food, beverage & beverage industry is a complex subject with so much going on it can be overwhelming. We want you to understand what each point means in our mission as an organization which helps people through innovation in this space. Some points may not apply or might even make sense at other businesses but we strive to do just that.</p>
         <h5 id="post-titles">My Plant Tracker</h5>
-        <p>The food, beverage & beverage industry is a complex subject with so much going on it can be overwhelming. We want you to understand what each point means in our mission as an organization which helps people through innovation in this space. Some points may not apply or might even make sense at other businesses but we strive to do just that.</p>
+        <p>The food, beverage & beverage industry is a complex subject with so much going on it can be overwhelming. We want you to understand what each point means in our mission as an organization which helps people through innovation in this space. Some points may not apply or might even make sense at other businesses but we strive to do just that.</p> -->
         <!-- <div class="text-sub-container">
             <div class="t-s-item1"></div>
             <div class="t-s-item1"></div>
@@ -104,7 +106,33 @@
     <script src="/js/init.js"></script>
 
     <!-- Scripts -->
-    <script src="/js/profile.js"></script>
+    <script>
+        $(document).ready(()=>{
+            showBlogs();
+        })
+
+        function showBlogs() {
+            database.collection("profile_post_collections").get().then((blogs)=>{
+                blogs.docs.forEach((blog)=>{
+                    makeBlog(blog.id, blog.data());
+                })
+            })
+        }
+
+        function makeBlog(id, blog) {
+            fetchTemplate("profile-blog.html", card=>{
+               let each = $(card);
+               console.log(each);
+               each.find(".card-title").html(blog.blog_title);
+               each.find(".card-text").html(blog.blog_text);  
+               each.find(".date").html(blog.date.toDate().toDateString());
+               $(".blogs-containter").append(each);
+               console.log(blog.date.toDate().toDateString());
+            })
+        }
+    </script>
+    <!-- <script src="/js/profile.js"></script> -->
+
 </body>
 
 </html>
