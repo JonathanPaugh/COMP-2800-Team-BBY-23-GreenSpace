@@ -24,7 +24,7 @@
     <div class="container-fluid">
         <div class="forum-threads"></div>
         <div class="forum-create">
-            <button class="btn btn-lg my-3 mx-5">Create Post</button>
+            <button class="btn btn-lg my-2 mx-5">Create Post</button>
         </div>
     </div>
 
@@ -72,17 +72,16 @@
         function createThread(id, topic, user, count) {
             fetchTemplate("forum-thread.html", data => {
                 let thread = $(data).appendTo(".forum-threads");
-                thread.find(".thread-id").attr("id", id).click(gotoThread);
+
+                let threadId = thread.find(".thread-id");
+                threadId.attr("href", `${threadId.attr("href")}?id=${id}`);
+
                 thread.find(".thread-topic").html(topic);
                 thread.find(".thread-user").html(user);
                 thread.find(".thread-count").html(`${count} Replies`);
             });
         }
 
-        function gotoThread() {
-            setUrlQuery("id", $(this).attr("id"));
-            redirect("/thread.html");
-        }
 
     </script>
 </body>
