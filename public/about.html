@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>GreenSpace</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        #container {
+            text-align: center;
+            background-color: white;
+        }
+
+        #top {
+            background-color: #93b1a7;
+        }
+
+        #top-text {
+            margin: 2em 1em 0em 0em;
+        }
+
+        #logo-image {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 1em;
+        }
+
+        #developers {
+            margin-top: 70px;
+        }
+
+        #developer-title {
+            font-size: 24pt;
+            margin-bottom: 20px;
+        }
+
+        #developer-images img {
+            margin-top: 20px;
+            border-radius: 10%;
+            width: 300px;
+            height: 300px;
+        }
+
+        figcaption {
+            margin-top: 10px;
+        }
+
+        .info-area {
+            margin: 3em;
+            padding: 2em;
+            border: 3px #dbcfb0 solid;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .info-text-1 {
+            font-size: 36pt;
+        }
+
+        .info-text-2 {
+            font-size: 10pt;
+        }
+
+        #main-para img {
+            width: 100%;
+            height: 300px;
+        }
+
+        .main-para-title {
+            margin: 20px 0px 20px 0px;
+        }
+
+        .main-content-text {
+            margin-bottom: 30px;
+        }
+
+
+        @media only screen and (min-width: 600px) {
+            #developer-images img {
+                width: 150px;
+                height: 150px;
+            }
+
+            #developer-images {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 1fr;
+                margin: 0px 50px 50px 50px;
+            }
+
+            #main-para-content-1 {
+                margin: 30px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 1fr;
+            }
+
+            #main-para-content-2 {
+                margin: 30px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 1fr;
+                grid-template-areas: "text image";
+            }
+
+            #main-para-image-2 {
+                grid-area: image;
+            }
+
+            #main-para-text-2 {
+                grid-area: text;
+                margin-left: 0px;
+                margin-right: 20px;
+            }
+
+            #main-para-content-3 {
+                margin: 30px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 1fr;
+            }
+
+            .main-content-text {
+                margin-left: 20px;
+            }
+
+        }
+
+        @media only screen and (min-width: 800px) {
+            #developer-images img {
+                width: 200px;
+                height: 200px;
+            }
+
+            #info {
+                display: grid;
+                grid-template-columns: 33.3% 33.3% 33.3%;
+                grid-template-rows: 1fr;
+                margin: 0em 5em 0em 5em;
+                text-align: center;
+            }
+
+            .info-area {
+                margin: 1em;
+                padding: 2em;
+            }
+
+            .info-text-1 {
+                font-size: 28pt;
+            }
+
+        }
+
+        @media only screen and (min-width: 1000px) {
+
+            #top {
+                margin-bottom: 0px;
+            }
+
+            #info {
+                margin: 0em 5em 0em 5em;
+            }
+
+            .info-area {
+                margin: 1em;
+                padding: 2em;
+            }
+
+            #logo-image {
+                width: 200px;
+                height: 200px;
+            }
+
+            #top-text {
+                margin-top: 0px;
+                padding: 100px 0;
+                text-align: left;
+                margin-left: 100px;
+            }
+
+            #developer-images img {
+                width: 230px;
+                height: 230px;
+                margin: 2em;
+            }
+
+            #main-para img {
+            width: 100%;
+            height: 100%;
+        }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="container">
+        <div id="top">
+            <div id="top-text">
+                <img id="logo-image" src="/public/image/coloured.png" alt="developer1">
+                <h1><b>We are GreenSpace</b></h1>
+                <h4>inspiring para goes here. inspiring para goes here. inspiring para goes here. inspiring para goes
+                    here. </h4><br><br>
+            </div>
+        </div>
+
+        <div id="main-para">
+            <div id="main-para-content-1">
+                <img src="/public/image/about_1.jpg">
+                <div class="main-content-text">
+                    <h4 class="main-para-title">title</h4>
+                    <p>content goes here. content goes here. content goes here. content goes here. </p>
+                </div>
+            </div>
+            <div id="main-para-content-2">
+                <img src="/public/image/about_2.jpg" id="main-para-image-2">
+                <div class="main-content-text" id="main-para-text-2">
+                    <h4 class="main-para-title">title</h4>
+                    <p>content goes here. content goes here. content goes here. content goes here. </p>
+                </div>
+            </div>
+            <div id="main-para-content-3">
+                <img src="/public/image/about_3.jpg">
+                <div class="main-content-text">
+                    <h4 class="main-para-title">title</h4>
+                    <p>content goes here. content goes here. content goes here. content goes here. </p>
+                </div>
+            </div>
+        </div><br><br>
+
+        <div id="info">
+            <div class="info-area">
+                <h4 class="info-text-1"><b>2021</b></h4>
+                <h6 class="info-text-2">Founded</h6>
+            </div>
+            <div class="info-area">
+                <h4 class="info-text-1"><b>35,000+</b></h4>
+                <h6 class="info-text-2">Plant Data</h6>
+            </div>
+            <div class="info-area">
+                <h4 class="info-text-1"><b>20+</b></h4>
+                <h6 class="info-text-2">Local Community Group</h6>
+            </div>
+        </div>
+
+        <div>
+            <div id="developers">
+                <h4 id="developer-title"><b>Developers</b></h4>
+                <div id="developer-images">
+                    <div>
+                        <img src="/public/image/user.png" alt="developer">
+                        <figcaption><b>Angel Zhong</b><br>Developer</figcaption>
+                    </div>
+                    <div>
+                        <img src="/public/image/user.png" alt="developer">
+                        <figcaption><b>Anna An</b><br>Developer</figcaption>
+                    </div>
+                    <div>
+                        <img src="/public/image/user.png" alt="developer">
+                        <figcaption><b>Jonathan Paugh</b><br>Developer</figcaption>
+                    </div>
+                </div>
+            </div><br>
+        </div>
+
+    </div>
+
+    <!-- Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+        </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
+        </script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+
+    <script src="./js/general.js"></script>
+    <script src="./js/firebase.js"></script>
+    <script src="./js/init.js"></script>
+
+    <!-- Scripts -->
+    <script></script>
+</body>
+
+</html>
