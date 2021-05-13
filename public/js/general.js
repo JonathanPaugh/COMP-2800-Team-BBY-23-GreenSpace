@@ -66,14 +66,19 @@ function fetchTemplate(path, callback) {
     fetchFile(`template/${path}`, callback);
 }
 
-function request(path, sData, callback) {
+// Makes a server request
+function request(path, sData, success, fail) {
     $.ajax({
         url: path,
         type: "POST",
         data: sData,
-        success: rData => callback && callback(rData),
+        success: rData => success && success(rData),
         error: function (xhr, status, error) {
-            console.log("Error:", xhr, status, error);
+            if (fail) {
+                fail(xhr);
+            } else {
+                console.log("Error:", xhr, status, error);
+            }
         }
     });
 }

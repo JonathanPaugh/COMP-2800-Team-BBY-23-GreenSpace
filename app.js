@@ -2,6 +2,7 @@
 
 const fs = require("fs");
 const https = require("https");
+const url = require("url");
 
 const express = require("express");
 
@@ -42,9 +43,25 @@ app.post("/find-plant", (req, res) => {
     });
 });
 
-app.post("/find-plants", limiter, (req, res) => {
+app.post("/find-plants", (req, res) => {
     findPlants(req.body.query, data => {
         res.send(data);
+    });
+});
+
+app.post("/search-plant", (req, res) => {
+    findPlant(req.body.query, data => {
+        if (data) {
+            findPlantImages(data.scientificName, images => {
+                data.images = images;
+                findPlantInformation(data.scientificName, information => {
+                    data.information = information;
+                    res.send(data);
+                });
+            });
+        } else {
+            res.status(400).send("Could not find plant");
+        }
     });
 });
 
@@ -95,6 +112,60 @@ function findPlants(query, callback) {
     });
 }
 
+function findPlantImages(query, callback) {
+    requestSearch(url.format({
+        protocol: "https",
+        hostname: "www.googleapis.com",
+        pathname: "/customsearch/v1",
+        query: 
+        {
+            key: process.env.API_GREENSPACE_GOOGLE,
+            cx: "6a02f3c7401460e16",
+            q: query,
+            searchType: "image",
+            imgType: "photo"
+        }
+    }), data => {
+        if (callback) {
+            if (data) {
+                if (data.items) {
+                    callback(data.items.map(item => item.link));
+                } else {
+                    callback(null);
+                }
+            } else {
+                callback(null);
+            }
+        }
+    });
+}
+
+function findPlantInformation(query, callback) {
+    requestSearch(url.format({
+        protocol: "https",
+        hostname: "www.googleapis.com",
+        pathname: "/customsearch/v1",
+        query: 
+        {
+            key: process.env.API_GREENSPACE_GOOGLE,
+            cx: "6a02f3c7401460e16",
+            q: query
+        }
+    }), data => {
+        if (callback) {
+            if (data) {
+                if (data.items) {
+                    callback(data.items[0]);
+                } else {
+                    callback(null);
+                }
+            } else {
+                callback(null);
+            }
+        }
+    });
+}
+
 function requestPlantData(path, method, data, callback) {
     var req = https.request({
         hostname: "explorer.natureserve.org",
@@ -104,22 +175,7 @@ function requestPlantData(path, method, data, callback) {
             "Accept": "application/json",
             "Content-Type": "application/json"
         }
-    }, res => {
-        let resData = "";
-        
-        // Append data chunks from api
-        res.on("data", chunk => {
-            resData += chunk;
-        });
-
-        // Return all data when api done sending data
-        res.on("close", () => {
-            console.log("Request Complete");
-            if (callback) {
-                callback(JSON.parse(resData));
-            }
-        });
-    });
+    }, res => getResponseChunked(res, callback));
 
     req.on("error", error => {
         console.error(error);
@@ -130,6 +186,32 @@ function requestPlantData(path, method, data, callback) {
     }
 
     req.end();
+}
+
+function requestSearch(url, callback) {
+    var req = https.request(url, res => getResponseChunked(res, callback));
+
+    req.on("error", error => {
+        console.error(error);
+    });
+
+    req.end();
+}
+
+function getResponseChunked(res, callback) {
+    let data = "";
+    
+    // Append data chunks from api
+    res.on("data", chunk => {
+        data += chunk;
+    });
+
+    // Return all data when api done sending data
+    res.on("close", () => {
+        if (callback) {
+            callback(JSON.parse(data));
+        }
+    });
 }
 
 app.listen(port, () => {
