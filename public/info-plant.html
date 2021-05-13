@@ -13,21 +13,18 @@
 </head>
 
 <body>
-
     <div class="container-fluid">
         <div class="card p-2 my-2">
-            <form id="searchForm" class="form-group has-search flex-grow-1">
+            <form class="search-form form-group has-search flex-grow-1">
                 <div class="input-group">
-                    <input list="searchOptions" type="text" id="searchValue" class="form-control" placeholder="Search Plants...">
+                    <input class="search-value form-control" type="text" list="search-suggestions" placeholder="Search Plants...">
                     <div class="input-group-append">
-                        <a id="search" href="">
+                        <a class="search-button" href="">
                             <i class="fa fa-search fa-2x ms-1 mt-1"></i>
                         </a>
                     </div>
                 </div>
-                <datalist id="searchOptions">
-                    <option value="1">
-                    <option value="2">
+                <datalist id="search-suggestions">
                 </datalist>
             </form>
         </div>
@@ -41,11 +38,9 @@
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
-                        <h5 class="card-title">Plant Name</h5>
+                        <h5 class="plant-name card-title">Plant Name</h5>
                         <div class="my-5"></div>
-                        <p class="card-text">Plant Description 1</p>
-                        <p class="card-text">Plant Description 2</p>
-                        <p class="card-text">Plant Description 3</p>
+                        <p class="plant-description card-text">Plant Description 1</p>
                     </div>
                 </div>
                 <div class="card-footer">
@@ -76,7 +71,47 @@
     <script src="/js/init.js"></script>
 
     <!-- Scripts -->
-    <script></script>
+    <script>
+        $(document).ready(() => {
+            $(".search-value").on("input", suggest);
+            $(".search-button").click(search);
+            $(".search-form").submit(search);
+
+        });
+
+        function search(event) {
+            event.preventDefault();
+            
+            request("/find-plant", { query: $(".search-value").val() }, plant => {
+                createInformation(
+                    plant.primaryCommonName, 
+                    plant.speciesGlobal.informalTaxonomy
+                );
+            });
+
+            $(".search-value").val("");
+            $("#search-suggestions").empty();
+        }
+
+        function createInformation(name, description) {
+            $(".plant-name").html(name);
+            $(".plant-description").html(description);
+        }
+
+        function suggest() {
+            request("/find-plants", { query: $(".search-value").val() }, plants => {
+                $("#search-suggestions").empty();
+                if (!plants.length) { return; }
+                createSuggestions(plants.map(plant => plant.primaryCommonName));
+            });
+        }
+
+        function createSuggestions(suggestions) {
+            new Set(suggestions).forEach(suggestion => {
+                createElement("option").appendTo("#search-suggestions").val(suggestion);
+            });
+        }
+    </script>
 </body>
 
 </html>

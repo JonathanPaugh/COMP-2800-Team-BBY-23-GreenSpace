@@ -65,3 +65,15 @@ function fetchFile(path, callback) {
 function fetchTemplate(path, callback) {
     fetchFile(`template/${path}`, callback);
 }
+
+function request(path, sData, callback) {
+    $.ajax({
+        url: path,
+        type: "POST",
+        data: sData,
+        success: rData => callback && callback(rData),
+        error: function (xhr, status, error) {
+            console.log("Error:", xhr, status, error);
+        }
+    });
+}

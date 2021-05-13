@@ -1,11 +1,19 @@
 "use strict";
 
-const express = require("express");
 const fs = require("fs");
 const https = require("https");
 
+const express = require("express");
+
 const app = express();
 const port = process.env.PORT || 3000;
+
+// Used to limit requests
+const limiter = require("express-rate-limit")({
+    windowMs: 100,
+    max: 1,
+    skipFailedRequests: true
+});
 
 app.use("/", express.static("public/"))
 app.use("/js", express.static("public/js"))
@@ -23,13 +31,47 @@ app.get("/", (req, res) => {
 });
 
 app.post("/get-plant", (req, res) => {
-    getPlantData(req.body.query, data => {
-        res.send(data.results);
+    getPlant(req.body.id, data => {
+        res.send(data);
     });
 });
 
-function getPlantData(query, callback) {
-    requestNatureServe("/api/data/speciesSearch", 
+app.post("/find-plant", (req, res) => {
+    findPlant(req.body.query, data => {
+        res.send(data);
+    });
+});
+
+app.post("/find-plants", limiter, (req, res) => {
+    findPlants(req.body.query, data => {
+        res.send(data);
+    });
+});
+
+function getPlant(id, callback) {
+    console.log(id);
+    requestPlantData(`/api/data/taxon/${id}`, "GET", null, data => {
+        if (callback) {
+            callback(data);
+        }
+    });
+}
+
+function findPlant(query, callback) {
+    findPlants(query, data => {
+        if (callback) {
+            if (data.length) {
+                callback(data[0]);
+            } else {
+                callback(null);
+            }
+            
+        }
+    });
+}
+
+function findPlants(query, callback) {
+    requestPlantData("/api/data/speciesSearch", "POST",
         {
             "criteriaType": "species",
             "textCriteria": 
@@ -48,16 +90,16 @@ function getPlantData(query, callback) {
             ]
         }, data => {
             if (callback) {
-                callback(data);
+                callback(data.results);
             }
     });
 }
 
-function requestNatureServe(path, data, callback) {
+function requestPlantData(path, method, data, callback) {
     var req = https.request({
         hostname: "explorer.natureserve.org",
         path: path,
-        method: "POST",
+        method: method,
         headers: {
             "Accept": "application/json",
             "Content-Type": "application/json"
