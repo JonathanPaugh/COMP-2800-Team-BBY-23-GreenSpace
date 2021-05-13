@@ -19,13 +19,47 @@
             float: right;
         }
 
-        #post-button, #back-button {
+        #post-button,
+        #back-button {
             float: left;
-            margin-left: 50px;
+            margin-left: 1em;
         }
 
         #back-button {
             background-color: #DBCFB0;
+        }
+
+        #post-button {
+            width: 30vw;
+        }
+
+        @media only screen and (min-width: 0px) and (max-width: 599px) {
+            .card {
+                margin: 5em 1em 1em 1em;
+            }
+        }
+
+        @media only screen and (min-width: 600px) {
+            .card {
+                margin: 5em 3em 1em 3em;
+            }
+
+            #post-button,
+            #back-button {
+                margin-left: 3em;
+                width: 15vw;
+            }
+        }
+
+        @media only screen and (min-width: 1200px) {
+            .card {
+                margin: 5em 5em 1em 5em;
+            }
+
+            #post-button,
+            #back-button {
+                margin-left: 5em;
+            }
         }
     </style>
 </head>
@@ -34,7 +68,7 @@
     <a id="back-button" class="btn col-3">Back</a><br>
     <div id="posts"></div>
     <a id="post-button" class="btn col-3">Create Post</a><br>
-    
+
 
     <!-- Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
@@ -64,7 +98,7 @@
         var posts = database.collection("groups").doc("categories")
             .collection(id).doc(groupName).collection("posts");
 
-            var docName;
+        var docName;
 
 
         $(document).ready(function () {
