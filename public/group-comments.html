@@ -11,6 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico">
     <style>
+        span {
+            margin: 5px;
+        }
 
         form {
             position: relative;
@@ -31,13 +34,43 @@
         .new-comment {
             padding: 5px;
         }
-        
+
+
         #back-button {
             float: left;
-            margin-left: 50px;
+            margin-left: 1em;
+        }
+
+        #back-button {
             background-color: #DBCFB0;
         }
-        
+
+        @media only screen and (min-width: 0px) and (max-width: 599px) {
+            .card {
+                margin: 2em 1em 0em 1em;
+            }
+        }
+
+        @media only screen and (min-width: 800px) {
+            .card {
+                margin: 2em 3em 0em 3em;
+            }
+
+            #back-button {
+                margin-left: 3em;
+                width: 10vw;
+            }
+        }
+
+        @media only screen and (min-width: 1200px) {
+            .card {
+                margin: 2em 5em 0em 5em;
+            }
+
+            #back-button {
+                margin-left: 5em;
+            }
+        }
     </style>
 </head>
 
@@ -47,12 +80,14 @@
     <div id="posts">
         <!-- Posts go here -->
     </div>
-    <div class="card m-5">
+    <div class="card">
         <div class="card-body">
             <h5><i class="far fa-comment"></i> Comments</h5>
         </div>
-        <!-- Comments go here -->
-        <div class="card-body comment"></div>
+
+        <div class="card-body comment">
+            <!-- Comments go here -->
+        </div>
         <div class="card-body">
             <form class="row g-3">
                 <div class="container-fluid">
@@ -63,6 +98,8 @@
                 </div>
             </form>
         </div>
+
+
     </div>
 
     <!-- Bundle -->
@@ -101,6 +138,7 @@
                     post.id,
                     post.data().title,
                     post.data().content,
+                    post.data().user,
                     post.data().likes,
                     post.data().comments
                 );
@@ -127,12 +165,13 @@
 
         });
 
-        function readPosts(docID, title, content, like, comment) {
+        function readPosts(docID, title, content, user, like, comment) {
             fetchFile("/template/group-post.html", data => {
                 let group = $(data).appendTo("#posts");
 
                 group.find(".post-title").html(title);
                 group.find(".post-content").html(content);
+                group.find(".post-user").html(user);
                 group.find(".post-like").html(like);
                 group.find(".post-comment").html(comment);
                 group.find(".view-button").hide();

@@ -10,12 +10,31 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico">
+    <style>
+        @media only screen and (min-width: 0px) and (max-width: 599px) {
+            .card {
+                margin: 5em 1em 0 1em;
+            }
+        }
+
+        @media only screen and (min-width: 600px) {
+            .card {
+                margin: 5em 3em 0 3em;
+            }
+        }
+
+        @media only screen and (min-width: 1200px) {
+            .card {
+                margin: 5em 5em 0 5em;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
     <div class="container-fluid">
-        <div class="card m-5 thread-create">
+        <div class="card thread-create">
             <div class="card-body">
                 <div class="form-group">
                     <label>Create Post</label>

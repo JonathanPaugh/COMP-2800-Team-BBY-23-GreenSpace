@@ -74,6 +74,11 @@
             margin-bottom: 2em;
         }
 
+        li:hover {
+            text-decoration: underline;
+            color: #B2D385;
+        }
+
         @media only screen and (min-width: 800px) {
             #container {
                 margin: 0 5em 0 5em;
@@ -96,7 +101,9 @@
                 margin: 5px;
             }
 
-            #post, #gallery, #likes {
+            #post,
+            #gallery,
+            #likes {
                 margin: 3em 0 3em 0;
             }
 
@@ -127,7 +134,9 @@
                 margin: 10px;
             }
 
-            #post, #gallery, #likes {
+            #post,
+            #gallery,
+            #likes {
                 margin: 5em 0 5em 0;
             }
 
@@ -225,9 +234,9 @@
             // $("#likes-a").click(function () {
             //     window.location.href = "/group-likes.html?id=" + id + hash;
             // });
+
             readGroup();
-
-
+            redirectToTopPost();
         });
 
         function readGroup() {
@@ -238,21 +247,19 @@
             posts.collection("posts").limit(3).orderBy("likes").get()
                 .then(function (posts) {
                     posts.docs.forEach(function (post) {
-
-                        // for (var i = 0; i < 1; i++) {
-                        //     $("#pre-1").append("<li>dfd</li>");
-                        // }
-                        // $("#pre-1").html(post.data().title);
-                        // $("#pre-2").html(post.data().title);
-                        // $("#pre-3").html(post.data().title);
-
-
-                        $("#top-post-title").append("<li>" + post.data().title + "</li>")
-
-
-                        console.log(post.data().title);
+                        $("#top-post-title").append("<li id=" + post.id + ">"
+                            + post.data().title + "</li>");
+                        console.log(post.id);
                     });
                 });
+        }
+
+        function redirectToTopPost() {
+            $("li").click(e => {
+                e.preventDefault();
+                window.location.href = "/group-comments.html?id=" + id + "#"
+                    + groupName + "&" + $(event.target).attr("id");
+            });
         }
 
     </script>
