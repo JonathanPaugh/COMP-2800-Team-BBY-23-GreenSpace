@@ -130,7 +130,7 @@
         var groupName = hash[0];
         var docName = hash[1];
         var posts = database.collection("groups").doc("categories")
-            .collection(id).doc(groupName).collection("posts").doc(docName);
+            .collection(id).doc(groupName).collection("gallery").doc(docName);
 
         $(document).ready(function () {
 
@@ -139,6 +139,7 @@
                     post.id,
                     post.data().title,
                     post.data().content,
+                    post.data().image,
                     post.data().user,
                     post.data().likes,
                     post.data().comments
@@ -161,17 +162,18 @@
 
             $("#back-button").click(e => {
                 e.preventDefault();
-                window.location.href = "/group-posts.html?id=" + id + "#" + groupName;
+                window.location.href = "/group-gallery.html?id=" + id + "#" + groupName;
             });
 
         });
 
-        function readPosts(docID, title, content, user, like, comment) {
+        function readPosts(docID, title, content, image, user, like, comment) {
             fetchFile("/template/group-post.html", data => {
                 let group = $(data).appendTo("#posts");
 
                 group.find(".post-title").html(title);
                 group.find(".post-content").html(content);
+                group.find(".post-content").append("<br><img src='"+ image + "'>");
                 group.find(".post-user").html(user);
                 group.find(".post-like").html(like);
                 group.find(".post-comment").html(comment);
