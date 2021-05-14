@@ -12,7 +12,7 @@ Social Groups\
 Garden Information\
 Plant Information\
 Garden Gallery\
-Plant Progress Tracker\
+Plant Progress Tracker
 
 # Projected Technologies
 
@@ -28,13 +28,13 @@ Webstorm\
 GitHub\
 Git\
 Sourcetree\
-Figma\
+Figma
 
 # Packages
 
 aws-sdk\
 express\
-express-rate-limit\
+express-rate-limit
 
 # APIS
 
