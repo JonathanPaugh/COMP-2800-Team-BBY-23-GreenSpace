@@ -4,6 +4,8 @@ A web application targeting people interested or involved in community gardening
 
 Created for BCIT course COMP 2800
 
+http://green-space.us-west-1.elasticbeanstalk.com/
+
 # Projected Features
 
 User Profile\
