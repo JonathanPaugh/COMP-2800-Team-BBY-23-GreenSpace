@@ -10,3 +10,4 @@ firebase.initializeApp({
 });
 
 const database = firebase.firestore();
+const storage = firebase.storage();
