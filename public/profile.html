@@ -24,8 +24,8 @@
             </div>
             <div class="row1-page1-part2">
                 <div class="pro-info">
-                    <p><span id="fp" class ="col-sm-4">First Name: </span><span id="pro-fname" >Sample First</span></p>
-                    <p><span id="fp">Last Name:</span><span id="pro-lname" >Sample Last</span></p>
+                    <!-- <p><span id="fp" class ="col-sm-4">First Name: </span><span id="pro-fname" >Sample First</span></p> -->
+                    <p><span id="fp">Name:</span><span id="pro-name" style="padding-left:50px;">Sample Last</span></p>
                     <p><span id="fp">Email:</span><span id="pro-email">firstLast@gmail.com</span></p>
                     <p><span id="fp">Website:</span><span id="pro-web" >www.123.com</span></p>
                     <p><span id="fp">Biography:</span><span id="pro-bio" >graphic designer</span></p>
@@ -114,7 +114,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
 
     <script src="/js/general.js"></script>
     <script src="/js/firebase.js"></script>
@@ -124,7 +123,7 @@
     <script>
         // clickpart(0)
         $(document).ready(()=>{
-
+            requireLogin();
             showBlogs();
            
             // $('#MyButton').click(profile);
@@ -154,7 +153,9 @@
         /*
         * Reference ends
         */
-                       
+                
+        
+        
         const modal = document.getElementById("myModal");
         function getModal(){
             // clicks anywhere outside 
@@ -172,9 +173,6 @@
             modal.style.display = "block";
         }
         function createBlog() {
-            var now = new Date;
-var utc_timestamp = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate() , 
-      now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
             database.collection("profile_post_collections").add({
                 blog_title: $(".ph-title").val(),
                 blog_text: $(".placehold").val(),
@@ -197,8 +195,7 @@ var utc_timestamp = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCD
         
         function getProfile() {
             withUser(user=>{
-                $('#pro-fname').html(user.data().first_name);
-                $('#pro-lname').html(user.data().last_name);
+                $('#pro-name').html(user.data().name);
                 $('#pro-email').html(user.data().email);
                 $('#pro-web').html(user.data().website);
                 $('#pro-bio').html(user.data().bio);
@@ -206,33 +203,16 @@ var utc_timestamp = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCD
             
         }
 
-        // function displayPost() {
-        //     database.collection("threads").doc(id).get().then(post => {
-        //         createPost(post.data().topic, post.data().content, post.data().user);
-        //     });
-        // }
-
-        // function createPost(topic, content, user) {
-        //     fetchTemplate("thread-post.html", data => {
-        //         let post = $(data).appendTo(".thread-post");
-        //         post.find(".post-topic").html(topic);
-        //         post.find(".post-content").html(content);
-
-        //         if (user) {
-        //             database.collection("users").doc(user).get().then(user => {
-        //                 post.find(".post-user").html(user.data().name);
-        //             });
-        //         }
-        //     });
-        // }
         function showBlogs() {
-            database.collection("profile_post_collections").get().then((blogs)=>{
-                blogs.docs.forEach((blog)=>{
-                    makeBlog(blog.id, blog.data());
-                    console.log("check: ", blog.data().date)
-                })
+            withUser(user => {
+                database.collection("profile_post_collections").get().then((blogs)=>{
+                        blogs.docs.forEach((blog)=>{
+                         makeBlog(blog.id, blog.data());
+                         console.log("check: ", blog.data().date)
+                     })
                
-            });
+                });
+            })
         }
 
         function makeBlog(id, box) {
