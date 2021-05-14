@@ -27,22 +27,27 @@
 
         #back-button {
             background-color: #DBCFB0;
-            margin-bottom: 0.5em;
         }
 
         #post-button {
             width: 30vw;
         }
 
+        .post-images {
+            width: 100%;
+            height: 100%;
+            ;
+        }
+
         @media only screen and (min-width: 0px) and (max-width: 599px) {
             .card {
-                margin: 1em 1em 1em 1em;
+                margin: 5em 1em 1em 1em;
             }
         }
 
         @media only screen and (min-width: 600px) {
             .card {
-                margin: 1em 3em 1em 3em;
+                margin: 5em 3em 1em 3em;
             }
 
             #post-button,
@@ -50,11 +55,17 @@
                 margin-left: 3em;
                 width: 15vw;
             }
+
+            .post-images {
+                width: 80%;
+                height: 80%;
+            }
+
         }
 
         @media only screen and (min-width: 1200px) {
             .card {
-                margin: 1em 5em 1em 5em;
+                margin: 5em 5em 1em 5em;
             }
 
             #post-button,
@@ -66,9 +77,11 @@
 </head>
 
 <body>
-    <a id="back-button" class="btn col-3">Back</a><br><br>
-    <div id="posts"></div>
-    <a id="post-button" class="btn col-3">Create Post</a><br><br>
+    <a id="back-button" class="btn col-3">Back</a><br>
+    <div id="posts">
+        <!--Posts go here-->
+    </div>
+    <a id="post-button" class="btn col-3">Create Post</a><br>
 
 
     <!-- Bundle -->
@@ -98,7 +111,7 @@
         var groupName = window.location.hash.substr(1);
 
         var posts = database.collection("groups").doc("categories")
-            .collection(id).doc(groupName).collection("posts");
+            .collection(id).doc(groupName).collection("gallery");
 
         var docName;
 
@@ -112,6 +125,7 @@
                         post.id,
                         post.data().title,
                         post.data().content,
+                        post.data().image,
                         post.data().user,
                         post.data().likes,
                         post.data().comments,
@@ -120,20 +134,21 @@
             });
 
             $("#back-button").attr("href", "/group-main.html?id=" + id + "#" + groupName);
-            $("#post-button").attr("href", "/group-create-post.html?id=" + id + "#" + groupName);
+            $("#post-button").attr("href", "/group-create-gallery.html?id=" + id + "#" + groupName);
         });
 
-        function readPosts(docID, title, content, user, like, comment) {
+        function readPosts(docID, title, content, image, user, like, comment) {
             fetchFile("/template/group-post.html", data => {
                 let group = $(data).appendTo("#posts");
 
                 group.find(".post-title").html(title);
                 group.find(".post-content").html(content);
+                group.find(".post-content").append("<br><img class='post-images' src='" + image + "'>");
                 group.find(".post-user").html(user);
                 group.find(".post-like").html(like);
                 group.find(".post-comment").html(comment);
                 group.find(".like-button").click(increaseLike);
-                group.find(".view-button").attr("href", "/group-comments.html?id=" + id
+                group.find(".view-button").attr("href", "/group-gallery-comments.html?id=" + id
                     + "#" + groupName + "&" + docID);
             });
         }

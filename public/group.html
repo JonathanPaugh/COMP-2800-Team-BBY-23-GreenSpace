@@ -25,16 +25,15 @@
             font-size: 18pt;
         }
 
-        #categories img {
-            width: 100px;
-            height: 100px;
-        }
-
         #categories {
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr;
             text-align: center;
+        }
+
+        .fas, .fab {
+            margin-bottom: 15px;
         }
 
         p {
@@ -59,32 +58,32 @@
     <div id="container">
         <div id="top">
             <p id="main-text">Select categories you are interested in</p>
-            <button class="btn">or go to My Groups</button>
+            <!-- <button class="btn">or go to My Groups</button> -->
         </div>
 
         <div id="categories">
             <div>
                 <a href="#">
-                    <img class="community-garden" src="/image/coloured.png" alt="category">
-                    <p class="community-garden">Community Garden</p>
+                    <i id="community-garden" class="fab fa-pagelines fa-5x"></i>
+                    <p id="community-garden">Community Garden</p>
                 </a>
             </div>
             <div id="category-2">
                 <a href="#">
-                    <img class="indoor-garden" src="/image/coloured.png" alt="category">
-                    <p class="indoor-garden">Indoor Garden</p>
+                    <i id ="indoor-garden" class="fas fa-seedling fa-5x"></i>
+                    <p id="indoor-garden">Indoor Garden</p>
                 </a>
             </div>
             <div id="category-3">
                 <a href="#">
-                    <img  class="container-garden" src="/image/coloured.png" alt="category">
-                    <p class="container-garden">Container Garden</p>
+                    <i id="container-garden" class="fas fa-box fa-5x"></i>
+                    <p id="container-garden">Container Garden</p>
                 </a>
             </div>
             <div id="category-4">
                 <a href="#">
-                    <img  class="greenhouse-garden" src="/image/coloured.png" alt="category">
-                    <p  class="greenhouse-garden">Greenhouse Garden</p>
+                    <i id="greenhouse-garden" class="fas fa-warehouse fa-5x"></i>
+                    <p id="greenhouse-garden">Greenhouse Garden</p>
                 </a>
             </div>
         </div>
@@ -102,6 +101,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
 
     <script src="./js/general.js"></script>
     <script src="./js/firebase.js"></script>
@@ -117,7 +117,7 @@
         function redirect() {
             document.querySelectorAll("a").forEach(item => {
                 item.addEventListener('click', event => {
-                    window.location.href = "/group-list.html?id=" + $(event.target).attr("class");
+                    window.location.href = "/group-list.html?id=" + $(event.target).attr("id");
                 });
             });
         }

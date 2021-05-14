@@ -11,6 +11,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico">
     <style>
+        .input-group {
+            padding: 1em;
+        }
+
         @media only screen and (min-width: 0px) and (max-width: 599px) {
             .card {
                 margin: 5em 1em 0 1em;
@@ -36,12 +40,16 @@
         <div class="card thread-create">
             <div class="card-body">
                 <div class="form-group">
-                    <label>Create Post</label>
+                    <label>Upload Image</label>
                     <input type="text" class="form-control post-title" placeholder="Title">
                     <div class="m-2"></div>
                     <textarea class="form-control post-content" rows="7"
-                        placeholder="Share your thoughts with the members!"></textarea>
+                        placeholder="Share pictures with the members!"></textarea>
                 </div>
+            </div>
+            <div class="input-group">
+                <input type="file" class="form-control" id="add-file" aria-describedby="inputGroupFileAddon04"
+                    aria-label="Upload">
             </div>
             <div class="card-footer d-flex flex-row-reverse">
                 <button id="create-post" class="btn w-25">Post</button>
@@ -74,17 +82,13 @@
         var id = parsedUrl.searchParams.get("id");
         var groupName = window.location.hash.substr(1);
         var posts = database.collection("groups").doc("categories")
-            .collection(id).doc(groupName).collection("posts");
+            .collection(id).doc(groupName).collection("gallery");
 
         $(document).ready(function () {
-
-            $("#create-post").click(e => {
-                e.preventDefault();
-                writePosts();
-            })
+            writeImages();
         });
 
-        function writePosts() {
+        function writePosts(url) {
             let postTitle = document.querySelector(".post-title").value;
             let postContent = document.querySelector(".post-content").value;
 
@@ -96,9 +100,10 @@
                             posts.add({
                                 user: doc.data().name,
                                 title: postTitle,
-                                content: postContent
+                                content: postContent,
+                                image: url
                             }).then(function () {
-                                window.location.href = "/group-posts.html?id=" + id + "#" + groupName;
+                                window.location.href = "/group-gallery.html?id=" + id + "#" + groupName;
                             });
                         });
                 } else {
@@ -107,7 +112,25 @@
             });
         }
 
-        
+        function writeImages() {
+            $("#add-file").on("change", event => {
+                event.preventDefault();
+
+                var uploadedIMG = event.target.files[0];
+                var sendIMG = storage.ref("groups/posts/" + uploadedIMG.name).put(uploadedIMG);
+
+                sendIMG.on("change",
+                    sendIMG.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                        $("#create-post").click(e => {
+                            e.preventDefault();
+                            writePosts(downloadURL);
+                        })
+
+                    })
+                );
+            });
+
+        }
     </script>
 </body>
 

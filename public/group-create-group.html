@@ -10,12 +10,35 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico">
+    <style>
+        .input-group {
+            padding: 1em;
+        }
+
+        @media only screen and (min-width: 0px) and (max-width: 599px) {
+            .card {
+                margin: 5em 1em 0 1em;
+            }
+        }
+
+        @media only screen and (min-width: 600px) {
+            .card {
+                margin: 5em 3em 0 3em;
+            }
+        }
+
+        @media only screen and (min-width: 1200px) {
+            .card {
+                margin: 5em 5em 0 5em;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
     <div class="container-fluid">
-        <div class="card m-5 thread-create">
+        <div class="card thread-create">
             <div class="card-body">
                 <div class="form-group">
                     <label>Create Group</label>
@@ -24,6 +47,10 @@
                     <textarea class="form-control group-description" rows="7"
                         placeholder="Enter Group Description"></textarea>
                 </div>
+            </div>
+            <div class="input-group">
+                <input type="file" class="form-control" id="add-file" aria-describedby="inputGroupFileAddon04"
+                    aria-label="Upload">
             </div>
             <div class="card-footer d-flex flex-row-reverse">
                 <button id="create-group" class="btn w-25">Add</button>
@@ -45,6 +72,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
 
     <script src="/js/general.js"></script>
     <script src="/js/firebase.js"></script>
@@ -57,21 +85,40 @@
         var groups = database.collection("groups").doc("categories").collection(id);
 
         $(document).ready(function () {
-            document.getElementById("create-group").addEventListener("click", e => {
-                e.preventDefault();
-                writePosts();
-            })
+            writeImages();
         });
 
-        function writePosts() {
+        function writePosts(url) {
             let groupTitle = document.querySelector(".group-title").value;
             let groupDescription = document.querySelector(".group-description").value;
 
             groups.add({
                 title: groupTitle,
-                description: groupDescription
+                description: groupDescription,
+                image: url
             }).then(function () {
                 window.location.href = "/group-list.html?id=" + id;
+            });
+
+        }
+
+        function writeImages() {
+            $("#add-file").on("change", event => {
+                event.preventDefault();
+
+                var uploadedIMG = event.target.files[0];
+                var sendIMG = storage.ref("groups/group/" + uploadedIMG.name).put(uploadedIMG);
+
+                sendIMG.on("change",
+                    sendIMG.snapshot.ref.getDownloadURL().then((downloadURL) => {
+
+                        $("#create-group").click(e => {
+                            e.preventDefault();
+                            writePosts(downloadURL);
+                        });
+
+                    })
+                );
             });
 
         }
