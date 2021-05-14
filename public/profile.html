@@ -15,78 +15,92 @@
 
 
 <body>
-<!-- <div class = "d-flex" ></div> -->
-
-<div class="wrapper">
-    <div class="item1">
-        <div class="profile-header">
-            <div class="profile-img">
-              
-                <img type="button" src="/image/user-image.png" width="80%" alt="user-pic">
-                <i class="fa fa-upload fa-3x"></i>
+    <div class="head"></div>
+    <div class="wrapper">
+        <div class="row1A">
+            <div class="part1">profile image
+                <div class="circle2">
+                </div> 
             </div>
-           
-    
-            <div class="user-info">
-                <h4 class="user-name" type="button">Hanna Wright</h4>
-                <div class="user-short-intro" >
-                    <span class="txt-edit">Garden Designer</span>
-                    <i class="fas fa-edit"></i>
-                </div>   
-                <!-- <div class="follower"><i class="fas fa-user"></i> 1800 followers</div> -->
+            <div class="row1-page1-part2">
+                <div class="pro-info">
+                    <p><span id="fp" class ="col-sm-4">First Name: </span><span id="pro-fname" >Sample First</span></p>
+                    <p><span id="fp">Last Name:</span><span id="pro-lname" >Sample Last</span></p>
+                    <p><span id="fp">Email:</span><span id="pro-email">firstLast@gmail.com</span></p>
+                    <p><span id="fp">Website:</span><span id="pro-web" >www.123.com</span></p>
+                    <p><span id="fp">Biography:</span><span id="pro-bio" >graphic designer</span></p>
+                    <input type="submit" id="MyButton" value="Edit" onClick="location.href='/profile-2.html'">
+                </div>                
             </div>
-            <!--Edit Profile Form -->
         </div>
-    </div>
-    <div class="item2">
-        <div class="sub-item1"></div>
-        <div class="sub-item2">
-            <!-- <div class="btn-group"> -->
-              <button class="sub-btn1">Posts</button>
-              <button class="sub-btn1">Reviews</button>
-              <button class="sub-btn1">Plant Tracker</button>       
-        </div>
-    </div>
-</div>
-<div class="content">
-    <div class="selection"></div>
-    <div class="text">
-        <h5 id="post-titles">My Posts</h5>
-        <div class="blogs-containter"></div>
+        <div class="row2">
+            <div class="nav_menu">
+                <ul>
+                    <li onclick="clickParts(0)" class="user-post true">
+                        Posts
+                    </li>
+                    <li onclick="clickParts(1)" class="user-favorites">
+                        Collections
+                    </li>
+                    <li onclick="clickParts(2)" class="user-favorites">
+                        Gallery
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="blog-section click-part-content">
+                <div class="section-title">My Posts</div>
+                <div class="section-create" style="height: 36px; ">
+                    <input type="submitPost" id="MyButtonPost" onclick="openTab()" style="font-size: 22px;" value="Create A Post" readonly="readonly" onClick="location.href='#'">
+                </div>
+                <!-- The Modal -->
+                <div id="myModal" class="modal">
 
-        <!-- <div class="modal-body">
-                  <form>
-                    <div class="form-group">
-                     
-                      <label for="review-text" class="col-form-label">Content:</label>
-                      <textarea class="form-control" id="review-text"></textarea>
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <p class="close" onclick="closeTab()" style="font-size: 50px;">&times;</p>
+                        <div class="modal-box">
+                            
+                            <div class="modal-title">
+                                <input type="text" class="form-control ph-title" placeholder="Blog Title">
+                            </div>
+                            <div class="modal-text">
+                                <textarea class="form-control placehold" aria-label="With textarea" placeholder="Write your post here..."></textarea>
+                                <button class="buttons-right blog-posted" onclick="createBlog()" style="font-size: 24px; float: right; margin-right: 15px; background-color:  #4d7e65 ">Post</button>
+                                <!-- <p style="color: black">Some text in the Modal..</p> -->
+                            </div>
+                            
+                            <!-- <div class="modal-date"></div> -->
+                        </div>
                     </div>
-                  </form>
-                </div>-->
-                <!--  <div class="form-group row">
-    <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-    <div class="col-sm-10">
-      <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-    </div>
-  </div>-->
-        <div class="text-post-div form-group">
-            <label for="blog-text-title">Blog Title: </label>
-            <textarea class="form-control" id="blog-textarea" rows="3"></textarea>
+
+                </div>
+                <div class="blogs"></div>
+            </div>
+            <div class="collection click-part-content">
+                hello2
+            </div>
+            <div class="gallery click-part-content">
+                hello3
+            </div>
+
         </div>
-        <!-- <button>Post</button>
-        <p>Our company, Veggie Farms, has evolved from a small vegetable nursery into a world-class vegetable wholesaler with facilities in three states. We specialize in organic, grass-fed and hormone-free vegetables. We don't use any pesticides or synthetic fertilizers. Our organic vegetable garden is located in the heart of the Midwest. Our greenhouse is located in Ohio. Our meat, eggs, dairy, honey, fish and poultry are all grown in our Cincinnati location. The company is operated by the Schuster family and is led by CEO Frank Schuster.</p>
-        <h5 id="post-titles">My Reviews</h5>
-        <p>The food, beverage & beverage industry is a complex subject with so much going on it can be overwhelming. We want you to understand what each point means in our mission as an organization which helps people through innovation in this space. Some points may not apply or might even make sense at other businesses but we strive to do just that.</p>
-        <h5 id="post-titles">My Plant Tracker</h5>
-        <p>The food, beverage & beverage industry is a complex subject with so much going on it can be overwhelming. We want you to understand what each point means in our mission as an organization which helps people through innovation in this space. Some points may not apply or might even make sense at other businesses but we strive to do just that.</p> -->
-        <!-- <div class="text-sub-container">
-            <div class="t-s-item1"></div>
-            <div class="t-s-item1"></div>
-            <div class="t-s-item1"></div>
+        <!-- <div class="col-1A">
+            <div class="profile">
+                hello profile
+            </div>
+        </div>
+        <div class="col-2B">
+            <div class="content">
+                .
+                <div class="text">
+                    <h5 id="post-titles">My Posts</h5>
+                    <div class="blogs-containter"></div>      
+                </div>
+            </div>
         </div> -->
-        
     </div>
-</div>
+    
     <!-- Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
@@ -107,31 +121,132 @@
 
     <!-- Scripts -->
     <script>
+        // clickpart(0)
         $(document).ready(()=>{
+
             showBlogs();
+           
+            // $('#MyButton').click(profile);
+            changeTab();
+            getProfile();
+            getModal();
         })
 
+        /*
+        * Reference begins: 
+        * @see https://www.youtube.com/watch?v=PJe5Cc6iybQ
+        */
+        function changeTab(){
+            $('.nav_menu ul li').click(()=>{
+                $(this).addClass('true').siblings().removeClass('true');
+            })
+        }
+        // var button = document.querySelectorAll('.nav_menu ul li');
+        var part_content = document.querySelectorAll('.click-part-content');
+        function clickParts(i) {
+            part_content.forEach(part=>{
+                part.style.display='none';
+            });
+            part_content[i].style.display = 'block';
+        }
+        clickParts(0);
+        /*
+        * Reference ends
+        */
+                       
+        const modal = document.getElementById("myModal");
+        function getModal(){
+            // clicks anywhere outside 
+            window.onclick = function(event) {
+                  if (event.target == modal) {
+                 modal.style.display = "none";
+                 }
+            }
+        }
+        function closeTab() {
+            modal.style.display = "none";
+        }
+
+        function openTab() {
+            modal.style.display = "block";
+        }
+        function createBlog() {
+            var now = new Date;
+var utc_timestamp = Date.UTC(now.getUTCFullYear(),now.getUTCMonth(), now.getUTCDate() , 
+      now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds());
+            database.collection("profile_post_collections").add({
+                blog_title: $(".ph-title").val(),
+                blog_text: $(".placehold").val(),
+                
+                date: firebase.firestore.Timestamp.fromDate(new Date())
+            })
+            .then((docRef) => {
+               console.log("Document written with ID: ", docRef.id);
+                readBlog(docRef.id);
+            })
+            .catch((error) => {
+              console.error("Error adding document: ", error);
+            });
+        }
+        function readBlog(id) {
+            database.collection("profile_post_collections").doc(id).get().then(doc=>{
+                makeBlog(id, doc.data());
+            })
+        }
+        
+        function getProfile() {
+            withUser(user=>{
+                $('#pro-fname').html(user.data().first_name);
+                $('#pro-lname').html(user.data().last_name);
+                $('#pro-email').html(user.data().email);
+                $('#pro-web').html(user.data().website);
+                $('#pro-bio').html(user.data().bio);
+            })
+            
+        }
+
+        // function displayPost() {
+        //     database.collection("threads").doc(id).get().then(post => {
+        //         createPost(post.data().topic, post.data().content, post.data().user);
+        //     });
+        // }
+
+        // function createPost(topic, content, user) {
+        //     fetchTemplate("thread-post.html", data => {
+        //         let post = $(data).appendTo(".thread-post");
+        //         post.find(".post-topic").html(topic);
+        //         post.find(".post-content").html(content);
+
+        //         if (user) {
+        //             database.collection("users").doc(user).get().then(user => {
+        //                 post.find(".post-user").html(user.data().name);
+        //             });
+        //         }
+        //     });
+        // }
         function showBlogs() {
             database.collection("profile_post_collections").get().then((blogs)=>{
                 blogs.docs.forEach((blog)=>{
                     makeBlog(blog.id, blog.data());
+                    console.log("check: ", blog.data().date)
                 })
-            })
+               
+            });
         }
 
-        function makeBlog(id, blog) {
+        function makeBlog(id, box) {
+            
             fetchTemplate("profile-blog.html", card=>{
                let each = $(card);
-               console.log(each);
-               each.find(".card-title").html(blog.blog_title);
-               each.find(".card-text").html(blog.blog_text);  
-               each.find(".date").html(blog.date.toDate().toDateString());
-               $(".blogs-containter").append(each);
-               console.log(blog.date.toDate().toDateString());
-            })
+               each.find(".blog-title").html(box.blog_title);
+               each.find(".blog-content").html(box.blog_text);  
+               each.find(".date").html(box.date.toDate().toLocaleString());
+               $(".blogs").prepend(each);
+            });
         }
+    
     </script>
-    <!-- <script src="/js/profile.js"></script> -->
+
 
 </body>
 
