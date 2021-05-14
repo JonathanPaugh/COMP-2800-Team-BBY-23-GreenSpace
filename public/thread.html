@@ -116,6 +116,17 @@
             });
         }
 
+        function displaySubmit() {
+            fetchTemplate("thread-submit.html", data => {
+                let submit = $(data).appendTo(".thread-submit");
+                submit.find(".submit-button").click(reply);
+                submit.find(".insert-plant").click(selectPlant);
+                submit.find(".plant-modal-button").click(insertPlant);
+                submit.find(".insert-image").click(selectImage);
+                submit.find(".insert-image-file").on("change", insertImage);
+            });
+        }
+
         function reply() {
             requireLogin();    
             withUser(user => {
@@ -139,13 +150,18 @@
             });
         }
 
-        function displaySubmit() {
-            fetchTemplate("thread-submit.html", data => {
-                let submit = $(data).appendTo(".thread-submit");
-                submit.find(".submit-button").click(reply);
-                submit.find(".insert-image").click(selectImage);
-                submit.find(".insert-image-file").on("change", insertImage);
-            });
+        function selectPlant() {
+            $(".modal").modal("show");
+            $(".plant-modal-input").val("");
+        }
+
+        function insertPlant() {
+            let link = createElement("a")
+                .appendTo(".submit-content")
+                .attr("href", `/plant?search=${$(".plant-modal-input").val()}`)
+                .html($(".plant-modal-input").val());
+
+            $(".modal").modal("hide");
         }
 
         function selectImage(event) {
