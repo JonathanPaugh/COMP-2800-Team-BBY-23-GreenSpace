@@ -32,7 +32,6 @@ Figma
 
 # Packages
 
-aws-sdk\
 express\
 express-rate-limit
 
