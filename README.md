@@ -7,33 +7,53 @@ Created for BCIT course COMP 2800
 # Projected Features
 
 User Profile
+
 Social Forum
+
 Social Groups
+
 Garden Information
+
 Plant Information
+
 Garden Gallery
+
 Plant Progress Tracker
 
 # Projected Technologies
 
 HTML
+
 JavaScript
+
 JQuery
+
 Firebase
+
 Firestore
+
 Node.Js
-AWS
+
+AWS (Elastic Beanstalk, CodePipeline)
+
 VSCode
+
 Webstorm
+
 GitHub
+
 Git
+
 Sourcetree
+
 Figma
 
 # Packages
 
 aws-sdk
+
 express
+
 express-rate-limit
 
 # APIS
