@@ -1,6 +1,7 @@
-*{
+* {
     box-sizing: border-box;
 }
+
 body {
     background-color:white;
     color: white;
@@ -18,24 +19,26 @@ body {
     flex-direction: column;
     background-color: white;
 }
+
 .row1, .row1A {
-   
     margin-bottom: 2px;
     /* height: 600px; */
     height: 950px;
     justify-content: center;
-    
 }
-.row1A{
+
+.row1A {
     margin-bottom: 0px;
     height: 920px;
 }
-.row1-col1, .part1{
+
+.row1-col1, .part1 {
     margin: 0;
     background-color: #a6b6b1;
     position: relative;
     height: 460px;
 }
+
 .circle, .circle2 {
     display: inline-block;
     height: 300px;
@@ -50,7 +53,7 @@ body {
     transform: translateY(-50%) translateX(-45%);
 }
 
-.row1-col2, .row1-page1-part2{
+.row1-col2, .row1-page1-part2 {
     background-color: #93b1a7;
     margin-top: 0px;;
     /* padding-top: 30px; */
@@ -74,7 +77,7 @@ body {
     padding-left: 58px;
 }
 
-.col-25{
+.col-25 {
     padding-left: 0px;
 }
 
@@ -98,17 +101,20 @@ input[type=button], input[type=submit], input[type=submitPost],input[submitBlog]
     position: absolute;
     right: 0px;
 }
+
 input[submitBlog] {
     bottom: 0px;
     right: 10px;
 }
+
 input[type=submitPost] {
    margin-top: 5px;
    margin-right: 30px;
    width: 180px;
    cursor: pointer;
 }
-input[type="email"], input[type="text"], .form-control{
+
+input[type="email"], input[type="text"], .form-control {
     padding-top: 6px;
     padding-bottom: 6px;
     margin-top: 8px;
@@ -121,6 +127,7 @@ input[type="email"], input[type="text"], .form-control{
     width: 100%;
     padding-top: 0px;
 }
+
 .nav_menu ul {
     display: flex;
     justify-content: center;
@@ -148,7 +155,6 @@ input[type="email"], input[type="text"], .form-control{
 
 .cardA {
     margin-top:0px;
-    height: 600px;
     margin-bottom: 30px;
     /* background-color:yellow; */
     color: black;
@@ -159,50 +165,41 @@ input[type="email"], input[type="text"], .form-control{
     grid-template-columns: 1fr 1fr;
     margin: 30px;
     border: solid 1px;
-    height: 600px;
     font-size: 22px;
+}
 
+.blog-text {
+    grid-column: 1 / span 1;
 }
-.blog-text{
-    grid-column: 1/span 1;
-}
-.blog-img{
-    grid-column: 2/span 1;
+
+.blog-img {
     height: 598px;
     width: 100%;
     object-fit: cover;
 }
+
 .blog-title {
     text-align: center;
     font-size: 24px;
 }
+
 .blog-content {
     padding-left: 15px;
-    height: 66%;
-    margin-bottom: 5px;
-    overflow: auto;
-    /* background-color: aqua; */
-}
-.date {
     padding-right: 15px;
-    
+    margin-bottom: 5px;
 }
-hr{
+
+.date {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+hr {
  clear: both;
  margin-bottom:12px;
 }
-.buttons-left {
-    padding-left: 20px;
-    padding-right: 20px;
-    margin-bottom: 5px;
-    color: white;
-}
-.buttons-right{
-    padding-left: 46px;
-    padding-right: 46px;
-    color: white;
-}
-.section-title{
+
+.section-title {
     text-align: center;
     color: black;
     font-size: 26px;
@@ -221,16 +218,17 @@ hr{
     padding-left: 170px; 
     overflow: auto; 
     background-color: rgba(0,0,0,0.5); 
-  }
-  
-  /* Modal Content */
-  .modal-content {
+}
+
+/* Modal Content */
+.modal-content {
     background-color: white;
     height: 600px;
     border: 1px solid rgb(150, 149, 149);
     width: 80%;
-  }
-  .modal-box {
+}
+
+.modal-box {
     margin: auto;
     width: 90%;
     height: 90%;
@@ -239,9 +237,9 @@ hr{
     background-color: lightgrey;
     display: grid;
     grid-template-rows: 16% 84%;
-    
-  }
-  .modal-title {
+}
+
+.modal-title {
     text-align: center;
     color: black;
     padding-top: 8px;
@@ -250,51 +248,72 @@ hr{
     font-weight: bold;
     grid-row: 1 /span 1;
     grid-column: 1 /span 1;
-  }
-  .ph-title{
+}
+
+.ph-title {
     text-align: center;
-  }
-  .modal-text {
+}
+
+.modal-text {
     text-align: left;
     grid-row: 2 /span 1;
     grid-column: 1 /span 1;
-  }
-  textarea {
-      resize: none;
-      height: 300px;
-      overflow: auto;
-  }
-  /* The Close Button */
-  .close {
+}
+
+textarea {
+    resize: none;
+    height: 300px;
+    overflow: auto;
+}
+
+/* The Close Button */
+.close {
     padding-top: 10px;
     text-align: right;
     padding-right: 30px;
     color: #948a8a;
     background-color: rgb(150, 206, 175);
     font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
+}
+
+.close:hover,
+.close:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
-  }
-@media only screen and (min-width: 400px) {
-    /* .blog-content {
-        background-color: yellow;
-    } */
+}
+
+#pro-edit {   
+    border-bottom: 2px yellow solid;
+    border-style: none none solid none;
+}
+
+#fp {
+    padding-right: 50px;
+}
+
+#fp-e {
+    padding-right: 100px;
+}
+
+#logo {
+    width: 50px;
+}
+
+@media only screen and (max-width: 999px) {
+    .blog {
+        grid-template-columns: 1fr;
+    }
+
     .pro-info {
         padding-left: 20px;
     }
 }
 @media only screen and (min-width: 1000px) {
-    /* .blog-content {
-        background-color: green;
-    } */
     .blog {
-        height: 600px;
+        grid-template-columns: 1fr 1fr;
     }
+
     .row1, .row1A {
         display: grid;
         grid-template-rows: 100%;
@@ -302,22 +321,25 @@ hr{
         height: 860px;
         justify-content: center;
     }
+
     .row1A {
         height: 490px;
     }
-    .row1-col1, .part1{
+
+    .row1-col1, .part1 {
         grid-column: 1 /span 1;
         height: 860px;
         background-color: #a6b6b1;
         position: relative;
     }
     
-    .part1, .row1-page1-part2{
+    .part1, .row1-page1-part2 {
         height: 490px;
     }
-    .row1-col2, .row1-page1-part2{
-        grid-column: 2/span 1;
-        grid-row: 1 /span 1;
+
+    .row1-col2, .row1-page1-part2 {
+        grid-column: 2 / span 1;
+        grid-row: 1 / span 1;
         background-color: #93b1a7;
         padding-left: 20px;
         color: black;
@@ -329,65 +351,26 @@ hr{
     .pro-info {
         padding-left: 20px;
     }
-    .circle, .circle2{
-        
+
+    .circle, .circle2 {
         height: 360px;
         width: 360px;
     }
-
 }
 
-@media only screen and (min-width: 1100px) {
-    .blog-content {
-        /* background-color: purple; */
-        height: 56%;
-    }
-    .cardA,.blog {
-        height: 400px;
-    }
-    .blog-img{
-        height: 398px;
-    }
-}
 @media only screen and (min-width: 1360px) {
-    /* .blog-content {
-        background-color: blue;
-    } */
-    .col-25{
+    .col-25 {
         padding-top: 15px;
         padding-right: 6px;
         width:25%;
     }
-    .col-75{
+
+    .col-75 {
         width:75%;
     }
-    /* .pro-info {
-        background-color: rgb(141, 96, 78);
-    } */
-    .circle{
-        /* margin: 0 auto; */
+
+    .circle {
         height: 56%;
         width: 426px;
     }
-    
-
-}
-
-
-#pro-edit {
-    
-    border-bottom: 2px yellow solid;
-    border-style: none none solid none;
-    
-}
-#fp {
-    padding-right: 50px;
-}
-
-#fp-e {
-    padding-right: 100px;
-}
-
-#logo {
-    width: 50px;
 }
