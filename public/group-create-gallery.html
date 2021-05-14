@@ -113,23 +113,24 @@
         }
 
         function writeImages() {
-            $("#add-file").on("change", event => {
+            $("#add-file").on("change", async function (event) {
                 event.preventDefault();
 
                 var uploadedIMG = event.target.files[0];
-                var sendIMG = storage.ref("groups/posts/" + uploadedIMG.name).put(uploadedIMG);
 
-                sendIMG.on("change",
-                    sendIMG.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                        $("#create-post").click(e => {
+                storage.ref().child("groups/posts/" + uploadedIMG.name).put(uploadedIMG)
+                    .then((snapshot) => {
+                        $("#create-post").click(async function (e) {
                             e.preventDefault();
-                            writePosts(downloadURL);
+
+                            var url = await snapshot.ref.getDownloadURL();
+
+                            console.log(snapshot.ref.getDownloadURL());
+                            console.log(snapshot);
+                            writePosts(url);
                         })
-
                     })
-                );
             });
-
         }
     </script>
 </body>
