@@ -41,6 +41,6 @@ express-rate-limit
 NatureServe Explorer - https://explorer.natureserve.org/api-docs/
 Google Custom Search - https://developers.google.com/custom-search/v1
 
-Team Members:
+# Team Members
 
 Jonathan Paugh, Anna An, Angel Zhong
