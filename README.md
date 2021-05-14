@@ -19,17 +19,27 @@ Plant Progress Tracker
 HTML
 JavaScript
 JQuery
-Firebase & Firestore
-Cloudstore
+Firebase
+Firestore
 Node.Js
 AWS
-API Requests (Plant api, Vancouver city api)
-VS Code
+VSCode
 Webstorm
 GitHub
 Git
 Sourcetree
 Figma
+
+# Packages
+
+aws-sdk
+express
+express-rate-limit
+
+# APIS
+
+NatureServe Explorer - https://explorer.natureserve.org/api-docs/
+Google Custom Search - https://developers.google.com/custom-search/v1
 
 Team Members:
 
