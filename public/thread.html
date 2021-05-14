@@ -158,7 +158,7 @@
         function insertPlant() {
             let link = createElement("a")
                 .appendTo(".submit-content")
-                .attr("href", `/plant?search=${$(".plant-modal-input").val()}`)
+                .attr("href", `/plant-search.html?search=${$(".plant-modal-input").val()}`)
                 .html($(".plant-modal-input").val());
 
             $(".modal").modal("hide");
