@@ -26,12 +26,8 @@
                 <div class="pro-info">
                     <form class="user-form">
                     <div class="form-group row pb-2">
-                        <label for="exampleFormControlInput1" class="col-25 ">First Name: </label>
-                        <input type="text" class="form-control col-sm-4 col-75 fname" placeholder="First name">
-                      </div>
-                      <div class="form-group row pb-2">
-                        <label for="exampleFormControlInput1" class="col-25 ">Last Name:</label>
-                        <input type="text" class="form-control col-sm-4 col-75 lname" placeholder="Last name">
+                        <label for="exampleFormControlInput1" class="col-25 ">Name: </label>
+                        <input type="text" class="form-control col-sm-4 col-75 name" placeholder="username">
                       </div>
                       <div class="form-group row pb-2">
                         <label for="exampleFormControlInput1" class="col-25">Email: </label>
@@ -78,6 +74,7 @@
     <script>
         $(document).ready(()=>{
             // showBlogs();
+            readProfileA();
             $('.user-form').submit(
                profile);
                $('#MyButton').click(
@@ -92,8 +89,7 @@
               
                 database.collection("users").doc(user.id).set({
                    
-                    first_name: $(".fname").val(),
-                    last_name: $(".lname").val(),
+                    name: $(".name").val(),
                     email:$(".email").val(),
                     website:$(".web").val(),
                     bio:$(".bio").val(),
@@ -104,6 +100,14 @@
             });
         }
    
+        function readProfileA(){
+            withUser(user => {
+                $(".name").val(user.data().name),
+                $(".email").val(user.data().email),
+                $(".web").val(user.data().website),
+                $(".bio").val(user.data().bio)
+            })
+        }
         // function getProfile(){
         //     withUser(user => {
         //         $(".fname").val(user.data().first_name),

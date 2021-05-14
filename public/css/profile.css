@@ -84,7 +84,9 @@ body {
     width: 90%;
     position: relative;
 }
-
+#pro-name {
+    padding-right:30px;
+}
 input[type=button], input[type=submit], input[type=submitPost],input[submitBlog] {
     background-color: #4d7e65;
     border: none;
