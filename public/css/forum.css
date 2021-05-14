@@ -1,0 +1,23 @@
+body {
+    background-color: var(--color-background);
+}
+
+.card-header {
+    background-color: var(--color-container);
+}
+
+.card-footer {
+    background-color: var(--color-container);
+}
+
+.card {
+    background-color: var(--color-background);
+}
+
+.thread-submit .card-footer {
+    background-color: var(--color-background);
+}
+
+.thread-submit .card-footer, .thread-create .card-footer {
+    background-color: var(--color-background);
+}

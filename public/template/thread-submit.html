@@ -2,10 +2,34 @@
     <div class="card-body">
         <div class="form-group">
             <label for="submit-content">Write Reply</label>
-            <textarea class="form-control submit-content" id="submit-content" rows="3"></textarea>
+            <div class="form-control submit-content" id="submit-content" contenteditable="true" style="min-height: 10vh;"></div>
+            <div class="my-3"></div>
+            <div class="insert-buttons d-flex">
+                <button class="btn mx-1 insert-image">Insert Image</button>
+                <button class="btn mx-1 insert-plant">Insert Plant</button>
+                <div class="upload-images">
+                </div>
+            </div>
         </div>
     </div>
     <div class="card-footer d-flex flex-row-reverse">
-        <button class="btn btn-success submit-button">Reply</button>
+        <button class="btn submit-button">Reply</button>
+    </div>
+</div>
+<div class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Enter Plant Name</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex justify-content-center">
+                <input class="plant-modal-input" type="text">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn plant-modal-button">Insert</button>
+            </div>
+        </div>
     </div>
 </div>

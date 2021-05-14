@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>GreenSpace</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="icon" href="/favicon.ico">
+    <style>
+        #container {
+            margin: 0 2em 0 2em;
+        }
+
+        #top {
+            text-align: center;
+            margin-bottom: 2em;
+        }
+
+        #top img {
+            width: 100%;
+            height: 30vh;
+        }
+
+        #group-title {
+            margin-bottom: 20px;
+        }
+
+        #gallery-image {
+            overflow: auto;
+            white-space: nowrap;
+        }
+
+        #gallery img {
+            display: inline-block;
+            width: 110px;
+            height: 110px;
+            margin: 3px;
+        }
+
+        #like-image {
+            overflow: auto;
+            white-space: nowrap;
+        }
+
+        #likes img {
+            display: inline-block;
+            width: 110px;
+            height: 110px;
+            margin: 3px;
+        }
+
+        #container a {
+            display: inline;
+            float: right;
+            font-size: 12pt;
+        }
+
+        .more {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .more:hover {
+            text-decoration: underline;
+        }
+
+        #post,
+        #gallery,
+        #likes {
+            margin-bottom: 2em;
+        }
+
+        li:hover {
+            text-decoration: underline;
+            color: #B2D385;
+        }
+
+        @media only screen and (min-width: 800px) {
+            #container {
+                margin: 0 5em 0 5em;
+            }
+
+            #top img {
+                width: 100%;
+                height: 50vh;
+            }
+
+            #gallery img {
+                width: 150px;
+                height: 150px;
+                margin: 5px;
+            }
+
+            #likes img {
+                width: 150px;
+                height: 150px;
+                margin: 5px;
+            }
+
+            #post,
+            #gallery,
+            #likes {
+                margin: 3em 0 3em 0;
+            }
+
+            #container li {
+                font-size: 14pt;
+            }
+        }
+
+        @media only screen and (min-width: 1200px) {
+            #container {
+                margin: 0 8em 0 8em;
+            }
+
+            #top img {
+                width: 100%;
+                height: 70vh;
+            }
+
+            #gallery img {
+                width: 200px;
+                height: 200px;
+                margin: 10px;
+            }
+
+            #likes img {
+                width: 200px;
+                height: 200px;
+                margin: 10px;
+            }
+
+            #post,
+            #gallery,
+            #likes {
+                margin: 5em 0 5em 0;
+            }
+
+            #main li {
+                font-size: 16pt;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container">
+        <div id="top">
+            <h1 id="group-title">
+                <!-- Group title goes here -->
+            </h1>
+            <img id="main-image" alt="image">
+        </div>
+
+        <div id="main">
+            <div id="post">
+                <h4><i class="fas fa-pencil-alt"></i><b> Top Posts</b><a id="post-a" class="more">see more</a></h4>
+                <ul>
+                    <li id="top-post-title">
+                        <!-- Titles of top 3 posts go here-->
+                    </li>
+                </ul>
+            </div>
+
+            <div id="gallery">
+                <h4><i class="far fa-images"></i><b> Gallery</b><a id="gallery-a" class="more">see more</a></h4>
+                <div id="top-gallery-image">
+                    <!-- Image previews of top 3 images go here -->
+                </div>
+
+            </div>
+
+            <!-- <div id="likes">
+                <h4><i class="fas fa-thumbs-up"></i><b> Your Likes</b><a id="likes-a" class="more">see more</a></h4>
+                <div id="like-image">
+                    <img src="/image/leave4.jpeg">
+                    <img src="/image/leave4.jpeg">
+                    <img src="/image/leave4.jpeg">
+                    <img src="/image/leave4.jpeg">
+                </div>
+
+            </div> -->
+
+        </div>
+
+    </div>
+
+    <!-- Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+        </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
+        </script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
+
+    <script src="/js/general.js"></script>
+    <script src="/js/firebase.js"></script>
+    <script src="/js/init.js"></script>
+
+    <!-- Scripts -->
+    <script>
+
+        const parsedUrl = new URL(window.location.href);
+        var id = parsedUrl.searchParams.get("id");
+        var groupName = parsedUrl.hash.substr(1);
+
+        var posts = database.collection("groups").doc("categories")
+            .collection(id).doc(groupName);
+
+        $(document).ready(function () {
+
+            $("#post-a").click(function () {
+                window.location.href = "/group-posts.html?id=" + id + "#" + groupName;
+            });
+
+            $("#gallery-a").click(function () {
+                window.location.href = "/group-gallery.html?id=" + id + "#" + groupName;
+            });
+
+            // $("#likes-a").click(function () {
+            //     window.location.href = "/group-likes.html?id=" + id + hash;
+            // });
+            
+            readGroupTitle();
+            readTopPosts();
+            readMainImage();
+            readTopImages();
+            redirectToTopPost();
+            redirectToTopImage();
+        });
+
+        function readGroupTitle() {
+            posts.get().then(info => {
+                $("#group-title").html(info.data().title);
+            });
+        }
+
+        function readMainImage() {
+            posts.get().then(info => {
+                $("#main-image").attr("src", info.data().image);
+            });
+        }
+
+        function readTopPosts() {
+            
+
+            posts.collection("posts").limit(3).orderBy("likes").get()
+                .then(function (posts) {
+                    posts.docs.forEach(function (post) {
+                        $("#top-post-title").append("<li id=" + post.id + ">"
+                            + post.data().title + "</li>");
+                    });
+                });
+        }
+
+        function readTopImages() {
+            posts.collection("gallery").limit(3).orderBy("likes").get()
+                .then(function (posts) {
+                    posts.docs.forEach(function (post) {
+                        $("#top-gallery-image").append("<img class='top-images' id='" + post.id 
+                        + "' src='" + post.data().image + "'>");
+                    });
+                });
+        }
+
+        function redirectToTopPost() {
+            $("li").click(e => {
+                e.preventDefault();
+                window.location.href = "/group-comments.html?id=" + id + "#"
+                    + groupName + "&" + $(event.target).attr("id");
+            });
+        }
+
+        function redirectToTopImage() {
+            $(".top-images").click(e => {
+                e.preventDefault();
+                window.location.href = "/group-comments.html?id=" + id + "#"
+                    + groupName + "&" + $(event.target).attr("id");
+            });
+        }
+
+    </script>
+</body>
+
+</html>

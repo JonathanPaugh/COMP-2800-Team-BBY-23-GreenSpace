@@ -4,8 +4,8 @@
   "description": "A web application targeting people interested or involved in community gardening focusing on the social aspect to help people learn and share their experiences while providing helpful feedback.",
   "main": "app.js",
   "dependencies": {
-    "aws-sdk": "^2.903.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-rate-limit": "^5.2.6"
   },
   "scripts": {
     "start": "node app.js"
