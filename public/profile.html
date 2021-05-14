@@ -18,17 +18,17 @@
     <div class="head"></div>
     <div class="wrapper">
         <div class="row1A">
-            <div class="part1">profile image
+            <div class="part1">
                 <div class="circle2">
                 </div> 
             </div>
             <div class="row1-page1-part2">
                 <div class="pro-info">
-                    <p><span id="fp" class ="col-sm-4">First Name: </span><span id="pro-fname" >Sample First</span></p>
-                    <p><span id="fp">Last Name:</span><span id="pro-lname" >Sample Last</span></p>
-                    <p><span id="fp">Email:</span><span id="pro-email">firstLast@gmail.com</span></p>
-                    <p><span id="fp">Website:</span><span id="pro-web" >www.123.com</span></p>
-                    <p><span id="fp">Biography:</span><span id="pro-bio" >graphic designer</span></p>
+                    <p><span id="fp" class ="col-sm-4">First Name: </span><span id="pro-fname"></span></p>
+                    <p><span id="fp">Last Name:</span><span id="pro-lname"></span></p>
+                    <p><span id="fp">Email:</span><span id="pro-email"></span></p>
+                    <p><span id="fp">Website:</span><span id="pro-web"></span></p>
+                    <p><span id="fp">Biography:</span><span id="pro-bio"></span></p>
                     <input type="submit" id="MyButton" value="Edit" onClick="location.href='/profile-2.html'">
                 </div>                
             </div>
@@ -53,29 +53,23 @@
                 <div class="section-create" style="height: 36px; ">
                     <input type="submitPost" id="MyButtonPost" onclick="openTab()" style="font-size: 22px;" value="Create A Post" readonly="readonly" onClick="location.href='#'">
                 </div>
-                <!-- The Modal -->
                 <div id="myModal" class="modal">
-
-                    <!-- Modal content -->
                     <div class="modal-content">
                         <p class="close" onclick="closeTab()" style="font-size: 50px;">&times;</p>
                         <div class="modal-box">
-                            
                             <div class="modal-title">
                                 <input type="text" class="form-control ph-title" placeholder="Blog Title">
                             </div>
                             <div class="modal-text">
                                 <textarea class="form-control placehold" aria-label="With textarea" placeholder="Write your post here..."></textarea>
                                 <button class="buttons-right blog-posted" onclick="createBlog()" style="font-size: 24px; float: right; margin-right: 15px; background-color:  #4d7e65 ">Post</button>
-                                <!-- <p style="color: black">Some text in the Modal..</p> -->
                             </div>
-                            
-                            <!-- <div class="modal-date"></div> -->
                         </div>
                     </div>
 
                 </div>
-                <div class="blogs"></div>
+
+                <div class="blogs container-fluid"></div>
             </div>
             <div class="collection click-part-content">
                 hello2
@@ -85,20 +79,6 @@
             </div>
 
         </div>
-        <!-- <div class="col-1A">
-            <div class="profile">
-                hello profile
-            </div>
-        </div>
-        <div class="col-2B">
-            <div class="content">
-                .
-                <div class="text">
-                    <h5 id="post-titles">My Posts</h5>
-                    <div class="blogs-containter"></div>      
-                </div>
-            </div>
-        </div> -->
     </div>
     
     <!-- Bundle -->
