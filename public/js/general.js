@@ -56,7 +56,7 @@ function withUser(callback) {
 
 // Fetches a file and returns file data
 function fetchFile(path, callback) {
-    fetch(`${window.location.origin}/public/${path}`)
+    fetch(`${window.location.origin}/${path}`)
         .then(response => response.text())
         .then(callback);
 }
@@ -64,4 +64,21 @@ function fetchFile(path, callback) {
 // Fetches a file using template path
 function fetchTemplate(path, callback) {
     fetchFile(`template/${path}`, callback);
+}
+
+// Makes a server request
+function request(path, sData, success, fail) {
+    $.ajax({
+        url: path,
+        type: "POST",
+        data: sData,
+        success: rData => success && success(rData),
+        error: function (xhr, status, error) {
+            if (fail) {
+                fail(xhr);
+            } else {
+                console.log("Error:", xhr, status, error);
+            }
+        }
+    });
 }

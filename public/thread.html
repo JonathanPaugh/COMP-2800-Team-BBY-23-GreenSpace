@@ -9,7 +9,8 @@
         integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link href="/public/css/forum.css" rel="stylesheet">
+    <link rel="icon" href="/favicon.ico">
+    <link href="/css/forum.css" rel="stylesheet">
     <style>
         body {
             min-height: 100vh;
@@ -18,7 +19,6 @@
 </head>
 
 <body>
-
     <div class="container-fluid">
         <div class="thread-post"></div>
         <div class="thread-replies"></div>
@@ -38,10 +38,11 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
 
-    <script src="./js/general.js"></script>
-    <script src="./js/firebase.js"></script>
-    <script src="./js/init.js"></script>
+    <script src="/js/general.js"></script>
+    <script src="/js/firebase.js"></script>
+    <script src="/js/init.js"></script>
 
     <!-- Scripts -->
     <script>
@@ -80,12 +81,12 @@
         function displayReplies() {
             database.collection("threads").doc(id).collection("replies").orderBy("date", "asc").get().then(replies => {
                 replies.docs.forEach(reply => {
-                    createReply(reply.data().content, reply.data().user);
+                    createReply(reply.data().content, reply.data().user, reply.data().images);
                 });
             });
         }
 
-        function createReply(content, user) {
+        function createReply(content, user, images) {
             fetchTemplate("thread-reply.html", data => {
                 let reply = $(data).appendTo(".thread-replies");
                 reply.find(".reply-content").html(content);
@@ -95,26 +96,112 @@
                         reply.find(".reply-user").html(user.data().name);
                     });
                 }
+
+                if (images?.length) {
+                    let container = createElement("div")
+                        .appendTo(reply)
+                        .addClass("card-footer");
+
+                    console.log(container[0]);
+                    
+                    images.forEach(async function(image) {
+                        let url = await storage.ref().child(image).getDownloadURL();
+                        createElement("img")
+                            .appendTo(container)
+                            .addClass("img-fluid")
+                            .attr("src", url)
+                            .attr("alt", `${reply.find(".reply-user").html()} User Image`);
+                    });
+                }
             });
         }
 
         function displaySubmit() {
             fetchTemplate("thread-submit.html", data => {
                 let submit = $(data).appendTo(".thread-submit");
-                $(".submit-button").click(reply);
+                submit.find(".submit-button").click(reply);
+                submit.find(".insert-plant").click(selectPlant);
+                submit.find(".plant-modal-button").click(insertPlant);
+                submit.find(".insert-image").click(selectImage);
+                submit.find(".insert-image-file").on("change", insertImage);
             });
         }
 
-        function reply() {            
+        function reply() {
+            requireLogin();    
             withUser(user => {
                 database.collection("threads").doc(id).collection("replies").add({
-                    content: $(".submit-content").val(),
+                    content: $(".submit-content").html(),
                     user: user.id,
                     date: new Date()
-                }).then(() => {
-                    redirect("/public/thread.html");
+                }).then(async function(reply) {
+                    let paths = [];
+                    for (let i = 0; i < images.length; i++) {
+                        let path = `threads/${id}/${reply.id}-${i}.${images[i].name.split(".").pop()}`;
+                        paths.push(path);
+                        await storage.ref().child(path).put(images[i]);
+                    }
+                    reply.set({
+                        images: paths
+                    }, { merge: true }).then(() => {
+                        redirect("/thread.html");
+                    });
                 });
             });
+        }
+
+        function selectPlant() {
+            $(".modal").modal("show");
+            $(".plant-modal-input").val("");
+        }
+
+        function insertPlant() {
+            let link = createElement("a")
+                .appendTo(".submit-content")
+                .attr("href", `/plant-search.html?search=${$(".plant-modal-input").val()}`)
+                .html($(".plant-modal-input").val());
+
+            $(".modal").modal("hide");
+        }
+
+        function selectImage(event) {
+            let input = createElement("input")
+                .appendTo(".upload-images")
+                .addClass(".upload-image")
+                .css("display", "none")
+                .attr("type", "file");
+
+            input.on("change", insertImage);
+            input.trigger("click");
+        }
+
+        var images = [];
+        function insertImage(event) {
+            if (!event.target.files[0]) { 
+                return; 
+            }
+
+            images.push(event.target.files[0]);
+
+            let counter = $(".upload-counter");
+            if (!counter.length) {
+                let container = createDiv()
+                    .insertAfter(".insert-buttons")
+                    .addClass("d-flex mt-3")
+
+                createDiv()
+                    .appendTo(container)
+                    .addClass("mx-1")
+                    .html("Uploaded Images:")
+
+                counter = createDiv()
+                    .appendTo(container)
+                    .addClass("upload-counter")
+                    .html("1");
+            } else {
+                let count = parseInt(counter.html());
+                counter.html(++count);
+            }
         }
 
     </script>

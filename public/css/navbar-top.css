@@ -5,3 +5,7 @@
 .navbar-toggler {
     border: none;
 }
+
+.nav-item a:hover {
+    color: var(--color-primary) !important;
+}

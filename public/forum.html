@@ -9,7 +9,8 @@
         integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link href="/public/css/forum.css" rel="stylesheet">
+    <link rel="icon" href="/favicon.ico">
+    <link href="/css/forum.css" rel="stylesheet">
     <style>
         body {
             min-height: 100vh;
@@ -23,7 +24,7 @@
     <div class="container-fluid">
         <div class="forum-threads"></div>
         <div class="forum-create">
-            <a href="/public/thread-create.html"><button class="btn btn-lg m-5">Create Post</button></a>
+            <button class="btn btn-lg my-2 mx-5">Create Post</button>
         </div>
     </div>
 
@@ -40,37 +41,48 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
 
-    <script src="./js/general.js"></script>
-    <script src="./js/firebase.js"></script>
-    <script src="./js/init.js"></script>
+    <script src="/js/general.js"></script>
+    <script src="/js/firebase.js"></script>
+    <script src="/js/init.js"></script>
 
     <!-- Scripts -->
     <script>
         $(document).ready(() => {
             displayThreads();
+
+            $(".forum-create button").click(() => {
+                requireLogin();
+                redirect("/thread-create.html");
+            })
         });
 
         function displayThreads() {
             database.collection("threads").get().then(threads => {
                 threads.docs.forEach(thread => {
-                    createThread(thread.data().topic, thread.id);
+                    database.collection("threads").doc(thread.id).collection("replies").get().then(replies => {
+                        database.collection("users").doc(thread.data().user).get().then(user => {
+                            createThread(thread.id, thread.data().topic, user.data().name, replies.size);
+                        });
+                    });
                 });
             });
         }
 
-        function createThread(topic, id) {
+        function createThread(id, topic, user, count) {
             fetchTemplate("forum-thread.html", data => {
                 let thread = $(data).appendTo(".forum-threads");
+
+                let threadId = thread.find(".thread-id");
+                threadId.attr("href", `${threadId.attr("href")}?id=${id}`);
+
                 thread.find(".thread-topic").html(topic);
-                thread.find(".thread-id").attr("id", id).click(gotoThread);
+                thread.find(".thread-user").html(user);
+                thread.find(".thread-count").html(`${count} Replies`);
             });
         }
 
-        function gotoThread() {
-            setUrlQuery("id", $(this).attr("id"));
-            redirect("/public/thread.html");
-        }
 
     </script>
 </body>

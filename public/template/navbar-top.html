@@ -1,10 +1,10 @@
 <div class="navbar-top">
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img id="logo" src="/public/image/coloured.png" alt="logo">
+            <div class="navbar-brand unselectable">
+                <img id="logo" src="/image/coloured.png" alt="logo">
                 GreenSpace
-            </a>
+            </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -12,14 +12,26 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/public/index.html">Home</a>
+                        <a class="nav-link" href="/index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/public/profile.html">Profile</a>
+                        <a class="nav-link" href="/profile.html">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/public/forum.html">Forum</a>
+                        <a class="nav-link" href="/forum.html">Forum</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/group.html">Group</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Information
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <li><a class="nav-link text-dark" href="/about.html">About Us</a></li>
+                            <li><a class="nav-link text-dark" href="/plant-search.html">Plant Search</a></li>
+                        </ul>
+                      </li>
                 </ul>
             </div>
         </div>
