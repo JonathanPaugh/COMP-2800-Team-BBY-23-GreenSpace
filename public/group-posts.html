@@ -23,15 +23,12 @@
         #back-button {
             float: left;
             margin-left: 1em;
+            width: fit-content;
         }
 
         #back-button {
             background-color: #DBCFB0;
             margin-bottom: 0.5em;
-        }
-
-        #post-button {
-            width: 30vw;
         }
 
         @media only screen and (min-width: 0px) and (max-width: 599px) {
@@ -48,7 +45,6 @@
             #post-button,
             #back-button {
                 margin-left: 3em;
-                width: 15vw;
             }
         }
 
@@ -92,7 +88,6 @@
 
     <!-- Scripts -->
     <script>
-
         const parsedUrl = new URL(window.location.href);
         var id = parsedUrl.searchParams.get("id");
         var groupName = window.location.hash.substr(1);
@@ -100,15 +95,11 @@
         var posts = database.collection("groups").doc("categories")
             .collection(id).doc(groupName).collection("posts");
 
-        var docName;
-
-
         $(document).ready(function () {
-
             posts.get().then(function (posts) {
-                posts.docs.forEach(function (post) {
-                    docName = post.id;
-                    readPosts(
+                posts.docs.forEach(async function (post) {
+                    var docName = post.id;
+                    var p = await readPosts(
                         post.id,
                         post.data().title,
                         post.data().content,
@@ -132,20 +123,24 @@
                 group.find(".post-user").html(user);
                 group.find(".post-like").html(like);
                 group.find(".post-comment").html(comment);
-                group.find(".like-button").click(increaseLike);
+                group.find(".like-button").attr("id", docID);
                 group.find(".view-button").attr("href", "/group-comments.html?id=" + id
                     + "#" + groupName + "&" + docID);
+
+                group.find(".like-button").click(e => {
+                    e.preventDefault();
+                    increaseLike(docID);
+                })
             });
         }
 
-        function increaseLike() {
-            posts.doc(docName).update({
+        function increaseLike(likeid) {
+            posts.doc(likeid).update({
                 likes: firebase.firestore.FieldValue.increment(1)
             }).then(function () {
                 location.reload();
             });
         }
-
     </script>
 </body>
 
