@@ -72,6 +72,8 @@
 
     <!-- Scripts -->
     <script>
+
+
         $(document).ready(()=>{
             // showBlogs();
             readProfileA();
@@ -107,31 +109,6 @@
                 $(".web").val(user.data().website),
                 $(".bio").val(user.data().bio)
             })
-        }
-        // function getProfile(){
-        //     withUser(user => {
-        //         $(".fname").val(user.data().first_name),
-        //         $(".lname").val(user.data().last_name)
-        //     })
-        // }
-        function showBlogs() {
-            database.collection("profile_post_collections").get().then((blogs)=>{
-                blogs.docs.forEach((blog)=>{
-                    makeBlog(blog.id, blog.data());
-                })
-            });
-        }
-
-        function makeBlog(id, blog) {
-            fetchTemplate("profile-blog.html", card=>{
-               let each = $(card);
-               console.log(each);
-               each.find(".card-title").html(blog.blog_title);
-               each.find(".card-text").html(blog.blog_text);  
-               each.find(".date").html(blog.date.toDate().toDateString());
-               $(".blogs-containter").append(each);
-               console.log(blog.date.toDate().toDateString());
-            });
         }
     
     </script>
