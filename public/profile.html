@@ -24,12 +24,13 @@
             </div>
             <div class="row1-page1-part2">
                 <div class="pro-info">
+                    <!-- style="padding-left:50px;" -->
                     <!-- <p><span id="fp" class ="col-sm-4">First Name: </span><span id="pro-fname" >Sample First</span></p> -->
-                    <p><span id="fp">Name:</span><span id="pro-name" style="padding-left:50px;">Sample Last</span></p>
-                    <p><span id="fp">Email:</span><span id="pro-email">firstLast@gmail.com</span></p>
-                    <p><span id="fp">Website:</span><span id="pro-web" >www.123.com</span></p>
-                    <p><span id="fp">Biography:</span><span id="pro-bio" >graphic designer</span></p>
-                    <input type="submit" id="MyButton" value="Edit" onClick="location.href='/profile-2.html'">
+                    <p><div id="fp">Name:</div><div id="pro-name">Sample Name</div></p>
+                    <p><div id="fp">Email:</div><div id="pro-email">firstLast@gmail.com</div></p>
+                    <p><div id="fp">Website:</div><div id="pro-web" >www.123.com</div></p>
+                    <p><div id="fp">Biography:</div><div id="pro-bio" >graphic designer</div></p>
+                    <div id="check"><input type="submit" id="MyButton" value="Edit" onClick="location.href='/profile-2.html'"></div>
                 </div>                
             </div>
         </div>
@@ -149,7 +150,6 @@
             requireLogin();
             showBlogs();
            
-            // $('#MyButton').click(profile);
             changeTab();
             getProfile();
             getModal();
@@ -211,7 +211,6 @@
                         makeBlog(docRef.id, doc.data());
                         closeTab();
                     })
-                   
                      
                 })
                  .catch((error) => {
@@ -220,8 +219,7 @@
             })
         }
         
-        function makeBlog(id, box) {
-            
+        function makeBlog(id, box) { 
             fetchTemplate("profile-blog.html", card=>{
                let each = $(card);
                each.find(".blog-title").html(box.blog_title);
@@ -243,22 +241,16 @@
 
         function showBlogs() {
             withUser(user => {
-                database.collection("users").doc(user.id).collection("blogs").get().then((blogs)=>{
+                database.collection("users").doc(user.id).collection("blogs").orderBy("date", "asc").get().then((blogs)=>{
                         blogs.docs.forEach((blog)=>{
                          makeBlog(blog.id, blog.data());
-                         console.log("check: ", blog.data().date)
+                        //  console.log("check: ", blog.data().date)
                      })
                
                 });
             })
         }
 
-      
-        // $(".button-class").click({
-        //  $(".button-class").click({
-
-        // })
-    
     </script>
 
 

@@ -29,7 +29,7 @@ body {
 
 .row1A {
     margin-bottom: 0px;
-    height: 920px;
+    height: auto;
 }
 
 .row1-col1, .part1 {
@@ -65,7 +65,7 @@ body {
 }
 
 .row1-page1-part2 {
-    height: 460px;
+    height: auto;
 }
 
 #pro-email, #pro-web {
@@ -73,8 +73,27 @@ body {
     padding-right: 0px;
 }
 
-#pro-email {
-    padding-left: 58px;
+#pro-email, #pro-web, #pro-bio, #pro-name {
+    padding-left: 15px;
+    padding-right: 15px;
+    border-bottom: solid 1px;
+    word-wrap: break-word;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-right: 1em;
+    height: auto;
+    line-height: 1.6;
+}
+#pro-bio {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-bottom: 1em;
+    overflow: auto;
+}
+#pro-email:empty, #pro-web:empty, #pro-bio:empty, #pro-name:empty {
+    border: none; 
+    border-bottom: 1px solid;
+    height: 30px;
 }
 
 .col-25 {
@@ -83,13 +102,14 @@ body {
 
 .pro-info {
     padding-top: 20px;
-    font-size: 26px;
+    font-size: 28px;
     width: 90%;
     position: relative;
 }
 #pro-name {
     padding-right:30px;
 }
+
 input[type=button], input[type=submit], input[type=submitPost],input[submitBlog] {
     background-color: #4d7e65;
     border: none;
@@ -173,10 +193,12 @@ input[type="email"], input[type="text"], .form-control {
 }
 
 .blog-img {
-    height: 598px;
+    
+    height: 400px;
     width: 100%;
     object-fit: cover;
 }
+
 
 .blog-title {
     text-align: center;
@@ -287,19 +309,29 @@ textarea {
     border-bottom: 2px yellow solid;
     border-style: none none solid none;
 }
-
 #fp {
+    margin-bottom: 10px;
+}
+/* #fp {
     padding-right: 50px;
 }
 
 #fp-e {
     padding-right: 100px;
-}
+} */
 
 #logo {
     width: 50px;
 }
-
+.pro-info {
+    padding-left: 5px;
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+}
+#check {
+    height: 80px;
+}
 @media only screen and (max-width: 999px) {
     .blog {
         grid-template-columns: 1fr;
@@ -318,23 +350,26 @@ textarea {
         display: grid;
         grid-template-rows: 100%;
         grid-template-columns: 40% 60%;
-        height: 860px;
+        /* height: 860px; */
+        height: auto;
         justify-content: center;
     }
 
-    .row1A {
+    /* .row1A {
         height: 490px;
-    }
+        overflow: auto;
+    } */
 
     .row1-col1, .part1 {
         grid-column: 1 /span 1;
-        height: 860px;
+        grid-row: 1 / span 1;
+        height: auto;
         background-color: #a6b6b1;
         position: relative;
     }
     
     .part1, .row1-page1-part2 {
-        height: 490px;
+        grid-row: 1 / span 1;
     }
 
     .row1-col2, .row1-page1-part2 {
@@ -350,6 +385,9 @@ textarea {
    
     .pro-info {
         padding-left: 20px;
+    }
+    #pro-bio {
+        overflow: auto;
     }
 
     .circle, .circle2 {
