@@ -256,7 +256,7 @@
         function readTopPosts() {
             
 
-            posts.collection("posts").limit(3).orderBy("likes").get()
+            posts.collection("posts").limit(3).orderBy("likes", "desc").get()
                 .then(function (posts) {
                     posts.docs.forEach(function (post) {
                         $("#top-post-title").append("<li id=" + post.id + ">"
@@ -266,7 +266,7 @@
         }
 
         function readTopImages() {
-            posts.collection("gallery").limit(3).orderBy("likes").get()
+            posts.collection("gallery").limit(3).orderBy("likes", "desc").get()
                 .then(function (posts) {
                     posts.docs.forEach(function (post) {
                         $("#top-gallery-image").append("<img class='top-images' id='" + post.id 
