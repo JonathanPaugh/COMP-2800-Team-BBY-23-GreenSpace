@@ -49,6 +49,12 @@ app.post("/find-plants", (req, res) => {
     });
 });
 
+app.post("/suggest-plants", (req, res) => {
+    findPlants(req.body.query, data => {
+        res.send(data?.map(plant => `${plant.primaryCommonName} (${plant.scientificName})`));
+    });
+});
+
 app.post("/search-plant", (req, res) => {
     findPlant(req.body.query, data => {
         if (data) {
@@ -66,7 +72,6 @@ app.post("/search-plant", (req, res) => {
 });
 
 function getPlant(id, callback) {
-    console.log(id);
     requestPlantData(`/api/data/taxon/${id}`, "GET", null, data => {
         if (callback) {
             callback(data);
@@ -77,7 +82,7 @@ function getPlant(id, callback) {
 function findPlant(query, callback) {
     findPlants(query, data => {
         if (callback) {
-            if (data.length) {
+            if (data?.length) {
                 callback(data[0]);
             } else {
                 callback(null);
@@ -127,12 +132,8 @@ function findPlantImages(query, callback) {
         }
     }), data => {
         if (callback) {
-            if (data) {
-                if (data.items) {
-                    callback(data.items.map(item => item.link));
-                } else {
-                    callback(null);
-                }
+            if (data?.items) {
+                callback(data.items.map(item => item.link));
             } else {
                 callback(null);
             }
@@ -153,12 +154,8 @@ function findPlantInformation(query, callback) {
         }
     }), data => {
         if (callback) {
-            if (data) {
-                if (data.items) {
+            if (data?.items) {
                     callback(data.items[0]);
-                } else {
-                    callback(null);
-                }
             } else {
                 callback(null);
             }

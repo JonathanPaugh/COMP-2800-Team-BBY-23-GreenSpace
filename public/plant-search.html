@@ -35,7 +35,17 @@
         .list-group-item {
             background-color: var(--color-container);
         }
-        
+
+        @media only screen and (max-width: 576px) {
+            .plant-taxonomy {
+                padding: 0.5rem 0.25rem;
+            }
+
+            .list-group-item {
+                padding: 0.25rem 0.25rem;
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 
@@ -58,7 +68,6 @@
     </div>
 
     <div class="container-fluid plant-info">
-
     </div>
 
     <!-- Bundle -->
@@ -101,10 +110,10 @@
         }
 
         function suggest() {
-            request("/find-plants", { query: $(".search-value").val() }, plants => {
+            request("/suggest-plants", { query: $(".search-value").val() }, plants => {
                 $("#search-suggestions").empty();
                 if (!plants.length) { return; }
-                createSuggestions(new Set(plants.map(plant => plant.primaryCommonName)));
+                createSuggestions(new Set(plants));
             });
         }
 
@@ -120,6 +129,11 @@
             }
 
             let query = $(".search-value").val();
+            let pattern = /\((.*?)\)/;
+
+            if (query.match(pattern)) {
+                query = query.match(pattern)[1];
+            }
 
             $(".plant-info").empty();
             

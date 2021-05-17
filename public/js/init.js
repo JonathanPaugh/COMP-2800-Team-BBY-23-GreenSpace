@@ -31,4 +31,31 @@ $(document).ready(() => {
             $("script").first().before(data);
         });
     }
+
+    if (localStorage.getItem("invert") == "true") {
+        invert();
+    }
 });
+
+// https://stackoverflow.com/questions/4766201/javascript-invert-color-on-all-elements-of-a-page
+// leosok
+function invert() { 
+    head = document.getElementsByTagName("head")[0],
+    style = document.createElement("style");
+
+    let css = "html {"
+        + "-webkit-filter: invert(100%);"
+        + "-moz-filter: invert(100%);"
+        + "-o-filter: invert(100%);"
+        + "-ms-filter: invert(100%);"
+        + "}"
+
+    style.type = "text/css";
+    if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
+    }
+
+    head.appendChild(style);
+};

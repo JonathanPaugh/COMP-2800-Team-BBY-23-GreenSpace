@@ -169,7 +169,8 @@
                 .appendTo(".upload-images")
                 .addClass(".upload-image")
                 .css("display", "none")
-                .attr("type", "file");
+                .attr("type", "file")
+                .attr("multiple", "");
 
             input.on("change", insertImage);
             input.trigger("click");
@@ -177,11 +178,15 @@
 
         var images = [];
         function insertImage(event) {
-            if (!event.target.files[0]) { 
+            let files = Array.from(event.target.files);
+
+            if (!files.length) { 
                 return; 
             }
 
-            images.push(event.target.files[0]);
+            files.forEach(file => {
+                images.push(file);
+            });
 
             let counter = $(".upload-counter");
             if (!counter.length) {
@@ -197,10 +202,10 @@
                 counter = createDiv()
                     .appendTo(container)
                     .addClass("upload-counter")
-                    .html("1");
+                    .html(files.length);
             } else {
                 let count = parseInt(counter.html());
-                counter.html(++count);
+                counter.html(count + files.length);
             }
         }
 
