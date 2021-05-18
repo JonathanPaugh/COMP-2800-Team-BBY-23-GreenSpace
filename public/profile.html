@@ -52,7 +52,7 @@
             <div class="blog-section click-part-content">
                 <div class="section-title">My Posts</div>
                 <div class="section-create" style="height: 36px; ">
-                    <input type="submitPost" id="MyButtonPost" onclick="openTab()" style="font-size: 22px;" value="Create A Post" readonly="readonly" onClick="location.href='#'">
+                    <input type="submitPost" id="MyButtonPost" onclick="openTab()" style="font-size: 22px;" value="Create A Post" readonly="readonly">
                 </div>
                 <!-- The Modal -->
                 <div id="myModal" class="modal">
@@ -81,13 +81,13 @@
                 <div class="blogs"></div>
             </div>
             <div class="collection click-part-content">
-                <div class="card">
+                <!-- <div class="card">
                     <div class="card-body">
                         <h5><i class="far fa-comment"></i> Comments</h5>
                     </div>
             
                     <div class="card-body comment">
-                        <!-- Comments go here -->
+                       
                     </div>
                     <div class="card-body">
                         <form class="row g-3">
@@ -98,13 +98,63 @@
                                 <button id="comment-submit" type="button" class="btn">Post</button>
                             </div>
                         </form>
-                    </div>
+                    </div> -->
             
             
                 </div>
             </div>
             <div class="gallery click-part-content">
-                <button style="font-size: 22px;" value="Upload An Image" readonly="readonly" onClick="location.href='#'">
+                <div class="col">
+                  <div class="card">
+                  
+                    
+                    <input class="btn btn-primary image-select" onclick="selectImage()" type="button" value="Add Image">
+                    <div class="card-body ">
+                        <!-- <input class="btn" onclick="addText()" type="button" value="Add Image"> -->
+                      <h5 class="card-title">Special title treatment</h5>
+                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>              
+                    </div> 
+                  </div>
+                </div>
+
+                <div class="container-fluid py-3" style="background-color: lightgrey;">
+                    <div class="row gallery-images">
+            
+                        
+                        <!-- <div class="gallery-images"></div> -->
+
+                        
+                        <!-- <div class="col-md-6">
+                          <div class="card image-size">
+                            <div class="card-body">
+                              <h5 class="card-title">Special title treatment</h5>
+                              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                              <button id="selectImage" class="btn-primary"onclick="selectImage()" style="font-size: 22px;">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card image-size">
+                              <div class="card-body ">
+                                <h5 class="card-title">Special title treatment</h5>
+                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="card image-size">
+                              <div class="card-body">
+                                <h5 class="card-title">Special title treatment</h5>
+                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                              </div>
+                            </div>
+                          </div> -->
+                    </div>
+                </div>
+                  
+                     <!-- Picture go here -->
             </div>
 
         </div>
@@ -155,6 +205,62 @@
             getModal();
         })
 
+
+        // const parsedUrl = new URL(window.location.href);
+        // var id = parsedUrl.searchParams.get("id");
+        // var groupName = window.location.hash.substr(1);
+        // var posts = database.collection("groups").doc("categories")
+        //     .collection(id).doc(groupName).collection("gallery");
+
+        // $(document).ready(function () {
+        //     writeImages();
+        // });
+
+        // function writePosts(url) {
+        //     let postTitle = document.querySelector(".post-title").value;
+        //     let postContent = document.querySelector(".post-content").value;
+
+        //     firebase.auth().onAuthStateChanged(function (user) {
+        //         if (user) {
+        //             database.collection("users").doc(user.uid).get()
+        //                 .then(function (doc) {
+
+        //                     posts.add({
+        //                         user: doc.data().name,
+        //                         title: postTitle,
+        //                         content: postContent,
+        //                         image: url
+        //                     }).then(function () {
+        //                         window.location.href = "/group-gallery.html?id=" + id + "#" + groupName;
+        //                     });
+        //                 });
+        //         } else {
+        //             alert("You are not signed in.");
+        //         }
+        //     });
+        // }
+
+        // function writeImages() {
+        //     $("#add-file").on("change", async function (event) {
+        //         event.preventDefault();
+
+        //         var uploadedIMG = event.target.files[0];
+
+        //         storage.ref().child("groups/posts/" + uploadedIMG.name).put(uploadedIMG)
+        //             .then((snapshot) => {
+        //                 $("#create-post").click(async function (e) {
+        //                     e.preventDefault();
+
+        //                     var url = await snapshot.ref.getDownloadURL();
+
+        //                     console.log(snapshot.ref.getDownloadURL());
+        //                     console.log(snapshot);
+        //                     writePosts(url);
+        //                 })
+        //             })
+        //     });
+        // }
+
         /*
         * Reference begins: 
         * @see https://www.youtube.com/watch?v=PJe5Cc6iybQ
@@ -195,7 +301,33 @@
         function openTab() {
             modal.style.display = "block";
         }
+        function selectImage() {
+            withUser(user=>{
+                var images = database.collection("users").doc(user.id).collection("gallery");
+                var input = document.createElement('input');
+                input.type = 'file';
+                input.click();
+                input.onchange = async function (selectAnImage) {
+                    selectAnImage.preventDefault();
+                    var fileSelected = selectAnImage.target.files[0];
+                    var imagRef = storage.ref().child("users/" + user.id + "/gallery/" + fileSelected.name);
+                    await imagRef
+                    .put(fileSelected)
+                    .then(async function (snapshot) {
+                        var link = await snapshot.ref.getDownloadURL();
+                        createImageDiv(link);
+                    });
+                } 
+            })
+        }
         
+        function createImageDiv(link) {
+            fetchTemplate("profile-gallery.html", card=>{
+                //card returned，appendTo
+                var gallery_card = $(card).appendTo(".gallery-images"); 
+                gallery_card.find(".card-image-gallery").attr("src",link);
+            })
+        }
         function createBlog() {
             withUser(user => {
                 database.collection("users").doc(user.id).collection("blogs").add({
