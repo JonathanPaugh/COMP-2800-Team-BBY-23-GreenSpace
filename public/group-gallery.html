@@ -23,20 +23,17 @@
         #back-button {
             float: left;
             margin-left: 1em;
+            width: fit-content;
         }
 
         #back-button {
             background-color: #DBCFB0;
-        }
-
-        #post-button {
-            width: 30vw;
+            margin-bottom: 0.5em;
         }
 
         .post-images {
             width: 100%;
             height: 100%;
-            ;
         }
 
         @media only screen and (min-width: 0px) and (max-width: 599px) {
@@ -47,13 +44,12 @@
 
         @media only screen and (min-width: 600px) {
             .card {
-                margin: 5em 3em 1em 3em;
+                margin: 1em 3em 1em 3em;
             }
 
             #post-button,
             #back-button {
                 margin-left: 3em;
-                width: 15vw;
             }
 
             .post-images {
@@ -65,7 +61,7 @@
 
         @media only screen and (min-width: 1200px) {
             .card {
-                margin: 5em 5em 1em 5em;
+                margin: 1em 5em 1em 5em;
             }
 
             #post-button,
@@ -77,11 +73,11 @@
 </head>
 
 <body>
-    <a id="back-button" class="btn col-3">Back</a><br>
+    <a id="back-button" class="btn col-3">Back</a><br><br>
     <div id="posts">
         <!--Posts go here-->
     </div>
-    <a id="post-button" class="btn col-3">Create Post</a><br>
+    <a id="post-button" class="btn col-3">Create Post</a><br><br>
 
 
     <!-- Bundle -->
@@ -113,14 +109,10 @@
         var posts = database.collection("groups").doc("categories")
             .collection(id).doc(groupName).collection("gallery");
 
-        var docName;
-
-
         $(document).ready(function () {
-
             posts.get().then(function (posts) {
                 posts.docs.forEach(function (post) {
-                    docName = post.id;
+                    var docName = post.id;
                     readPosts(
                         post.id,
                         post.data().title,
@@ -147,14 +139,18 @@
                 group.find(".post-user").html(user);
                 group.find(".post-like").html(like);
                 group.find(".post-comment").html(comment);
-                group.find(".like-button").click(increaseLike);
                 group.find(".view-button").attr("href", "/group-gallery-comments.html?id=" + id
                     + "#" + groupName + "&" + docID);
+
+                group.find(".like-button").click(e => {
+                    e.preventDefault();
+                    increaseLike(docID);
+                });
             });
         }
 
-        function increaseLike() {
-            posts.doc(docName).update({
+        function increaseLike(likeid) {
+            posts.doc(likeid).update({
                 likes: firebase.firestore.FieldValue.increment(1)
             }).then(function () {
                 location.reload();
