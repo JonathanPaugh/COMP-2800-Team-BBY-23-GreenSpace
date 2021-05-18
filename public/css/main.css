@@ -45,6 +45,14 @@ i:hover {
     background-color: rgba(0, 0, 0, 0);
 }
 
+.hover-primary:hover {
+    color: var(--color-primary) !important;
+}
+
+.hover-accent:hover {
+    color: var(--color-accent) !important;
+}
+
 .unselectable {
     user-select: none;
     -o-user-select: none;
