@@ -37,8 +37,15 @@ $(document).ready(() => {
     }
 });
 
-// https://stackoverflow.com/questions/4766201/javascript-invert-color-on-all-elements-of-a-page
-// leosok
+/* Used a stackoverflow.com reference to build the invert function
+* @author community wiki (leosok, ggorlen) @ stackoverflow.com
+* @see https://stackoverflow.com/questions/4766201/javascript-invert-color-on-all-elements-of-a-page
+*/
+
+/*
+* Reference Start
+*/
+
 function invert() { 
     head = document.getElementsByTagName("head")[0],
     style = document.createElement("style");
@@ -59,3 +66,7 @@ function invert() {
 
     head.appendChild(style);
 };
+
+/*
+* Reference End
+*/
