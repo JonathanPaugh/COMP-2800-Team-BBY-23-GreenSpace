@@ -38,7 +38,7 @@
             <div class="nav_menu">
                 <ul>
                     <li onclick="clickParts(0)" class="user-post true">
-                        Posts
+                        Reminders
                     </li>
                     <li onclick="clickParts(1)" class="user-favorites">
                         Collections
@@ -50,9 +50,9 @@
             </div>
             
             <div class="blog-section click-part-content">
-                <div class="section-title">My Posts</div>
+                <div class="section-title">My Reminders</div>
                 <div class="section-create" style="height: 36px; ">
-                    <input type="submitPost" id="MyButtonPost" onclick="openTab()" style="font-size: 22px;" value="Create A Post" readonly="readonly">
+                    <input type="submitPost" id="MyButtonPost" onclick="openTab()" style="font-size: 22px;" value="Create One" readonly="readonly">
                 </div>
                 <!-- The Modal -->
                 <div id="myModal" class="modal">
@@ -66,7 +66,7 @@
                                 <input type="text" class="form-control ph-title" placeholder="Blog Title">
                             </div>
                             <div class="modal-text">
-                                <textarea class="form-control placehold" aria-label="With textarea" placeholder="Write your post here..."></textarea>
+                                <textarea class="form-control placehold" aria-label="With textarea" placeholder="Write your reminder here..."></textarea>
                                 <button class="buttons-right blog-posted" onclick="createBlog()" style="font-size: 24px; float: right; margin-right: 15px; background-color:  #4d7e65 ">Post</button>
                                 <!-- <p style="color: black">Some text in the Modal..</p> -->
                             </div>
@@ -205,62 +205,6 @@
             getModal();
         })
 
-
-        // const parsedUrl = new URL(window.location.href);
-        // var id = parsedUrl.searchParams.get("id");
-        // var groupName = window.location.hash.substr(1);
-        // var posts = database.collection("groups").doc("categories")
-        //     .collection(id).doc(groupName).collection("gallery");
-
-        // $(document).ready(function () {
-        //     writeImages();
-        // });
-
-        // function writePosts(url) {
-        //     let postTitle = document.querySelector(".post-title").value;
-        //     let postContent = document.querySelector(".post-content").value;
-
-        //     firebase.auth().onAuthStateChanged(function (user) {
-        //         if (user) {
-        //             database.collection("users").doc(user.uid).get()
-        //                 .then(function (doc) {
-
-        //                     posts.add({
-        //                         user: doc.data().name,
-        //                         title: postTitle,
-        //                         content: postContent,
-        //                         image: url
-        //                     }).then(function () {
-        //                         window.location.href = "/group-gallery.html?id=" + id + "#" + groupName;
-        //                     });
-        //                 });
-        //         } else {
-        //             alert("You are not signed in.");
-        //         }
-        //     });
-        // }
-
-        // function writeImages() {
-        //     $("#add-file").on("change", async function (event) {
-        //         event.preventDefault();
-
-        //         var uploadedIMG = event.target.files[0];
-
-        //         storage.ref().child("groups/posts/" + uploadedIMG.name).put(uploadedIMG)
-        //             .then((snapshot) => {
-        //                 $("#create-post").click(async function (e) {
-        //                     e.preventDefault();
-
-        //                     var url = await snapshot.ref.getDownloadURL();
-
-        //                     console.log(snapshot.ref.getDownloadURL());
-        //                     console.log(snapshot);
-        //                     writePosts(url);
-        //                 })
-        //             })
-        //     });
-        // }
-
         /*
         * Reference begins: 
         * @see https://www.youtube.com/watch?v=PJe5Cc6iybQ
@@ -319,7 +263,9 @@
                     });
                 } 
             })
+
         }
+       
         
         function createImageDiv(link) {
             fetchTemplate("profile-gallery.html", card=>{
@@ -327,6 +273,7 @@
                 var gallery_card = $(card).appendTo(".gallery-images"); 
                 gallery_card.find(".card-image-gallery").attr("src",link);
             })
+             
         }
         function createBlog() {
             withUser(user => {
@@ -340,7 +287,8 @@
                     console.log("Document written with ID: ", docRef.id);
                     console.log(docRef.get());
                     docRef.get().then(doc=>{
-                        makeBlog(docRef.id, doc.data());
+                        console.log(doc);
+                        makeBlog(doc);
                         closeTab();
                     })
                      
@@ -351,13 +299,24 @@
             })
         }
         
-        function makeBlog(id, box) { 
+        function makeBlog(blog) { 
+            console.log(blog);
             fetchTemplate("profile-blog.html", card=>{
                let each = $(card);
-               each.find(".blog-title").html(box.blog_title);
-               each.find(".blog-content").html(box.blog_text);  
-               each.find(".date").html(box.date.toDate().toLocaleString());
+               each.find(".blog-edit").attr("id", blog.id);
+               each.find(".blog-reminder").attr("id", blog.id);
+               each.find(".blog-remove").attr("id", blog.id);
+               each.find(".blog-title").html(blog.data().blog_title);
+               each.find(".blog-content").html(blog.data().blog_text);  
+               each.find(".date").html(blog.data().date.toDate().toLocaleString());
+
                $(".blogs").prepend(each);
+               each.find(".blog-edit").click(function(){
+                   var edit_id = $(this).attr("id");
+                   console.log(edit_id);
+                   setUrlQuery("blogId", edit_id);
+                   redirect("profile-edit.html");
+               })
                
             });
         }
@@ -375,7 +334,7 @@
             withUser(user => {
                 database.collection("users").doc(user.id).collection("blogs").orderBy("date", "asc").get().then((blogs)=>{
                         blogs.docs.forEach((blog)=>{
-                         makeBlog(blog.id, blog.data());
+                         makeBlog(blog);
                         //  console.log("check: ", blog.data().date)
                      })
                
