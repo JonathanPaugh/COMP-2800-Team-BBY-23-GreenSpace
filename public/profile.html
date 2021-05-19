@@ -30,7 +30,10 @@
                     <p><div id="fp">Email:</div><div id="pro-email">firstLast@gmail.com</div></p>
                     <p><div id="fp">Website:</div><div id="pro-web" >www.123.com</div></p>
                     <p><div id="fp">Biography:</div><div id="pro-bio" >graphic designer</div></p>
-                    <div id="check"><input type="submit" id="MyButton" value="Edit" onClick="location.href='/profile-2.html'"></div>
+                    <div id="check">
+                        <button class ="btn btn-lg" onClick="location.href='/profile-2.html'">Edit</button>
+                        <!-- <input type="submit" id="MyButton" value="Edit" onClick="location.href='/profile-2.html'"> -->
+                    </div>
                 </div>                
             </div>
         </div>
@@ -52,7 +55,7 @@
             <div class="blog-section click-part-content">
                 <div class="section-title">My Reminders</div>
                 <div class="section-create" style="height: 36px; ">
-                    <input type="submitPost" id="MyButtonPost" onclick="openTab()" style="font-size: 22px;" value="Create One" readonly="readonly">
+                    <input type="submitPost" id="MyButtonPost" onclick="openTab()" style="font-size: 22px;" value=" + Add One" readonly="readonly">
                 </div>
                 <!-- The Modal -->
                 <div id="myModal" class="modal">
@@ -67,7 +70,8 @@
                             </div>
                             <div class="modal-text">
                                 <textarea class="form-control placehold" aria-label="With textarea" placeholder="Write your reminder here..."></textarea>
-                                <button class="buttons-right blog-posted" onclick="createBlog()" style="font-size: 24px; float: right; margin-right: 15px; background-color:  #4d7e65 ">Post</button>
+                                <button class="buttons-right blog-posted col-2" onclick="createBlog()" 
+                                style="font-size: 24px; float: right; margin-right: 15px; border: none;">Post</button>
                                 <!-- <p style="color: black">Some text in the Modal..</p> -->
                             </div>
                             
