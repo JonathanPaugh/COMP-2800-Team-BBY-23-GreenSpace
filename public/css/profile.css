@@ -135,12 +135,11 @@ input[type=submitPost] {
 }
 
 input[type="email"], input[type="text"], .form-control {
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     margin-top: 8px;
     margin-bottom: 8px;
-    font-family: monospace;
-    font-size: 30px;
+    font-family: 'Poppins', sans-serif;
 }
 
 .nav_menu {
