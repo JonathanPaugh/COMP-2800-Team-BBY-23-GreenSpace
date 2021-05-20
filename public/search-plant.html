@@ -99,35 +99,37 @@
         });
 
         function searchInit() {
-            searchPlantInit(
-                (plant, query) => {
-                    $(".plant-info").empty();
-                    setUrlQuery("search", query);
-                    createInfo(
-                        plant.primaryCommonName, 
-                        plant.scientificName,
-                        plant.speciesGlobal?.informalTaxonomy,
-                        plant.information?.snippet,
-                        plant.information?.link,
-                        {
-                            phyllum: plant.speciesGlobal?.phylum,
-                            class: plant.speciesGlobal?.taxclass,
-                            order: plant.speciesGlobal?.taxorder,
-                            family: plant.speciesGlobal?.family,
-                            genus: plant.speciesGlobal?.genus,
-                            species: plant.scientificName?.replace(plant.speciesGlobal.genus, "").trim()
-                        },
-                        plant.images
-                    );
-                }, error => {
-                    console.log(error);
-                    $(".plant-info").empty();
-                    createDiv()
-                        .appendTo(".plant-info")
-                        .addClass("search-error card p-2 text-danger text-center")
-                        .html(error.responseText);
-                }
+            searchPlantInit(searchSuccess, searchFail);
+        }
+
+        function searchSuccess(plant, query) {
+            $(".plant-info").empty();
+            setUrlQuery("search", query);
+            createInfo(
+                plant.primaryCommonName, 
+                plant.scientificName,
+                plant.speciesGlobal?.informalTaxonomy,
+                plant.information?.snippet,
+                plant.information?.link,
+                {
+                    phyllum: plant.speciesGlobal?.phylum,
+                    class: plant.speciesGlobal?.taxclass,
+                    order: plant.speciesGlobal?.taxorder,
+                    family: plant.speciesGlobal?.family,
+                    genus: plant.speciesGlobal?.genus,
+                    species: plant.scientificName?.replace(plant.speciesGlobal.genus, "").trim()
+                },
+                plant.images
             );
+        }
+
+        function searchFail(error) {
+            console.log(error);
+            $(".plant-info").empty();
+            createDiv()
+                .appendTo(".plant-info")
+                .addClass("search-error card p-2 text-danger text-center")
+                .html(error.responseText);
         }
 
         function createInfo(name, scientific, description, snippet, link, taxonomy, images) {
@@ -174,7 +176,7 @@
             let query = getUrlQuery().get("search");
             if (query) {
                 $(".search-value").val(query);
-                searchPlant();
+                searchPlant(null, searchSuccess, searchFail);
             }
         }
 
