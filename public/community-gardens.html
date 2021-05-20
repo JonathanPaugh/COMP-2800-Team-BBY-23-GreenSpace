@@ -260,6 +260,9 @@
 
                 if (input === "the most beautiful garden") {
                     $("#easter-egg").show();
+                } else {
+                    $("#easter-egg").hide();
+
                 }
 
                 communityGardens.filter(garden => {
@@ -271,8 +274,6 @@
                         garden.show();
                     }
                 });
-
-
             })
         }
     </script>
