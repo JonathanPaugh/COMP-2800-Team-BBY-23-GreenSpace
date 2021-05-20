@@ -143,7 +143,8 @@
         <div class="card p-2 my-2">
             <form id="search-garden" class="search-form form-group has-search flex-grow-1">
                 <div class="input-group">
-                    <input class="search-value form-control" type="text" placeholder="Type the name of the garden here!">
+                    <input class="search-value form-control" type="text"
+                        placeholder="Type the name of the garden here!">
                     <div class="input-group-append">
                         <a class="search-button">
                             <i class="fa fa-search fa-2x ms-1 mt-1"></i>
@@ -156,7 +157,25 @@
     </div>
     <div>
         <div class="garden-header"><i class="fas fa-list-ul"></i> Garden List</div>
-        <div id="container"></div>
+        <div id="container">
+            <!--Garden List goes here-->
+        </div>
+        <div class="accordion accordion-flush" id="easter-egg">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        Your Garden
+                    </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                    data-bs-parent="#easter-egg">
+                    <div class="accordion-body">
+                        The most beautiful garden in the world is yours.
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Bundle -->
@@ -185,6 +204,8 @@
         var communityGardens = [];
 
         $(document).ready(function () {
+            $("#easter-egg").hide();
+
             gardens.get()
                 .then(function (gardens) {
                     gardens.docs.forEach(function (garden) {
@@ -237,14 +258,21 @@
                     garden.hide();
                 });
 
+                if (input === "the most beautiful garden") {
+                    $("#easter-egg").show();
+                }
+
                 communityGardens.filter(garden => {
                     var gardenTitles = garden.find(".community-garden-name").html().toLowerCase();
+
                     return gardenTitles.includes(input);
                 }).forEach(garden => {
                     if (garden) {
                         garden.show();
                     }
                 });
+
+
             })
         }
     </script>
