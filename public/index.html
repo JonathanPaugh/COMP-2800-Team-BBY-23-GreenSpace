@@ -115,6 +115,7 @@
                 if (user) {
                     fetchTemplate("main-welcome.html", data => {
                         $("#main").html(data);
+                        $(".main-logout").click(logout);
                     });
                 } else {
                     fetchTemplate("main-login.html", data => {
@@ -123,6 +124,12 @@
                 }
             });
         });
+        
+        function logout() {
+            firebase.auth().signOut().then(() => {
+                redirect("index.html");
+            });
+        }
     </script>
 </body>
 
