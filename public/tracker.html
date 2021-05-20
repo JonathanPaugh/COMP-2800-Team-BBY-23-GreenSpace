@@ -9,14 +9,42 @@
         integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href="/css/slider.css" rel="stylesheet">
     <link rel="icon" href="/favicon.ico">
     <style>
         body {
             min-height: 100vh;
         }
 
+        img {
+            border: 1px solid #CCC;
+            border-radius: 3px;
+        }
+
         .tracker-section  {
             background-color: var(--color-container);
+        }
+
+        .tracker-plant-image {
+            width: 25vw;
+            height: 25vw;
+            object-fit: cover;
+        }
+
+        .time-slider {
+            width: 100%;
+            height: 8px;
+        }
+        
+        @media only screen and (max-width: 576px) {
+            .plant-taxonomy {
+                padding: 0.5rem 0.25rem;
+            }
+
+            .list-group-item {
+                padding: 0.25rem 0.25rem;
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
@@ -24,15 +52,25 @@
 <body>
     <div class="d-flex flex-column">
         <div class="flex-grow-1 p-5">
-            <div class="tracker-section container-fluid my-5">
+            <div class="tracker-section container-fluid ">
                 <div class="tracker-options row p-3">
                 </div>
             </div>
-    
+            <div class="time-container my-5">
+                <input class="time-slider" type="range" min="0" max="100" value="0">
+                <div class="d-flex justify-content-between">
+                    <div>0</div>
+                    <div>25</div>
+                    <div>50</div>
+                    <div>75</div>
+                    <div>100</div>
+                </div>
+            </div>
             <div class="tracker-section container-fluid">
                 <div class="tracker-plants row p-3">
             </div>
         </div>
+        
     </div>
     
 
@@ -66,6 +104,8 @@
         $(document).ready(() => {
             createOptions();
             displayPlants();
+
+            $(".time-slider").on("input change", timeUpdate);
         });
 
         function searchInit() {
@@ -118,13 +158,35 @@
         }
 
         function addPlant(plant) {
-            database.collection("tracker").add({
-                _type: type,
-                _typeId: typeId,
-                id: plant.uniqueId,
-                image: plant.images ? plant.images[0] : null,
-            }).then(() => {
-                selectedPlant = null;
+            database.collection("tracker")
+                .where("_type", "==", type)
+                .where("_typeId", "==", typeId)
+                .get()
+                .then(async function(trackers) {
+
+                let docs = trackers.docs;
+
+                if (!docs.length) {
+                    await database.collection("tracker").add({
+                        _type: type,
+                        _typeId: typeId,
+                    }).then(tracker => {
+                        docs.push(tracker);
+                    });
+                }
+
+                console.log(docs.length);
+
+                for (let tracker of docs) {
+                    console.log(tracker.id);
+                    let trackerRef = database.collection("tracker").doc(tracker.id);
+                    await trackerRef.collection("plants").add({
+                        id: plant.uniqueId,
+                        image: plant.images ? plant.images[0] : null,
+                        date: new Date()
+                    });
+                }
+
                 redirect("tracker.html");
             });
         }
@@ -142,20 +204,41 @@
                 .where("_type", "==", type)
                 .where("_typeId", "==", typeId)
                 .get()
-                .then(plants => {
-                plants.docs.forEach(plant => {
-                    createPlant(plant.data().id, plant.data().image)
-                    console.log(plant);
+                .then(trackers => {
+
+                trackers.docs.forEach(tracker => {
+                    let trackerRef = database.collection("tracker").doc(tracker.id);
+                    trackerRef.collection("plants").get().then(plants => {
+                        plants.docs.forEach(plant => {
+                            createPlant(plant.data().id, plant.data().image, getAge(plant.data().date.toDate()))
+                        });
+                    });
                 });
             });
         }
 
-        function createPlant(name, image) {
-            fetchTemplate("/tracker/tracker-plant.html", data => {
-                let plant = $(data).appendTo(".tracker-plants");
-                plant.find(".tracker-plant-name").html(name);
-                plant.find(".tracker-plant-image").attr("src", image);
+        function createPlant(id, image, date) {
+            request("/get-plant", { id: id }, plant => {
+                fetchTemplate("/tracker/tracker-plant.html", data => {
+                    let item = $(data).appendTo(".tracker-plants");
+                    item.find(".tracker-plant-name").html(plant.primaryCommonName);
+                    item.find(".tracker-plant-image").attr("src", image);
+                    item.find(".tracker-plant-age").attr("default", date).html(date);
+                });
             });
+        }
+
+        function getAge(date) {
+            let age = new Date(Date.now() - date.getTime());
+            return Math.abs(age.getUTCFullYear() - 1970);
+        }
+
+        function timeUpdate() {
+            let value = parseInt($(this).val());
+            let age = $(".tracker-plant-age");
+            let ageValue = parseInt(age.attr("default"));
+            console.log(ageValue + value);
+            age.html(ageValue + value);
         }
     </script>
 </body>
