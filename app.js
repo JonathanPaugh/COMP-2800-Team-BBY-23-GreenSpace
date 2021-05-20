@@ -61,8 +61,15 @@ app.post("/search-plant", (req, res) => {
             findPlantImages(data.scientificName, images => {
                 data.images = images;
                 findPlantInformation(data.scientificName, information => {
-                    data.information = information;
-                    res.send(data);
+                    if (!information) {
+                        findPlantInformation(data.primaryCommonName, information => {
+                            data.information = information;
+                            res.send(data);
+                        });
+                    } else {
+                        data.information = information;
+                        res.send(data);
+                    }
                 });
             });
         } else {
@@ -127,7 +134,9 @@ function findPlantImages(query, callback) {
             key: process.env.API_GREENSPACE_GOOGLE,
             cx: "ef88b6adf0f68d6d2",
             q: query,
-            searchType: "image"
+            searchType: "image",
+            imgType: "photo",
+            imgDominantColor: "green"
         }
     }), data => {
         if (callback) {

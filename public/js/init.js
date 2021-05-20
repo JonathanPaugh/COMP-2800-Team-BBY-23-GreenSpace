@@ -27,7 +27,6 @@ $(document).ready(() => {
     if (!$("body").hasClass("hide-navbar-bottom")) 
     {
         fetchTemplate("navbar-bottom.html", data => {
-            console.log(data);
             $("head").append(createElement("link").attr("rel", "stylesheet").attr("href", "/css/navbar-bottom.css"));
             $("body script").first().before(data);
             $("body script").last().after(createElement("script").attr("src", "/js/navbar-bottom.js"));

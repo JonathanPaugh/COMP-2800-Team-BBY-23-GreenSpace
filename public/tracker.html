@@ -119,6 +119,14 @@
                 .appendTo(".selected-plant")
                 .addClass("search-success pt-4 text-success text-center")
                 .html(plant.primaryCommonName);
+
+            if (plant.images) {
+                createElement("img")
+                    .appendTo(".selected-plant")
+                    .addClass("img-fluid")
+                    .attr("src", plant.images[0]);
+            }
+            
         }
 
         function searchPlantError(error) {
@@ -237,7 +245,6 @@
             let value = parseInt($(this).val());
             let age = $(".tracker-plant-age");
             let ageValue = parseInt(age.attr("default"));
-            console.log(ageValue + value);
             age.html(ageValue + value);
         }
     </script>
