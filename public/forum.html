@@ -15,12 +15,10 @@
         body {
             min-height: 100vh;
         }
-
     </style>
 </head>
 
 <body>
-
     <div class="container-fluid">
         <div class="forum-threads"></div>
         <div class="forum-create">
@@ -83,7 +81,11 @@
             });
         }
 
-
+        function logout() {
+            firebase.auth().signOut().then(() => {
+                redirect("index.html");
+            });
+        }
     </script>
 </body>
 

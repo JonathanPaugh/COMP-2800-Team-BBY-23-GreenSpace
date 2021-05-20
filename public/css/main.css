@@ -45,6 +45,10 @@ i:hover {
     background-color: rgba(0, 0, 0, 0);
 }
 
+.hover-white:hover {
+    color: var(--color-white) !important;
+}
+
 .hover-primary:hover {
     color: var(--color-primary) !important;
 }

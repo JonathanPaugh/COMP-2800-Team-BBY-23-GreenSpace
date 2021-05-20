@@ -128,7 +128,13 @@
         }
 
         function reply() {
-            requireLogin();    
+            requireLogin();
+
+            if (!$(".submit-content").html()) {
+                $(".submit-content").addClass("border border-danger");
+                return;
+            }
+
             withUser(user => {
                 database.collection("threads").doc(id).collection("replies").add({
                     content: $(".submit-content").html(),
