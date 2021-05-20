@@ -67,7 +67,17 @@
             padding: 0 1em 0 1em;
         }
 
-        .btn-group {
+        .garden-header,
+        #search-header {
+            font-size: 16pt;
+        }
+
+        .garden-header {
+            margin: 0 1em 0.3em 1em;
+
+        }
+
+        .search-box {
             width: 100vw;
             padding: 3em 1em 1em 1em;
         }
@@ -85,12 +95,16 @@
                 margin: 0 3em 0 3em;
             }
 
+            .garden-header {
+                margin: 0 2em 0.3em 2em;
+            }
+
             h1,
             iframe {
                 padding: 0 3em 0 3em;
             }
 
-            .btn-group {
+            .search-box {
                 padding: 3em 3em 1em 3em;
             }
         }
@@ -102,12 +116,16 @@
                 margin: 0 5em 0 5em;
             }
 
+            .garden-header {
+                margin: 0 4em 0.3em 4em;
+            }
+
             h1,
             iframe {
                 padding: 0 5em 0 5em;
             }
 
-            .btn-group {
+            .search-box {
                 padding: 3em 5em 1em 5em;
             }
         }
@@ -115,18 +133,31 @@
 </head>
 
 <body>
-    <h1>Community gardens in Metro Vancouver</h1><br>
+    <h1>Community gardens in Vancouver</h1><br>
+    <div class="garden-header"><i class="fas fa-map-pin"></i> Garden Map</div>
     <iframe
         src="https://opendata.vancouver.ca/explore/embed/dataset/community-gardens-and-food-trees/map/?location=11,49.2808,-123.0994&static=false&datasetcard=false&scrollWheelZoom=true"></iframe>
-    <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="button" class="btn">Left</button>
-        <button type="button" class="btn">Middle</button>
-        <button type="button" class="btn">Right</button>
-        <button type="button" class="btn">Left</button>
-        <button type="button" class="btn">Middle</button>
-        <button type="button" class="btn">Right</button>
+
+    <div class="container-fluid search-box">
+        <div id="search-header"><i class="fas fa-search"></i> Search a garden from the list</div>
+        <div class="card p-2 my-2">
+            <form id="search-garden" class="search-form form-group has-search flex-grow-1">
+                <div class="input-group">
+                    <input class="search-value form-control" type="text" placeholder="Type the name of the garden here!">
+                    <div class="input-group-append">
+                        <a class="search-button">
+                            <i class="fa fa-search fa-2x ms-1 mt-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
     </div>
-    <div id="container"></div>
+    <div>
+        <div class="garden-header"><i class="fas fa-list-ul"></i> Garden List</div>
+        <div id="container"></div>
+    </div>
 
     <!-- Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
@@ -151,6 +182,7 @@
     <script src="/js/community-garden-api.js"></script>
     <script>
         var gardens = database.collection("community-gardens");
+        var communityGardens = [];
 
         $(document).ready(function () {
             gardens.get()
@@ -169,11 +201,15 @@
                         );
                     });
                 });
+
+            search();
         });
 
         function createGarden(docID, name, year, address, org, plots, juris, email, website) {
             fetchFile("/template/community-garden.html", data => {
                 let garden = $(data).appendTo("#container");
+
+                communityGardens.push(garden);
 
                 garden.find(".accordion-header").attr("id", "flush-" + docID);
                 garden.find(".accordion-button").attr("data-bs-target", "#A" + docID);
@@ -191,6 +227,25 @@
                 garden.find(".website").html(website);
                 garden.find(".website").attr("href", website);
             });
+        }
+
+        function search() {
+            document.getElementById("search-garden").addEventListener("keyup", (e) => {
+                var input = e.target.value.toLowerCase();
+
+                communityGardens.forEach(garden => {
+                    garden.hide();
+                });
+
+                communityGardens.filter(garden => {
+                    var gardenTitles = garden.find(".community-garden-name").html().toLowerCase();
+                    return gardenTitles.includes(input);
+                }).forEach(garden => {
+                    if (garden) {
+                        garden.show();
+                    }
+                });
+            })
         }
     </script>
 </body>
