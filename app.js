@@ -125,10 +125,9 @@ function findPlantImages(query, callback) {
         query: 
         {
             key: process.env.API_GREENSPACE_GOOGLE,
-            cx: "6a02f3c7401460e16",
+            cx: "ef88b6adf0f68d6d2",
             q: query,
-            searchType: "image",
-            imgType: "photo"
+            searchType: "image"
         }
     }), data => {
         if (callback) {
