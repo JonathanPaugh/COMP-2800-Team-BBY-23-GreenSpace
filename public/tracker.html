@@ -159,11 +159,7 @@
             fetchTemplate("tracker/tracker-option-settings.html", data => {
                 let track = $(data).appendTo(".tracker-options");
                 track.find(".tracker-option-settings").click(() => {
-                    createModal("settings",  modal => {
-                        redirect("/tracker.html");
-                    }, modal => {
-                        redirect("/tracker.html");
-                    }, modal => {
+                    createModal("settings", modal => {
                         getTrackers().then(trackers => {
                             trackers.docs.forEach(tracker => {
                                 let trackerRef = database.collection("tracker").doc(tracker.id);
@@ -177,7 +173,11 @@
                                 });
                             });
                         });
-                    });
+                    }, modal => {
+                        redirect("/tracker.html");
+                    }, modal => {
+                        redirect("/tracker.html");
+                    }); 
                 });
             });
         }
@@ -190,11 +190,17 @@
                     show(modal);
                 }
                 modal.on("hidden.bs.modal", event => {
-                    hide(modal);
+                    if (hide) {
+                        hide(modal);
+                    }
                     event.preventDefault();
                     modal.remove();
                 });
-                modal.find(".modal-click").click(() => click(modal));
+                modal.find(".modal-click").click(() => {
+                    if (click) {
+                        click(modal);
+                    }
+                });
             });
         }
 
@@ -341,7 +347,7 @@
         }
 
         function getHeight(age, maturity, maxHeight) {
-            return Math.min(age / maturity, 1) * maxHeight;
+            return (Math.min(age / maturity, 1) * maxHeight).toFixed(2);
         }
     </script>
 </body>
