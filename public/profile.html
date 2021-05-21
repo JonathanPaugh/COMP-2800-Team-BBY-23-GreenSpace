@@ -24,15 +24,12 @@
             </div>
             <div class="row1-page1-part2">
                 <div class="pro-info">
-                    <!-- style="padding-left:50px;" -->
-                    <!-- <p><span id="fp" class ="col-sm-4">First Name: </span><span id="pro-fname" >Sample First</span></p> -->
                     <p><div id="fp">Name:</div><div id="pro-name">Sample Name</div></p>
                     <p><div id="fp">Email:</div><div id="pro-email">firstLast@gmail.com</div></p>
                     <p><div id="fp">Website:</div><div id="pro-web" >www.123.com</div></p>
                     <p><div id="fp">Biography:</div><div id="pro-bio" >graphic designer</div></p>
                     <div id="check">
                         <button class ="btn btn-lg" onClick="location.href='/profile-2.html'">Edit</button>
-                        <!-- <input type="submit" id="MyButton" value="Edit" onClick="location.href='/profile-2.html'"> -->
                     </div>
                 </div>                
             </div>
@@ -74,7 +71,6 @@
                                 style="font-size: 24px; float: right; margin-right: 15px; border: none;">Post</button>
                                 <!-- <p style="color: black">Some text in the Modal..</p> -->
                             </div>
-                            
                             <!-- <div class="modal-date"></div> -->
                         </div>
                     </div>
@@ -85,6 +81,9 @@
                 <div class="blogs"></div>
             </div>
             <div class="collection click-part-content">
+                <div class="favorite-collect">
+                    
+                </div>
                 <!-- <div class="card">
                     <div class="card-body">
                         <h5><i class="far fa-comment"></i> Comments</h5>
@@ -112,7 +111,7 @@
                   <div class="card">
                   
                     
-                    <input class="btn btn-primary image-select" onclick="selectImage()" type="button" value="Add Image">
+                    <input class="btn image-select" onclick="selectImage()" type="button" value="Add Image">
                     <div class="card-body ">
                         <!-- <input class="btn" onclick="addText()" type="button" value="Add Image"> -->
                       <h5 class="card-title">Special title treatment</h5>
@@ -201,14 +200,82 @@
     <script>
         // clickpart(0)
         $(document).ready(()=>{
+            collection();
             requireLogin();
             showBlogs();
-           
+            showImages();
             changeTab();
+        
             getProfile();
             getModal();
+           
         })
 
+        function collection() {
+            withUser(user => {
+               
+               
+                userCollect(user);
+            })
+        }
+        function userCollect(user) {
+            $(".favorite-collect").empty();
+            getCollect(user);
+        }
+//http://localhost:3000/group-list.html?id=community-garden
+        function getCollect(user) {
+            var collectList = [database.collection("groups").doc("categories").collection("community-garden"),
+                    database.collection("groups").doc("categories").collection("container-garden"),
+                    database.collection("groups").doc("categories").collection("greenhouse-garden"),
+                    database.collection("groups").doc("categories").collection("indoor-garden")];
+
+                    collectList.forEach( category=>{
+
+                        category.get().then(collection=>{
+                            console.log("collection: ", collection);
+                            collection.docs.forEach(garden => {
+
+                                var gardenRef = category.doc(garden.id);
+                                
+                                gardenRef.collection("posts").where("user", "==", user.data().name).get().then((posts)=>{
+                                    
+                                    posts.docs.forEach((post)=>{
+                                        console.log(user.data().name);
+                                        gardenRef.collection("posts").doc(post.id).get().then(doc=>{
+                                            console.log(doc.data().user);
+                                        });
+
+                                    })
+                                })
+                            })
+                        })
+                    })
+
+           
+        }
+        // function galleryCollection(doc) {
+        //     withUser(user => {
+        //         if(doc.data().user == user) {
+        //             if(doc.data().likes > 0) {
+        //                 makeCollection(doc);
+        //             }
+        //         }
+        //     })
+        // }
+
+        // function postCollection(doc) {
+        //     withUser(user => {
+        //         if(doc.data().user == user) {
+        //             if(doc.data().likes > 0) {
+        //                 makeCollection(doc);
+        //             }
+        //         }
+        //     })
+        // }
+       
+        // function makeCollection(doc) {
+        //     console.log("content", doc.data().likes);
+        // }
         /*
         * Reference begins: 
         * @see https://www.youtube.com/watch?v=PJe5Cc6iybQ
@@ -251,7 +318,7 @@
         }
         function selectImage() {
             withUser(user=>{
-                var images = database.collection("users").doc(user.id).collection("gallery");
+                // var images = database.collection("users").doc(user.id).collection("gallery");
                 var input = document.createElement('input');
                 input.type = 'file';
                 input.click();
@@ -279,17 +346,31 @@
             })
              
         }
+
+        function showImages() {
+            withUser(user => {
+                var listRef = storage.ref().child("users/" + user.id).child("gallery");
+                listRef.listAll().then(function(array){
+                    array.items.forEach(function(imgRef){
+                        imgRef.getDownloadURL().then(function(url){
+                            createImageDiv(url);
+                        })
+                    })
+                })
+            })
+        }
         function createBlog() {
             withUser(user => {
+                //add user input to firebase 
                 database.collection("users").doc(user.id).collection("blogs").add({
-                blog_title: $(".ph-title").val(),
-                blog_text: $(".placehold").val(),
-                
-                date: firebase.firestore.Timestamp.fromDate(new Date())
+                    blog_title: $(".ph-title").val(),
+                    blog_text: $(".placehold").val(),  
+                    date: firebase.firestore.Timestamp.fromDate(new Date())
                 })
                 .then((docRef) => {
                     console.log("Document written with ID: ", docRef.id);
                     console.log(docRef.get());
+                    //get document with data above from docRef
                     docRef.get().then(doc=>{
                         console.log(doc);
                         makeBlog(doc);
@@ -297,30 +378,47 @@
                     })
                      
                 })
-                 .catch((error) => {
+                .catch((error) => {
                  console.error("Error adding document: ", error);
                 });
             })
         }
         
         function makeBlog(blog) { 
-            console.log(blog);
+
             fetchTemplate("profile-blog.html", card=>{
                let each = $(card);
-               each.find(".blog-edit").attr("id", blog.id);
-               each.find(".blog-reminder").attr("id", blog.id);
-               each.find(".blog-remove").attr("id", blog.id);
+               //set the doc data to the html selector
                each.find(".blog-title").html(blog.data().blog_title);
                each.find(".blog-content").html(blog.data().blog_text);  
+               each.find(".reminder-tag").html(blog.data().blog_like);
                each.find(".date").html(blog.data().date.toDate().toLocaleString());
 
                $(".blogs").prepend(each);
                each.find(".blog-edit").click(function(){
-                   var edit_id = $(this).attr("id");
-                   console.log(edit_id);
-                   setUrlQuery("blogId", edit_id);
+                   setUrlQuery("blogId", blog.id);
                    redirect("profile-edit.html");
                })
+               each.find(".blog-remove").click(function(){
+                    withUser(user => {
+                         each.remove(); 
+                         database.collection("users").doc(user.id).collection("blogs").doc(blog.id).delete();
+                    })
+               })
+               each.find(".blog-like").click(function(){
+                    withUser(user => {
+                        var doc = database.collection("users").doc(user.id).collection("blogs").doc(blog.id);
+                        var reminder_count = each.find(".reminder-tag").html(); //it is a string
+                            reminder_count = parseInt(reminder_count); //convert to number
+                            each.find(".reminder-tag").html(++reminder_count); //increase it, then set back to html
+                        doc.update({
+                            blog_like: firebase.firestore.FieldValue.increment(1)
+                        })
+                    })
+               })
+            
+        
+             
                
             });
         }
