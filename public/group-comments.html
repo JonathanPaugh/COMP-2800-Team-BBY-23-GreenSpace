@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico">
     <style>
-        span {
+        .far {
             margin: 5px;
         }
 
@@ -32,9 +32,9 @@
         }
 
         .new-comment {
+            display: inline;
             padding: 5px;
         }
-
 
         #back-button {
             float: left;
@@ -43,6 +43,19 @@
 
         #back-button {
             background-color: #DBCFB0;
+        }
+
+        .delete {
+            display: inline;
+            float: right;
+        }
+
+        .post-title {
+            float: left;
+        }
+
+        .fa-times {
+            margin-left: 10px;
         }
 
         @media only screen and (min-width: 0px) and (max-width: 599px) {
@@ -84,8 +97,7 @@
         <div class="card-body">
             <h5><i class="far fa-comment"></i> Comments</h5>
         </div>
-
-        <div class="card-body comment">
+        <div class="card-body" id="comments">
             <!-- Comments go here -->
         </div>
         <div class="card-body">
@@ -133,7 +145,6 @@
             .collection(id).doc(groupName).collection("posts").doc(docName);
 
         $(document).ready(function () {
-
             posts.get().then(function (post) {
                 readPosts(
                     post.id,
@@ -148,6 +159,7 @@
             posts.collection("comments").get().then(function (snap) {
                 snap.forEach(function (doc) {
                     readComments(
+                        doc.id,
                         doc.data().user,
                         doc.data().content
                     );
@@ -169,7 +181,9 @@
         function readPosts(docID, title, content, user, like, comment) {
             fetchFile("/template/group-post.html", data => {
                 let group = $(data).appendTo("#posts");
+                $(".delete").hide();
 
+                group.find(".delete").attr("id", "d-" + docID);
                 group.find(".post-title").html(title);
                 group.find(".post-content").html(content);
                 group.find(".post-user").html(user);
@@ -177,14 +191,38 @@
                 group.find(".post-comment").html(comment);
                 group.find(".view-button").hide();
                 group.find(".like-button").click(increaseLike);
+
+                firebase.auth().onAuthStateChanged(function (usr) {
+                    database.collection("users").doc(usr.uid).get()
+                        .then(function (doc) {
+                            if (doc.data().name === user) {
+                                group.find(".delete").show();
+                            }
+                        });
+                });
+                deletePost();
             });
         }
 
-        function readComments(user, comment) {
-            let newUser = "<span class='new-user'><b>" + user + "</b></span>&emsp;"
-            let newComment = "<span class='new-comment'>" + comment + "</span><br>"
-            $(".comment").append(newUser);
-            $(".comment").append(newComment);
+        function readComments(docID, user, comment) {
+            fetchFile("/template/group-comment.html", data => {
+                let comm = $(data).appendTo("#comments");
+                $(".delete-comment").hide();
+
+                comm.find(".delete-comment").attr("id", "d-" + docID);
+                comm.find(".new-user").html(user);
+                comm.find(".new-comment").html(comment);
+
+                firebase.auth().onAuthStateChanged(function (usr) {
+                    database.collection("users").doc(usr.uid).get()
+                        .then(function (doc) {
+                            if (doc.data().name === user) {
+                                comm.find(".delete-comment").show();
+                            }
+                        });
+                });
+                deleteComment();
+            });
         }
 
         function writeComments() {
@@ -224,6 +262,29 @@
             });
         }
 
+        function deletePost() {
+            $(".delete").click(async function(e) {
+                e.preventDefault();
+                //var id = e.target.id.substr(2);
+
+                var ale = await alert("Are you sure you want to delete?");
+                var del = await posts.delete();
+                
+                window.location.href = "/group-posts.html?id=" + id + "#" + groupName;
+            });
+        }
+
+        function deleteComment() {
+            $(".delete-comment").click(async function (e) {
+                e.preventDefault();
+                var id = e.target.id.substr(2);
+
+                var ale = await alert("Are you sure you want to delete?");
+                var del = await posts.collection("comments").doc(id).delete();
+
+                location.reload();
+            });
+        }
     </script>
 </body>
 
