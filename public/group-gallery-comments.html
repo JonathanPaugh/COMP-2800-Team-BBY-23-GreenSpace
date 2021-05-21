@@ -188,7 +188,7 @@
                 group.find(".delete").attr("id", "d-" + docID);
                 group.find(".post-title").html(title);
                 group.find(".post-content").html(content);
-                group.find(".post-content").append("<br><img class='post-content' src='"+ image + "'>");
+                group.find(".post-content").append("<br><img class='post-content' src='" + image + "'>");
                 group.find(".post-user").html(user);
                 group.find(".post-like").html(like);
                 group.find(".post-comment").html(comment);
@@ -198,7 +198,7 @@
                 firebase.auth().onAuthStateChanged(function (usr) {
                     database.collection("users").doc(usr.uid).get()
                         .then(function (doc) {
-                            if(doc.data().name === user) {
+                            if (doc.data().name === user) {
                                 group.find(".delete").show();
                             }
                         });
@@ -265,26 +265,30 @@
         }
 
         function deletePost() {
-            $(".delete").click(async function(e) {
+            $(".delete").click(async function (e) {
                 e.preventDefault();
                 //var id = e.target.id.substr(2);
 
-                var ale = await alert("Are you sure you want to delete?");
-                var del = await posts.delete();
-                
-                window.location.href = "/group-gallery.html?id=" + id + "#" + groupName;
+                var ale = await window.confirm("Are you sure you want to delete?");
+
+                if (ale) {
+                    var del = await posts.delete();
+                    window.location.href = "/group-gallery.html?id=" + id + "#" + groupName;
+                }
             });
         }
 
         function deleteComment() {
-            $(".delete-comment").click(async function(e) {
+            $(".delete-comment").click(async function (e) {
                 e.preventDefault();
                 var id = e.target.id.substr(2);
 
-                var ale = await alert("Are you sure you want to delete?")
-                var del = await posts.collection("comments").doc(id).delete();
-                
-                location.reload();
+                var ale = await window.confirm("Are you sure you want to delete?");
+
+                if (ale) {
+                    var del = await posts.collection("comments").doc(id).delete();
+                    location.reload();
+                }
             });
         }
     </script>
