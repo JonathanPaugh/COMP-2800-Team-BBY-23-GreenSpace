@@ -11,7 +11,7 @@ body {
 
 .head {
     margin: 0em 0em 0em 0em;
-    height: 50vh;
+    height: 30vh;
 }
 
 .wrapper {
@@ -33,7 +33,7 @@ body {
 
 .row1-col1, .part1 {
     margin: 0;
- 
+    background-color: #a6b6b1;
     /* background-color: var(--color-secondary); */
     position: relative;
     height: 460px;
@@ -242,7 +242,13 @@ input[type="email"], input[type="text"], .form-control {
     min-height: 160px;
     font-size: 19px;
 }
-
+.reminder-tag, .tree-tag, .group-tag {
+    color: black;
+}
+.eidt-card {
+    display: flex;
+    flex-direction: column;
+}
 .date {
     padding-left: 15px;
     padding-right: 15px;
@@ -305,8 +311,6 @@ hr {
     position: fixed; 
     z-index: 2;
     padding: 6em;
-    /* padding-top: 160px; */
-    padding-left: 8em;  
     overflow: auto; 
     background-color: rgba(0,0,0,0.5); 
 }
@@ -316,7 +320,7 @@ hr {
     background-color: white;
     height: 600px;
     border: 1px solid rgb(150, 149, 149);
-    width: 80%;
+    width: 100%;
 }
 
 .modal-box {
@@ -325,7 +329,7 @@ hr {
     height: 90%;
     margin-bottom: 30px;
     border: solid 2px black;
-    background-color: lightgrey;
+    background-color: var(--color-secondary);
     display: grid;
     grid-template-rows: 16% 84%;
 }
@@ -402,16 +406,30 @@ textarea {
 #check {
     height: 80px;
 }
-
+.favorite-collect {
+    height: 80px;
+    width: 100%;
+    background-color:white;
+}
 
 @media only screen and (max-width: 999px) {
     .blog {
         grid-template-columns: 1fr;
     }
 
+
+    .btn-blg-left,.blog-btn-right {
+        padding: 5px;
+          margin-left: 5px; 
+          font-size: 15px;
+        }
     .pro-info {
         padding-left: 20px;
     }
+    .reminder-tag, .tree-tag, .group-tag {
+        size:w3-small;
+    }
+
 }
 @media only screen and (min-width: 1000px) {
     .blog {
