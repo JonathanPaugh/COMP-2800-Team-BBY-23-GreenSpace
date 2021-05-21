@@ -168,10 +168,12 @@
                 e.preventDefault();
                 var id = e.target.id.substr(2);
 
-                var ale = await alert("Are you sure you want to delete?");
-                var del = await posts.doc(id).delete();
+                var ale = await window.confirm("Are you sure you want to delete?");
                 
-                location.reload();
+                if (ale) {
+                    var del = await posts.doc(id).delete();
+                    location.reload();
+                }
             });
         }
     </script>
