@@ -165,8 +165,7 @@
                             }
                         });
                 });
-
-                deletePost();
+                deletePost("d-" + docID);
             });
         }
 
@@ -178,8 +177,8 @@
             });
         }
 
-        function deletePost() {
-            $(".delete").click(async function(e) {
+        function deletePost(buttonID) {
+            $("#" + buttonID).click(async function(e) {
                 e.preventDefault();
                 var id = e.target.id.substr(2);
 

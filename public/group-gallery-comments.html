@@ -203,7 +203,7 @@
                             }
                         });
                 });
-                deletePost();
+                deletePost("d-" + docID);
             });
         }
 
@@ -224,7 +224,7 @@
                             }
                         });
                 });
-                deleteComment();
+                deleteComment("d-" + docID);
             });
         }
 
@@ -264,8 +264,8 @@
             });
         }
 
-        function deletePost() {
-            $(".delete").click(async function (e) {
+        function deletePost(buttonID) {
+            $("#" + buttonID).click(async function (e) {
                 e.preventDefault();
                 //var id = e.target.id.substr(2);
 
@@ -278,8 +278,8 @@
             });
         }
 
-        function deleteComment() {
-            $(".delete-comment").click(async function (e) {
+        function deleteComment(buttonID) {
+            $("#" + buttonID).click(async function (e) {
                 e.preventDefault();
                 var id = e.target.id.substr(2);
 
