@@ -36,6 +36,14 @@
             height: 100%;
         }
 
+        .post-title {
+            float: left;
+        }
+
+        .fa-times {
+            float: right;
+        }
+
         @media only screen and (min-width: 0px) and (max-width: 599px) {
             .card {
                 margin: 5em 1em 1em 1em;
@@ -132,7 +140,9 @@
         function readPosts(docID, title, content, image, user, like, comment) {
             fetchFile("/template/group-post.html", data => {
                 let group = $(data).appendTo("#posts");
+                $(".delete").hide();
 
+                group.find(".delete").attr("id", "d-" + docID);
                 group.find(".post-title").html(title);
                 group.find(".post-content").html(content);
                 group.find(".post-content").append("<br><img class='post-images' src='" + image + "'>");
@@ -146,6 +156,17 @@
                     e.preventDefault();
                     increaseLike(docID);
                 });
+
+                firebase.auth().onAuthStateChanged(function (usr) {
+                    database.collection("users").doc(usr.uid).get()
+                        .then(function (doc) {
+                            if(doc.data().name === user) {
+                                group.find(".delete").show();
+                            }
+                        });
+                });
+
+                deletePost();
             });
         }
 
@@ -157,6 +178,17 @@
             });
         }
 
+        function deletePost() {
+            $(".delete").click(async function(e) {
+                e.preventDefault();
+                var id = e.target.id.substr(2);
+
+                var ale = await alert("Are you sure you want to delete?")
+                var del = await posts.doc(id).delete();
+                
+                location.reload();
+            });
+        }
     </script>
 </body>
 
