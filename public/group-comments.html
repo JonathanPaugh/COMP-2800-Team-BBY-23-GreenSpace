@@ -245,7 +245,6 @@
                     alert("You are not signed in.");
                 }
             });
-
         }
 
         function increaseLike() {
@@ -259,6 +258,12 @@
         function increaseComment() {
             posts.update({
                 comments: firebase.firestore.FieldValue.increment(1)
+            });
+        }
+
+        function decreaseComment() {
+            posts.update({
+                comments: firebase.firestore.FieldValue.increment(-1)
             });
         }
 
@@ -285,6 +290,7 @@
                 
                 if (ale) {
                     var del = await posts.collection("comments").doc(id).delete();
+                    var dec = await decreaseComment();
                     location.reload();
                 }
             });

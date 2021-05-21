@@ -407,14 +407,18 @@ textarea {
 #check {
     height: 80px;
 }
-.favorite-collect {
+.history-collect-space {
     height: 80px;
     width: 100%;
+<<<<<<< HEAD
+    
+=======
     background-color: var(--color-secondary);
 }
 
 .gallery {
     margin-top: 48px;
+>>>>>>> 3b5a9a2dee82dfb3463656d71a52ae14f2dd7877
 }
 
 @media only screen and (max-width: 999px) {
@@ -452,6 +456,9 @@ textarea {
         /* height: 860px; */
         height: auto;
         justify-content: center;
+    }
+    .center h5{
+        font-size: 30px;
     }
 
     /* .row1A {
