@@ -83,8 +83,22 @@
 
                 <div class="blogs"></div>
             </div>
-            <div class="collection click-part-content">
-                <div class="favorite-collect">
+            <div class="collection click-part-content" style="color:black;">
+                <div class="history-collect-space">
+                </div>
+                <div class="center" style="text-align:center;"><h5>Garden Post History</h5></div>
+                <div class="history-collect">
+                    
+                </div>
+                <div class="center" style="text-align:center;"><h5>Garden Gallery History</h5></div>
+                <div class="gallery-collect">
+                    
+                </div>
+                <div class="card post">
+                    <div class="card-header">
+                        <div class="post-title"></div>
+                        <i class="delete fas fa-times"></i>
+                    </div>
                     
                 </div>
                 <!-- <div class="card">
@@ -227,7 +241,7 @@
             })
         }
         function userCollect(user) {
-            $(".favorite-collect").empty();
+            // $(".history-collect").empty();
             getCollect(user);
         }
 //http://localhost:3000/group-list.html?id=community-garden
@@ -237,30 +251,77 @@
                     database.collection("groups").doc("categories").collection("greenhouse-garden"),
                     database.collection("groups").doc("categories").collection("indoor-garden")];
 
-                    collectList.forEach( category=>{
+                    var test = database.collection("groups").doc("categories").collection("container-garden");
+                    test.get().then(collection=>{
+                        console.log("test: ", collection);
+                    })
+
+                    collectList.forEach(category=>{
 
                         category.get().then(collection=>{
-                            console.log("collection: ", collection);
-                            collection.docs.forEach(garden => {
-
+                            
+                            collection.docs.forEach(garden => { //ilk
                                 var gardenRef = category.doc(garden.id);
+                                gardenPosts(gardenRef, user);
                                 
-                                gardenRef.collection("posts").where("user", "==", user.data().name).get().then((posts)=>{
-                                    
-                                    posts.docs.forEach((post)=>{
-                                        console.log(user.data().name);
-                                        gardenRef.collection("posts").doc(post.id).get().then(doc=>{
-                                            console.log(doc.data().user);
-                                        });
-
-                                    })
-                                })
                             })
                         })
                     })
 
            
         }
+        function gardenPosts(gardenRef, user) {
+            gardenRef.collection("posts").where("user", "==", user.data().name).get().then((posts)=>{
+                                    
+                    posts.docs.forEach((post)=>{
+                            console.log(user.data().name);
+                            gardenRef.collection("posts").doc(post.id).get().then(doc=>{
+                            console.log(doc.data());
+                            console.log(doc.data().user);
+                        makeCollection(doc.data());
+                    });
+                 })
+            })
+            gardenRef.collection("posts").get().then((posts)=>{
+                // console.log("posts: ", posts);
+                posts.docs.forEach((post)=>{
+                    // console.log(post.collection("comments"));
+                })
+            })
+            gardenRef.collection("gallery").where("user", "==", user.data().name).get().then((gallery)=>{
+                                    
+                    gallery.docs.forEach((instance)=>{
+                        gardenRef.collection("gallery").doc(instance.id).get().then(doc=>{
+                                makeGalleryCollection(doc.data());
+
+                        });
+                    })
+            })
+        }
+
+        function makeCollection(data){
+            
+            fetchTemplate("profile-collection.html", card=>{
+                //card returned，appendTo
+                var history_card = $(card).appendTo(".history-collect"); 
+                history_card.find(".collect-title").html(data.title);
+                history_card.find(".card-text").html(data.content);
+                history_card.find(".user-name").html(data.user);
+                // history_card.find(".card-text span").html(data.user);
+                // $("blog_img").remove();
+                // gallery_card.find(".collect-title").attr("src",link);
+            })
+        }
+
+        function makeGalleryCollection(data) {
+            fetchTemplate("profile-collection-gallery.html", card=>{
+                var history_gallery_card = $(card).appendTo(".gallery-collect"); 
+                history_gallery_card.find(".collect-title").html(data.title);
+                history_gallery_card.find(".card-text").html(data.content);
+                history_gallery_card.find(".blog-img").attr("src", data.image);
+            })
+        }
+
         // function galleryCollection(doc) {
         //     withUser(user => {
         //         if(doc.data().user == user) {
@@ -415,6 +476,7 @@
                })
                each.find(".blog-like").click(function(){
                     withUser(user => {
+                        
                         var doc = database.collection("users").doc(user.id).collection("blogs").doc(blog.id);
                         var reminder_count = each.find(".reminder-tag").html(); //it is a string
                             reminder_count = parseInt(reminder_count); //convert to number

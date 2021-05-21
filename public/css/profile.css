@@ -406,10 +406,10 @@ textarea {
 #check {
     height: 80px;
 }
-.favorite-collect {
+.history-collect-space {
     height: 80px;
     width: 100%;
-    background-color:white;
+    
 }
 
 @media only screen and (max-width: 999px) {
@@ -443,6 +443,9 @@ textarea {
         /* height: 860px; */
         height: auto;
         justify-content: center;
+    }
+    .center h5{
+        font-size: 30px;
     }
 
     /* .row1A {
