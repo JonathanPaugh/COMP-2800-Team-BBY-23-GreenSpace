@@ -60,11 +60,11 @@
 
         function displayPost() {
             database.collection("threads").doc(id).get().then(post => {
-                createPost(post.data().topic, post.data().content, post.data().user);
+                createPost(post.id, post.data().topic, post.data().content, post.data().user);
             });
         }
 
-        function createPost(topic, content, user) {
+        function createPost(postId, topic, content, user) {
             fetchTemplate("thread-post.html", data => {
                 let post = $(data).appendTo(".thread-post");
                 post.find(".post-topic").html(topic);
@@ -74,19 +74,44 @@
                     database.collection("users").doc(user).get().then(user => {
                         post.find(".post-user").html(user.data().name);
                     });
+
+                    withUser(currentUser => {
+                        if (currentUser.id == user) {
+                            fetchTemplate("delete.html", data => {
+                                let remove = $(data).prependTo(post.find(".post-body"));
+                                remove.click(() => {
+                                    database.collection("threads").doc(id)
+                                        .delete()
+                                        .then(() => { 
+                                            
+                                            clearUrlQuery();
+                                            redirect("/forum.html");
+                                    });
+                                });
+                            });
+                        }
+                    });
                 }
             });
         }
 
         function displayReplies() {
-            database.collection("threads").doc(id).collection("replies").orderBy("date", "asc").get().then(replies => {
+            database.collection("threads").doc(id)
+                .collection("replies").orderBy("date", "asc")
+                .get().then(replies => {
+
                 replies.docs.forEach(reply => {
-                    createReply(reply.data().content, reply.data().user, reply.data().images);
+                    createReply(
+                        reply.id, 
+                        reply.data().content, 
+                        reply.data().user,
+                         reply.data().images
+                    );
                 });
             });
         }
 
-        function createReply(content, user, images) {
+        function createReply(replyId, content, user, images) {
             fetchTemplate("thread-reply.html", data => {
                 let reply = $(data).appendTo(".thread-replies");
                 reply.find(".reply-content").html(content);
@@ -95,14 +120,26 @@
                     database.collection("users").doc(user).get().then(user => {
                         reply.find(".reply-user").html(user.data().name);
                     });
+
+                    withUser(currentUser => {
+                        if (currentUser.id == user) {
+                            fetchTemplate("delete.html", data => {
+                                let remove = $(data).prependTo(reply.find(".reply-body"));
+                                remove.click(() => {
+                                    database.collection("threads").doc(id)
+                                        .collection("replies").doc(replyId)
+                                        .delete()
+                                        .then(() => redirect("/thread.html"));
+                                });
+                            });
+                        }
+                    });
                 }
 
                 if (images?.length) {
                     let container = createElement("div")
                         .appendTo(reply)
                         .addClass("card-footer");
-
-                    console.log(container[0]);
                     
                     images.forEach(async function(image) {
                         let url = await storage.ref().child(image).getDownloadURL();

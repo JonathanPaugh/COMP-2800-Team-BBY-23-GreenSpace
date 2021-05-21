@@ -3,21 +3,22 @@
 }
 
 body {
-    background-color:white;
+    background-color: var(--color-secondary);
     color: white;
-    background-image: url(/image/leave4.jpeg);
-    object-fit: cover;
 }
 
 .head {
-    margin: 0em 0em 0em 0em;
+    background-image: url(/image/leave4.jpeg);
     height: 30vh;
+    width: 100%;
+    margin-top: -75.83px;
 }
 
 .wrapper {
     display: flex;
     flex-direction: column;
     background-color: var(--color-secondary);
+    margin-bottom: 48px;
 }
 
 .row1, .row1A {
@@ -121,6 +122,7 @@ input[type=button], input[type=submit], input[type=submitPost],input[submitBlog]
     text-align: center;
 }
 input[type=submitPost] {
+    margin-top: 1.5rem !important;
     background-color: #DBCFB0;
 }
 input[type=button]:hover, 
@@ -160,7 +162,6 @@ input[type="email"], input[type="text"], .form-control {
     align-items: center;
     list-style: none;
     font-size: 22px;
-    height: 60px;
     background: var(--color-primary);
     color: #000;
     padding-left: 0px;
@@ -409,7 +410,15 @@ textarea {
 .history-collect-space {
     height: 80px;
     width: 100%;
+<<<<<<< HEAD
     
+=======
+    background-color: var(--color-secondary);
+}
+
+.gallery {
+    margin-top: 48px;
+>>>>>>> 3b5a9a2dee82dfb3463656d71a52ae14f2dd7877
 }
 
 @media only screen and (max-width: 999px) {
@@ -428,6 +437,10 @@ textarea {
     }
     .reminder-tag, .tree-tag, .group-tag {
         size:w3-small;
+    }
+
+    .profile-sections {
+        flex-direction: column;
     }
 
 }

@@ -200,7 +200,7 @@
                             }
                         });
                 });
-                deletePost();
+                deletePost("d-" + docID);
             });
         }
 
@@ -221,7 +221,7 @@
                             }
                         });
                 });
-                deleteComment();
+                deleteComment("d-" + docID);
             });
         }
 
@@ -245,7 +245,6 @@
                     alert("You are not signed in.");
                 }
             });
-
         }
 
         function increaseLike() {
@@ -262,27 +261,38 @@
             });
         }
 
-        function deletePost() {
-            $(".delete").click(async function(e) {
-                e.preventDefault();
-                //var id = e.target.id.substr(2);
-
-                var ale = await alert("Are you sure you want to delete?");
-                var del = await posts.delete();
-                
-                window.location.href = "/group-posts.html?id=" + id + "#" + groupName;
+        function decreaseComment() {
+            posts.update({
+                comments: firebase.firestore.FieldValue.increment(-1)
             });
         }
 
-        function deleteComment() {
-            $(".delete-comment").click(async function (e) {
+        function deletePost(buttonID) {
+            $("#" + buttonID).click(async function (e) {
+                e.preventDefault();
+                //var id = e.target.id.substr(2);
+
+                var ale = await window.confirm("Are you sure you want to delete?");
+
+                if (ale) {
+                    var del = await posts.delete();
+                    window.location.href = "/group-posts.html?id=" + id + "#" + groupName;
+                }
+            });
+        }
+
+        function deleteComment(buttonID) {
+            $("#" + buttonID).click(async function (e) {
                 e.preventDefault();
                 var id = e.target.id.substr(2);
 
-                var ale = await alert("Are you sure you want to delete?");
-                var del = await posts.collection("comments").doc(id).delete();
-
-                location.reload();
+                var ale = await window.confirm("Are you sure you want to delete?");
+                
+                if (ale) {
+                    var del = await posts.collection("comments").doc(id).delete();
+                    var dec = await decreaseComment();
+                    location.reload();
+                }
             });
         }
     </script>
