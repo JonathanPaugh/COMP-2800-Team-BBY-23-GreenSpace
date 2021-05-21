@@ -158,6 +158,12 @@
         </div>
 
         <div id="main">
+            <div id="tracker">
+                <a class="tracker" href="#"><h4><i class="fas fa-seedling"></i><b> Plant Tracker</b></h4></a>
+            </div>
+
+            <br>
+
             <div id="post">
                 <h4><i class="fas fa-pencil-alt"></i><b> Top Posts</b><a id="post-a" class="more">see more</a></h4>
                 <ul>
@@ -172,8 +178,9 @@
                 <div id="top-gallery-image">
                     <!-- Image previews of top 3 images go here -->
                 </div>
-
             </div>
+
+            
 
             <!-- <div id="likes">
                 <h4><i class="fas fa-thumbs-up"></i><b> Your Likes</b><a id="likes-a" class="more">see more</a></h4>
@@ -220,6 +227,11 @@
             .collection(id).doc(groupName);
 
         $(document).ready(function () {
+
+            $(".tracker").click(function (event) {
+                event.preventDefault();
+                window.location.href = `/tracker.html?type=${id}&typeId=${groupName}`;
+            });
 
             $("#post-a").click(function () {
                 window.location.href = "/group-posts.html?id=" + id + "#" + groupName;

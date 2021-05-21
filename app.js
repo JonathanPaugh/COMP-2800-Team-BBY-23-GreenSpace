@@ -51,18 +51,45 @@ app.post("/find-plants", (req, res) => {
 
 app.post("/suggest-plants", (req, res) => {
     findPlants(req.body.query, data => {
-        res.send(data?.map(plant => `${plant.primaryCommonName} (${plant.scientificName})`));
+        res.send(data?.map(function (plant) { 
+            return {
+                id: plant.uniqueId,
+                value: `${plant.primaryCommonName} (${plant.scientificName})`
+            }})
+        );
     });
 });
 
 app.post("/search-plant", (req, res) => {
-    findPlant(req.body.query, data => {
+    let method;
+    let body;
+
+    if (req.body.id) {
+        
+        method = getPlant;
+        body = req.body.id;
+    } else if (req.body.query) {
+        method = findPlant;
+        body = req.body.query;
+    } else {
+        res.status(400).send("Invalid Request");
+        return;
+    }
+
+    method(body, data => {
         if (data) {
             findPlantImages(data.scientificName, images => {
                 data.images = images;
                 findPlantInformation(data.scientificName, information => {
-                    data.information = information;
-                    res.send(data);
+                    if (!information) {
+                        findPlantInformation(data.primaryCommonName, information => {
+                            data.information = information;
+                            res.send(data);
+                        });
+                    } else {
+                        data.information = information;
+                        res.send(data);
+                    }
                 });
             });
         } else {
@@ -127,7 +154,9 @@ function findPlantImages(query, callback) {
             key: process.env.API_GREENSPACE_GOOGLE,
             cx: "ef88b6adf0f68d6d2",
             q: query,
-            searchType: "image"
+            searchType: "image",
+            imgType: "photo",
+            imgDominantColor: "green"
         }
     }), data => {
         if (callback) {

@@ -1,0 +1,28 @@
+<div class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Find Plant</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex justify-content-center">
+                <form class="search-plant search-form form-group has-search flex-grow-1">
+                    <div class="input-group">
+                        <input class="search-value form-control" type="text" list="search-suggestions" placeholder="Search Plants...">
+                        <div class="input-group-append">
+                            <a class="search-button" href="">
+                                <i class="fa fa-search fa-2x ms-1 mt-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <datalist id="search-suggestions"></datalist>
+                    <div class="search-result"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn modal-click">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
