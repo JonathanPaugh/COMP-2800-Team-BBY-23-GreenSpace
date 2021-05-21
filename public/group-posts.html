@@ -31,6 +31,14 @@
             margin-bottom: 0.5em;
         }
 
+        .post-title {
+            float: left;
+        }
+
+        .fa-times {
+            float: right;
+        }
+
         @media only screen and (min-width: 0px) and (max-width: 599px) {
             .card {
                 margin: 1em 1em 1em 1em;
@@ -96,6 +104,7 @@
             .collection(id).doc(groupName).collection("posts");
 
         $(document).ready(function () {
+
             posts.get().then(function (posts) {
                 posts.docs.forEach(async function (post) {
                     var docName = post.id;
@@ -117,7 +126,9 @@
         function readPosts(docID, title, content, user, like, comment) {
             fetchFile("/template/group-post.html", data => {
                 let group = $(data).appendTo("#posts");
+                $(".delete").hide();
 
+                group.find(".delete").attr("id", "d-" + docID);
                 group.find(".post-title").html(title);
                 group.find(".post-content").html(content);
                 group.find(".post-user").html(user);
@@ -131,6 +142,16 @@
                     e.preventDefault();
                     increaseLike(docID);
                 });
+
+                firebase.auth().onAuthStateChanged(function (usr) {
+                    database.collection("users").doc(usr.uid).get()
+                        .then(function (doc) {
+                            if(doc.data().name === user) {
+                                group.find(".delete").show();
+                            }
+                        });
+                });
+                deletePost();
             });
         }
 
@@ -138,6 +159,18 @@
             posts.doc(likeid).update({
                 likes: firebase.firestore.FieldValue.increment(1)
             }).then(function () {
+                location.reload();
+            });
+        }
+
+        function deletePost() {
+            $(".delete").click(async function(e) {
+                e.preventDefault();
+                var id = e.target.id.substr(2);
+
+                var ale = await alert("Are you sure you want to delete?");
+                var del = await posts.doc(id).delete();
+                
                 location.reload();
             });
         }
