@@ -52,25 +52,15 @@
 <body>
     <div class="d-flex flex-column">
         <div class="flex-grow-1 p-5">
-            <div class="tracker-section container-fluid ">
+            <div class="tracker-section container-fluid my-5">
                 <div class="tracker-options row p-3">
                 </div>
             </div>
-            <div class="time-container my-5">
-                <input class="time-slider" type="range" min="0" max="100" value="0">
-                <div class="d-flex justify-content-between">
-                    <div>0</div>
-                    <div>25</div>
-                    <div>50</div>
-                    <div>75</div>
-                    <div>100</div>
+            <div class="tracker-section container-fluid my-5">
+                <div class="tracker-plants row p-3">
                 </div>
             </div>
-            <div class="tracker-section container-fluid">
-                <div class="tracker-plants row p-3">
-            </div>
         </div>
-        
     </div>
     
 
@@ -104,74 +94,125 @@
         $(document).ready(() => {
             createOptions();
             displayPlants();
-
-            $(".time-slider").on("input change", timeUpdate);
+            $(document).on("navbottom", createTime);
         });
+
+        function getTrackers() {
+            return database.collection("tracker")
+                .where("_type", "==", type)
+                .where("_typeId", "==", typeId)
+                .get();
+        }
+
+        function setPlant(id, data) {
+            getTrackers().then(trackers => {
+                trackers.docs.forEach(tracker => {
+                    let trackerRef = database.collection("tracker").doc(tracker.id);
+                    trackerRef.collection("plants").doc(id).set(data, { merge: true });
+                });
+            });
+        }
 
         function searchInit() {
             searchPlantInit(searchPlantSuccess, searchPlantError);
         }
 
-        function searchPlantSuccess(plant, query) {
-            $(".selected-plant").empty();
-            selectedPlant = plant;
-            createDiv()
-                .appendTo(".selected-plant")
-                .addClass("search-success pt-4 text-success text-center")
-                .html(plant.primaryCommonName);
-
-            if (plant.images) {
-                createElement("img")
-                    .appendTo(".selected-plant")
-                    .addClass("img-fluid")
-                    .attr("src", plant.images[0]);
-            }
-            
+        function searchPlantSuccess(plant) {
+            createSelection(plant);
         }
 
         function searchPlantError(error) {
             console.log(error);
-            $(".selected-plant").empty();
+            $(".search-result").empty();
+            selectedPlant = null;
             createDiv()
-                .appendTo(".selected-plant")
+                .appendTo(".search-result")
                 .addClass("search-error pt-4 text-danger text-center")
                 .html(error.responseText);
         }
 
         function createOptions() {
-            fetchTemplate("tracker/tracker-option-create.html", data => {
-                let create = $(data).appendTo(".tracker-options");
-                create.find(".tracker-option-create").click(() => {
-                    fetchTemplate("tracker/tracker-modal-create.html", data => {
-                        $("body").prepend(data);
+            createOptionTrack();
+            createOptionSettings();
+        }
+
+        function createOptionTrack() {
+            fetchTemplate("tracker/tracker-option-track.html", data => {
+                let track = $(data).appendTo(".tracker-options");
+                track.find(".tracker-option-track").click(() => {
+                    createModal("track", modal => {
                         searchInit();
-                        let modal = $(".tracker-modal-create");
-                        modal.modal("show");
-                        modal.on("hidden.bs.modal", event => {
-                            event.preventDefault();
+                    }, null, modal => {
+                        if (selectedPlant) {
+                            addPlant(selectedPlant, modal.find(".selected-plant"));
+                            modal.modal("hide");
                             modal.remove();
-                        });
-                        $(".tracker-modal-create-button").click(() => {
-                            if (selectedPlant) {
-                                addPlant(selectedPlant);
-                                modal.modal("hide");
-                                modal.remove();
-                            } else {
-                                addPlantError();
-                            }
+                        } else {
+                            addPlantError();
+                        }
+                    });
+                });
+            });
+        }
+
+        function createOptionSettings() {
+            fetchTemplate("tracker/tracker-option-settings.html", data => {
+                let track = $(data).appendTo(".tracker-options");
+                track.find(".tracker-option-settings").click(() => {
+                    createModal("settings",  modal => {
+                        redirect("/tracker.html");
+                    }, modal => {
+                        redirect("/tracker.html");
+                    }, modal => {
+                        getTrackers().then(trackers => {
+                            trackers.docs.forEach(tracker => {
+                                let trackerRef = database.collection("tracker").doc(tracker.id);
+                                trackerRef.collection("plants").get().then(plants => {
+                                    plants.docs.forEach(plant => {
+                                        createPlantSetting(
+                                            plant,
+                                            modal.find(".modal-body")
+                                        );
+                                    });
+                                });
+                            });
                         });
                     });
                 });
             });
         }
 
-        function addPlant(plant) {
-            database.collection("tracker")
-                .where("_type", "==", type)
-                .where("_typeId", "==", typeId)
-                .get()
-                .then(async function(trackers) {
+        function createModal(modal, show, hide, click) {
+            fetchTemplate(`tracker/tracker-modal-${modal}.html`, data => {
+                let modal = $(data).prependTo("body");
+                modal.modal("show");
+                if (show) {
+                    show(modal);
+                }
+                modal.on("hidden.bs.modal", event => {
+                    hide(modal);
+                    event.preventDefault();
+                    modal.remove();
+                });
+                modal.find(".modal-click").click(() => click(modal));
+            });
+        }
 
+        function createSelection(plant) {
+            $(".selected-plant").empty();
+            selectedPlant = plant;
+            fetchTemplate("/tracker/tracker-selection.html", data => {
+                let selection = $(data).appendTo(".search-result");
+                selection.find(".selected-plant-name").html(plant.primaryCommonName);
+                selection.find(".selected-plant-date").val(new Date().toLocaleDateString("en-CA"));
+                if (plant.images) {
+                    selection.find(".selected-plant-image").attr("src", plant.images[0]);
+                }
+            });
+        }
+
+        function addPlant(plant, selection) {
+            getTrackers().then(async function(trackers) {
                 let docs = trackers.docs;
 
                 if (!docs.length) {
@@ -183,15 +224,13 @@
                     });
                 }
 
-                console.log(docs.length);
-
                 for (let tracker of docs) {
-                    console.log(tracker.id);
                     let trackerRef = database.collection("tracker").doc(tracker.id);
                     await trackerRef.collection("plants").add({
                         id: plant.uniqueId,
                         image: plant.images ? plant.images[0] : null,
-                        date: new Date()
+                        date: new Date(selection.find(".selected-plant-date").val()),
+                        quantity: selection.find(".selected-plant-quantity").val()
                     });
                 }
 
@@ -200,39 +239,99 @@
         }
 
         function addPlantError() {
-            $(".selected-plant").empty();
+            $(".search-result").empty();
             createDiv()
-                .appendTo(".selected-plant")
+                .appendTo(".search-result")
                 .addClass("search-error pt-4 text-danger text-center")
                 .html("Please search for a plant to create");
         }
 
         function displayPlants() {
-            database.collection("tracker")
-                .where("_type", "==", type)
-                .where("_typeId", "==", typeId)
-                .get()
-                .then(trackers => {
-
+            getTrackers().then(trackers => {
                 trackers.docs.forEach(tracker => {
                     let trackerRef = database.collection("tracker").doc(tracker.id);
                     trackerRef.collection("plants").get().then(plants => {
                         plants.docs.forEach(plant => {
-                            createPlant(plant.data().id, plant.data().image, getAge(plant.data().date.toDate()))
+                            createPlantTracked(
+                                plant.data().id, 
+                                plant.data().image, 
+                                plant.data().date, 
+                                plant.data().quantity,
+                                plant.data().maturity,
+                                plant.data().maxHeight
+                            );
                         });
                     });
                 });
             });
         }
 
-        function createPlant(id, image, date) {
+        function createPlantTracked(id, image, date, quantity, maturity, maxHeight) {
             request("/get-plant", { id: id }, plant => {
                 fetchTemplate("/tracker/tracker-plant.html", data => {
-                    let item = $(data).appendTo(".tracker-plants");
-                    item.find(".tracker-plant-name").html(plant.primaryCommonName);
-                    item.find(".tracker-plant-image").attr("src", image);
-                    item.find(".tracker-plant-age").attr("default", date).html(date);
+                    let tracked = $(data).appendTo(".tracker-plants");
+                    tracked.find(".tracker-plant-name").html(plant.primaryCommonName);
+                    tracked.find(".tracker-plant-image").attr("src", image);
+                    tracked.find(".tracker-plant-date").html(`Planted ${date.toDate().toLocaleDateString("en-ca")}`);
+                    let age = getAge(date.toDate());
+                    tracked.find(".tracker-plant-age").attr("default", age).html(age);
+                    tracked.find(".tracker-plant-quantity").attr("default", quantity).html(quantity);
+                    if (maturity && maxHeight) {
+                        let height = getHeight(age, maturity, maxHeight);
+                        tracked.find(".tracker-plant-height")
+                            .attr("maturity", maturity)
+                            .attr("max-height", maxHeight)
+                            .html(height + "m");
+                    }
                 });
+            });
+        }
+
+        function createPlantSetting(doc, container) {
+            request("/get-plant", { id: doc.data().id }, plant => {
+                fetchTemplate("/tracker/tracker-setting.html", data => {
+                    let setting = $(data).appendTo(container);
+                    let safeId = doc.data().id.replaceAll(".", "");
+                    setting.find(".setting-body").attr("id", safeId);
+                    setting.find(".setting-name")
+                        .attr("data-bs-target", `#${safeId}`)
+                        .attr("aria-controls", safeId)
+                        .html(plant.primaryCommonName);
+
+                    setting.find(".setting-maturity").val(doc.data().maturity).on("input", function() {
+                        setPlant(doc.id, { maturity: $(this).val() });
+                    });
+
+                    setting.find(".setting-max-height").val(doc.data().maxHeight).on("input", function() {
+                        setPlant(doc.id, { maxHeight: $(this).val() });
+                    });;
+                });
+            });
+        }
+
+        function createTime() {
+            fetchTemplate("/tracker/tracker-time.html", data => {
+                $(data).appendTo(".navbar-bottom");
+                $(".time-slider").on("input change", timeUpdate);
+                $(".navbar-bottom").addClass("px-2").css("background-color", "var(--color-background)")
+                $(".time-info").popover()
+            });
+        }
+
+        function timeUpdate() {
+            let value = parseInt($(this).val());
+            $(".tracker-plant-attributes").each(function() {
+                let age = $(this).find(".tracker-plant-age");
+                let ageDefault = parseInt(age.attr("default"));
+                let ageValue = ageDefault + value;
+                age.html(ageValue);
+
+                let height = $(this).find(".tracker-plant-height");
+
+                if (height.html() != "N/A") {
+                    let heightValue = getHeight(ageValue, height.attr("maturity"), height.attr("max-height"));
+                    height.html(heightValue + "m");
+                }
             });
         }
 
@@ -241,11 +340,8 @@
             return Math.abs(age.getUTCFullYear() - 1970);
         }
 
-        function timeUpdate() {
-            let value = parseInt($(this).val());
-            let age = $(".tracker-plant-age");
-            let ageValue = parseInt(age.attr("default"));
-            age.html(ageValue + value);
+        function getHeight(age, maturity, maxHeight) {
+            return Math.min(age / maturity, 1) * maxHeight;
         }
     </script>
 </body>

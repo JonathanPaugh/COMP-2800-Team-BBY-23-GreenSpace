@@ -70,3 +70,12 @@ i:hover {
 .btn:focus {
     box-shadow: 0 0 8px rgba(197, 237, 172, 0.8);
 }
+
+.accordion-button:focus {
+    box-shadow: 0 0 8px rgba(197, 237, 172, 0.8);
+}
+
+.accordion-button:not(.collapsed) {
+    color: var(--color-accent);
+    background-color: var(--color-primary);
+}

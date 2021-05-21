@@ -51,12 +51,32 @@ app.post("/find-plants", (req, res) => {
 
 app.post("/suggest-plants", (req, res) => {
     findPlants(req.body.query, data => {
-        res.send(data?.map(plant => `${plant.primaryCommonName} (${plant.scientificName})`));
+        res.send(data?.map(function (plant) { 
+            return {
+                id: plant.uniqueId,
+                value: `${plant.primaryCommonName} (${plant.scientificName})`
+            }})
+        );
     });
 });
 
 app.post("/search-plant", (req, res) => {
-    findPlant(req.body.query, data => {
+    let method;
+    let body;
+
+    if (req.body.id) {
+        
+        method = getPlant;
+        body = req.body.id;
+    } else if (req.body.query) {
+        method = findPlant;
+        body = req.body.query;
+    } else {
+        res.status(400).send("Invalid Request");
+        return;
+    }
+
+    method(body, data => {
         if (data) {
             findPlantImages(data.scientificName, images => {
                 data.images = images;

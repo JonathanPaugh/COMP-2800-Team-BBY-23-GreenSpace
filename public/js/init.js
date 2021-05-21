@@ -1,6 +1,8 @@
 // Script for site-wide page preparation //
 
 $(document).ready(() => {
+    const onNavbarTop = new Event("navtop");
+    const onNavbarBottom = new Event("navbottom");
 
     // Inject FontAwesome
     $("head").append(createElement("link")
@@ -20,6 +22,7 @@ $(document).ready(() => {
         fetchTemplate("navbar-top.html", data => {
             $("head").append(createElement("link").attr("rel", "stylesheet").attr("href", "/css/navbar-top.css"));
             $("body").prepend(data);
+            document.dispatchEvent(onNavbarTop);
         });
     }
 
@@ -30,6 +33,7 @@ $(document).ready(() => {
             $("head").append(createElement("link").attr("rel", "stylesheet").attr("href", "/css/navbar-bottom.css"));
             $("body script").first().before(data);
             $("body script").last().after(createElement("script").attr("src", "/js/navbar-bottom.js"));
+            document.dispatchEvent(onNavbarBottom);
         });
     }
 
