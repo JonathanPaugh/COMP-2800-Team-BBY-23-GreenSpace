@@ -49,6 +49,9 @@
                     <li onclick="clickParts(2)" class="user-favorites">
                         Gallery
                     </li>
+                    <li class="user-tracker">
+                        Plant Tracker
+                    </li>
                 </ul>
             </div>
             
@@ -207,6 +210,12 @@
             changeTab();
             getProfile();
             getModal();
+
+            $(".user-tracker").click(() => {
+                withUser(user => {
+                    window.location.href = `tracker.html?type=user&typeId=${user.id}`;
+                });
+            });
         })
 
         /*

@@ -102,9 +102,11 @@
             searchPlantInit(searchSuccess, searchFail);
         }
 
-        function searchSuccess(plant, query) {
+        function searchSuccess(plant, search) {
             $(".plant-info").empty();
-            setUrlQuery("search", query);
+            
+            setUrlQuery("search", search);
+            
             createInfo(
                 plant.primaryCommonName, 
                 plant.scientificName,
@@ -174,7 +176,9 @@
 
         function querySearch() {
             let query = getUrlQuery().get("search");
-            if (query) {
+            if (query.startsWith("ELEMENT_GLOBAL")) {
+                searchPlantId(null, query, searchSuccess, searchFail);
+            } else {
                 $(".search-value").val(query);
                 searchPlant(null, searchSuccess, searchFail);
             }
