@@ -49,14 +49,47 @@ app.post("/find-plants", (req, res) => {
     });
 });
 
+app.post("/suggest-plants", (req, res) => {
+    findPlants(req.body.query, data => {
+        res.send(data?.map(function (plant) { 
+            return {
+                id: plant.uniqueId,
+                value: `${plant.primaryCommonName} (${plant.scientificName})`
+            }})
+        );
+    });
+});
+
 app.post("/search-plant", (req, res) => {
-    findPlant(req.body.query, data => {
+    let method;
+    let body;
+
+    if (req.body.id) {
+        
+        method = getPlant;
+        body = req.body.id;
+    } else if (req.body.query) {
+        method = findPlant;
+        body = req.body.query;
+    } else {
+        res.status(400).send("Invalid Request");
+        return;
+    }
+
+    method(body, data => {
         if (data) {
             findPlantImages(data.scientificName, images => {
                 data.images = images;
                 findPlantInformation(data.scientificName, information => {
-                    data.information = information;
-                    res.send(data);
+                    if (!information) {
+                        findPlantInformation(data.primaryCommonName, information => {
+                            data.information = information;
+                            res.send(data);
+                        });
+                    } else {
+                        data.information = information;
+                        res.send(data);
+                    }
                 });
             });
         } else {
@@ -66,7 +99,6 @@ app.post("/search-plant", (req, res) => {
 });
 
 function getPlant(id, callback) {
-    console.log(id);
     requestPlantData(`/api/data/taxon/${id}`, "GET", null, data => {
         if (callback) {
             callback(data);
@@ -77,7 +109,7 @@ function getPlant(id, callback) {
 function findPlant(query, callback) {
     findPlants(query, data => {
         if (callback) {
-            if (data.length) {
+            if (data?.length) {
                 callback(data[0]);
             } else {
                 callback(null);
@@ -120,19 +152,16 @@ function findPlantImages(query, callback) {
         query: 
         {
             key: process.env.API_GREENSPACE_GOOGLE,
-            cx: "6a02f3c7401460e16",
+            cx: "ef88b6adf0f68d6d2",
             q: query,
             searchType: "image",
-            imgType: "photo"
+            imgType: "photo",
+            imgDominantColor: "green"
         }
     }), data => {
         if (callback) {
-            if (data) {
-                if (data.items) {
-                    callback(data.items.map(item => item.link));
-                } else {
-                    callback(null);
-                }
+            if (data?.items) {
+                callback(data.items.map(item => item.link));
             } else {
                 callback(null);
             }
@@ -153,12 +182,8 @@ function findPlantInformation(query, callback) {
         }
     }), data => {
         if (callback) {
-            if (data) {
-                if (data.items) {
+            if (data?.items) {
                     callback(data.items[0]);
-                } else {
-                    callback(null);
-                }
             } else {
                 callback(null);
             }

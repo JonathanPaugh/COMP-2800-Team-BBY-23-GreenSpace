@@ -158,6 +158,12 @@
         </div>
 
         <div id="main">
+            <div id="tracker">
+                <a class="tracker" href="#"><h4><i class="fas fa-seedling"></i><b> Plant Tracker</b></h4></a>
+            </div>
+
+            <br><br><br>
+
             <div id="post">
                 <h4><i class="fas fa-pencil-alt"></i><b> Top Posts</b><a id="post-a" class="more">see more</a></h4>
                 <ul>
@@ -172,8 +178,9 @@
                 <div id="top-gallery-image">
                     <!-- Image previews of top 3 images go here -->
                 </div>
-
             </div>
+
+            
 
             <!-- <div id="likes">
                 <h4><i class="fas fa-thumbs-up"></i><b> Your Likes</b><a id="likes-a" class="more">see more</a></h4>
@@ -221,6 +228,11 @@
 
         $(document).ready(function () {
 
+            $(".tracker").click(function (event) {
+                event.preventDefault();
+                window.location.href = `/tracker.html?type=${id}&typeId=${groupName}`;
+            });
+
             $("#post-a").click(function () {
                 window.location.href = "/group-posts.html?id=" + id + "#" + groupName;
             });
@@ -256,7 +268,7 @@
         function readTopPosts() {
             
 
-            posts.collection("posts").limit(3).orderBy("likes").get()
+            posts.collection("posts").limit(3).orderBy("likes", "desc").get()
                 .then(function (posts) {
                     posts.docs.forEach(function (post) {
                         $("#top-post-title").append("<li id=" + post.id + ">"
@@ -266,7 +278,7 @@
         }
 
         function readTopImages() {
-            posts.collection("gallery").limit(3).orderBy("likes").get()
+            posts.collection("gallery").limit(3).orderBy("likes", "desc").get()
                 .then(function (posts) {
                     posts.docs.forEach(function (post) {
                         $("#top-gallery-image").append("<img class='top-images' id='" + post.id 

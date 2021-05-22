@@ -1,6 +1,8 @@
 // Script for site-wide page preparation //
 
 $(document).ready(() => {
+    const onNavbarTop = new Event("navtop");
+    const onNavbarBottom = new Event("navbottom");
 
     // Inject FontAwesome
     $("head").append(createElement("link")
@@ -20,6 +22,7 @@ $(document).ready(() => {
         fetchTemplate("navbar-top.html", data => {
             $("head").append(createElement("link").attr("rel", "stylesheet").attr("href", "/css/navbar-top.css"));
             $("body").prepend(data);
+            document.dispatchEvent(onNavbarTop);
         });
     }
 
@@ -28,7 +31,47 @@ $(document).ready(() => {
     {
         fetchTemplate("navbar-bottom.html", data => {
             $("head").append(createElement("link").attr("rel", "stylesheet").attr("href", "/css/navbar-bottom.css"));
-            $("script").first().before(data);
+            $("body script").first().before(data);
+            $("body script").last().after(createElement("script").attr("src", "/js/navbar-bottom.js"));
+            document.dispatchEvent(onNavbarBottom);
         });
     }
+
+    if (localStorage.getItem("invert") == "true") {
+        invert();
+    }
 });
+
+/* Used a stackoverflow.com reference to build the invert function
+* @author community wiki (leosok, ggorlen) @ stackoverflow.com
+* @see https://stackoverflow.com/questions/4766201/javascript-invert-color-on-all-elements-of-a-page
+*/
+
+/*
+* Reference Start
+*/
+
+function invert() { 
+    head = document.getElementsByTagName("head")[0],
+    style = document.createElement("style");
+
+    let css = "html {"
+        + "-webkit-filter: invert(100%);"
+        + "-moz-filter: invert(100%);"
+        + "-o-filter: invert(100%);"
+        + "-ms-filter: invert(100%);"
+        + "}"
+
+    style.type = "text/css";
+    if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
+    }
+
+    head.appendChild(style);
+};
+
+/*
+* Reference End
+*/

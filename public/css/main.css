@@ -45,6 +45,18 @@ i:hover {
     background-color: rgba(0, 0, 0, 0);
 }
 
+.hover-white:hover {
+    color: var(--color-white) !important;
+}
+
+.hover-primary:hover {
+    color: var(--color-primary) !important;
+}
+
+.hover-accent:hover {
+    color: var(--color-accent) !important;
+}
+
 .unselectable {
     user-select: none;
     -o-user-select: none;
@@ -61,4 +73,13 @@ i:hover {
 
 .btn:focus {
     box-shadow: 0 0 8px rgba(197, 237, 172, 0.8);
+}
+
+.accordion-button:focus {
+    box-shadow: 0 0 8px rgba(197, 237, 172, 0.8);
+}
+
+.accordion-button:not(.collapsed) {
+    color: var(--color-accent);
+    background-color: var(--color-primary);
 }

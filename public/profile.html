@@ -15,7 +15,11 @@
 
 
 <body>
-    <div class="head"></div>
+    <div class="head">
+        <div class="head-image">
+
+        </div>
+    </div>
     <div class="wrapper">
         <div class="row1A">
             <div class="part1">
@@ -24,20 +28,21 @@
             </div>
             <div class="row1-page1-part2">
                 <div class="pro-info">
-                    <!-- <p><span id="fp" class ="col-sm-4">First Name: </span><span id="pro-fname" >Sample First</span></p> -->
-                    <p><span id="fp">Name:</span><span id="pro-name" style="padding-left:50px;"></span></p>
-                    <p><span id="fp">Email:</span><span id="pro-email"></span></p>
-                    <p><span id="fp">Website:</span><span id="pro-web" ></span></p>
-                    <p><span id="fp">Biography:</span><span id="pro-bio" ></span></p>
-                    <input type="submit" id="MyButton" value="Edit" onClick="location.href='/profile-2.html'">
+                    <p><div id="fp">Name:</div><div id="pro-name">Sample Name</div></p>
+                    <p><div id="fp">Email:</div><div id="pro-email">firstLast@gmail.com</div></p>
+                    <p><div id="fp">Website:</div><div id="pro-web" >www.123.com</div></p>
+                    <p><div id="fp">Biography:</div><div id="pro-bio" >graphic designer</div></p>
+                    <div id="check">
+                        <button class ="btn btn-lg" onClick="location.href='/profile-2.html'">Edit</button>
+                    </div>
                 </div>                
             </div>
         </div>
         <div class="row2">
             <div class="nav_menu">
-                <ul>
+                <ul class="profile-sections">
                     <li onclick="clickParts(0)" class="user-post true">
-                        Posts
+                        Reminders
                     </li>
                     <li onclick="clickParts(1)" class="user-favorites">
                         Collections
@@ -45,13 +50,16 @@
                     <li onclick="clickParts(2)" class="user-favorites">
                         Gallery
                     </li>
+                    <li class="user-tracker">
+                        Plant Tracker
+                    </li>
                 </ul>
             </div>
             
             <div class="blog-section click-part-content">
-                <div class="section-title">My Posts</div>
+                <div class="section-title">My Reminders</div>
                 <div class="section-create" style="height: 36px; ">
-                    <input type="submitPost" id="MyButtonPost" onclick="openTab()" style="font-size: 22px;" value="Create A Post" readonly="readonly" onClick="location.href='#'">
+                    <input type="submitPost" id="MyButtonPost" onclick="openTab()" style="font-size: 22px;" value=" + Add One" readonly="readonly">
                 </div>
                 <!-- The Modal -->
                 <div id="myModal" class="modal">
@@ -65,23 +73,110 @@
                                 <input type="text" class="form-control ph-title" placeholder="Blog Title">
                             </div>
                             <div class="modal-text">
-                                <textarea class="form-control placehold" aria-label="With textarea" placeholder="Write your post here..."></textarea>
-                                <button class="buttons-right blog-posted" onclick="createBlog()" style="font-size: 24px; float: right; margin-right: 15px; background-color:  #4d7e65 ">Post</button>
+                                <textarea class="form-control placehold" aria-label="With textarea" placeholder="Write your reminder here..."></textarea>
+                                <button class="buttons-right blog-posted col-2" onclick="createBlog()" 
+                                style="font-size: 24px; float: right; margin-right: 15px; border: none;">Post</button>
                                 <!-- <p style="color: black">Some text in the Modal..</p> -->
                             </div>
-                            
                             <!-- <div class="modal-date"></div> -->
                         </div>
                     </div>
 
                 </div>
+
+
                 <div class="blogs"></div>
             </div>
-            <div class="collection click-part-content">
-                hello2
+            <div class="collection click-part-content" style="color:black;">
+                <div class="history-collect-space">
+                </div>
+                <div class="center" style="text-align:center;"><h5>Garden Post History</h5></div>
+                <div class="history-collect">
+                    
+                </div>
+                <div class="center" style="text-align:center;"><h5>Garden Gallery History</h5></div>
+                <div class="gallery-collect">
+                    
+                </div>
+                <div class="card post">
+                    <div class="card-header">
+                        <div class="post-title"></div>
+                        <i class="delete fas fa-times"></i>
+                    </div>
+                    
+                </div>
+                <!-- <div class="card">
+                    <div class="card-body">
+                        <h5><i class="far fa-comment"></i> Comments</h5>
+                    </div>
+            
+                    <div class="card-body comment">
+                       
+                    </div>
+                    <div class="card-body">
+                        <form class="row g-3">
+                            <div class="container-fluid">
+                                <input id="comment-value" class="form-control" placeholder="Write your comment here">
+                            </div>
+                            <div class="col-auto">
+                                <button id="comment-submit" type="button" class="btn">Post</button>
+                            </div>
+                        </form>
+                    </div> -->
+            
+            
+                </div>
             </div>
             <div class="gallery click-part-content">
-                hello3
+                <div class="col">
+                  <div class="card">
+                    <input class="btn image-select" onclick="selectImage()" type="button" value="Add Image">
+                    <div class="card-body ">
+                        <!-- <input class="btn" onclick="addText()" type="button" value="Add Image"> -->
+                      <h5 class="card-title">Special title treatment</h5>
+                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>              
+                    </div> 
+                  </div>
+                </div>
+
+                <div class="container-fluid py-3" style="background-color: lightgrey;">
+                    <div class="row gallery-images">
+            
+                        
+                        <!-- <div class="gallery-images"></div> -->
+
+                        
+                        <!-- <div class="col-md-6">
+                          <div class="card image-size">
+                            <div class="card-body">
+                              <h5 class="card-title">Special title treatment</h5>
+                              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                              <button id="selectImage" class="btn-primary"onclick="selectImage()" style="font-size: 22px;">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card image-size">
+                              <div class="card-body ">
+                                <h5 class="card-title">Special title treatment</h5>
+                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="card image-size">
+                              <div class="card-body">
+                                <h5 class="card-title">Special title treatment</h5>
+                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                              </div>
+                            </div>
+                          </div> -->
+                    </div>
+                </div>
+                  
+                     <!-- Picture go here -->
             </div>
 
         </div>
@@ -114,7 +209,8 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
-
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
+    
     <script src="/js/general.js"></script>
     <script src="/js/firebase.js"></script>
     <script src="/js/init.js"></script>
@@ -123,15 +219,134 @@
     <script>
         // clickpart(0)
         $(document).ready(()=>{
+            collection();
             requireLogin();
             showBlogs();
-           
-            // $('#MyButton').click(profile);
+            showImages();
             changeTab();
+        
             getProfile();
             getModal();
+
+            $(".user-tracker").click(() => {
+                withUser(user => {
+                    window.location.href = `tracker.html?type=user&typeId=${user.id}`;
+                });
+            });
         })
 
+        function collection() {
+            withUser(user => {
+               
+               
+                userCollect(user);
+            })
+        }
+        function userCollect(user) {
+            // $(".history-collect").empty();
+            getCollect(user);
+        }
+//http://localhost:3000/group-list.html?id=community-garden
+        function getCollect(user) {
+            var collectList = [database.collection("groups").doc("categories").collection("community-garden"),
+                    database.collection("groups").doc("categories").collection("container-garden"),
+                    database.collection("groups").doc("categories").collection("greenhouse-garden"),
+                    database.collection("groups").doc("categories").collection("indoor-garden")];
+
+                    var test = database.collection("groups").doc("categories").collection("container-garden");
+                    test.get().then(collection=>{
+                        console.log("test: ", collection);
+                    })
+
+                    collectList.forEach(category=>{
+
+                        category.get().then(collection=>{
+                            
+                            collection.docs.forEach(garden => { //ilk
+                                var gardenRef = category.doc(garden.id);
+                                gardenPosts(gardenRef, user);
+                                
+                            })
+                        })
+                    })
+
+           
+        }
+        function gardenPosts(gardenRef, user) {
+            gardenRef.collection("posts").where("user", "==", user.data().name).get().then((posts)=>{
+                                    
+                    posts.docs.forEach((post)=>{
+                            console.log(user.data().name);
+                            gardenRef.collection("posts").doc(post.id).get().then(doc=>{
+                            console.log(doc.data());
+                            console.log(doc.data().user);
+                        makeCollection(doc.data());
+                    });
+                 })
+            })
+            gardenRef.collection("posts").get().then((posts)=>{
+                // console.log("posts: ", posts);
+                posts.docs.forEach((post)=>{
+                    // console.log(post.collection("comments"));
+                })
+            })
+            gardenRef.collection("gallery").where("user", "==", user.data().name).get().then((gallery)=>{
+                                    
+                    gallery.docs.forEach((instance)=>{
+                        gardenRef.collection("gallery").doc(instance.id).get().then(doc=>{
+                                makeGalleryCollection(doc.data());
+
+                        });
+                    })
+            })
+        }
+
+        function makeCollection(data){
+            
+            fetchTemplate("profile-collection.html", card=>{
+                //card returned，appendTo
+                var history_card = $(card).appendTo(".history-collect"); 
+                history_card.find(".collect-title").html(data.title);
+                history_card.find(".card-text").html(data.content);
+                history_card.find(".user-name").html(data.user);
+                // history_card.find(".card-text span").html(data.user);
+                // $("blog_img").remove();
+                // gallery_card.find(".collect-title").attr("src",link);
+            })
+        }
+
+        function makeGalleryCollection(data) {
+            fetchTemplate("profile-collection-gallery.html", card=>{
+                var history_gallery_card = $(card).appendTo(".gallery-collect"); 
+                history_gallery_card.find(".collect-title").html(data.title);
+                history_gallery_card.find(".card-text").html(data.content);
+                history_gallery_card.find(".blog-img").attr("src", data.image);
+            })
+        }
+
+        // function galleryCollection(doc) {
+        //     withUser(user => {
+        //         if(doc.data().user == user) {
+        //             if(doc.data().likes > 0) {
+        //                 makeCollection(doc);
+        //             }
+        //         }
+        //     })
+        // }
+
+        // function postCollection(doc) {
+        //     withUser(user => {
+        //         if(doc.data().user == user) {
+        //             if(doc.data().likes > 0) {
+        //                 makeCollection(doc);
+        //             }
+        //         }
+        //     })
+        // }
+       
+        // function makeCollection(doc) {
+        //     console.log("content", doc.data().likes);
+        // }
         /*
         * Reference begins: 
         * @see https://www.youtube.com/watch?v=PJe5Cc6iybQ
@@ -172,27 +387,113 @@
         function openTab() {
             modal.style.display = "block";
         }
-        function createBlog() {
-            database.collection("profile_post_collections").add({
-                blog_title: $(".ph-title").val(),
-                blog_text: $(".placehold").val(),
-                
-                date: firebase.firestore.Timestamp.fromDate(new Date())
+        function selectImage() {
+            withUser(user=>{
+                // var images = database.collection("users").doc(user.id).collection("gallery");
+                var input = document.createElement('input');
+                input.type = 'file';
+                input.click();
+                input.onchange = async function (selectAnImage) {
+                    selectAnImage.preventDefault();
+                    var fileSelected = selectAnImage.target.files[0];
+                    var imagRef = storage.ref().child("users/" + user.id + "/gallery/" + fileSelected.name);
+                    await imagRef
+                    .put(fileSelected)
+                    .then(async function (snapshot) {
+                        var link = await snapshot.ref.getDownloadURL();
+                        createImageDiv(link);
+                    });
+                } 
             })
-            .then((docRef) => {
-               console.log("Document written with ID: ", docRef.id);
-                readBlog(docRef.id);
-            })
-            .catch((error) => {
-              console.error("Error adding document: ", error);
-            });
+
         }
-        function readBlog(id) {
-            database.collection("profile_post_collections").doc(id).get().then(doc=>{
-                makeBlog(id, doc.data());
+       
+        
+        function createImageDiv(link) {
+            fetchTemplate("profile-gallery.html", card=>{
+                //card returned，appendTo
+                var gallery_card = $(card).appendTo(".gallery-images"); 
+                gallery_card.find(".card-image-gallery").attr("src",link);
+            })
+             
+        }
+
+        function showImages() {
+            withUser(user => {
+                var listRef = storage.ref().child("users/" + user.id).child("gallery");
+                listRef.listAll().then(function(array){
+                    array.items.forEach(function(imgRef){
+                        imgRef.getDownloadURL().then(function(url){
+                            createImageDiv(url);
+                        })
+                    })
+                })
+            })
+        }
+        function createBlog() {
+            withUser(user => {
+                //add user input to firebase 
+                database.collection("users").doc(user.id).collection("blogs").add({
+                    blog_title: $(".ph-title").val(),
+                    blog_text: $(".placehold").val(),  
+                    date: firebase.firestore.Timestamp.fromDate(new Date())
+                })
+                .then((docRef) => {
+                    console.log("Document written with ID: ", docRef.id);
+                    console.log(docRef.get());
+                    //get document with data above from docRef
+                    docRef.get().then(doc=>{
+                        console.log(doc);
+                        makeBlog(doc);
+                        closeTab();
+                    })
+                     
+                })
+                .catch((error) => {
+                 console.error("Error adding document: ", error);
+                });
             })
         }
         
+        function makeBlog(blog) { 
+
+            fetchTemplate("profile-blog.html", card=>{
+               let each = $(card);
+               //set the doc data to the html selector
+               each.find(".blog-title").html(blog.data().blog_title);
+               each.find(".blog-content").html(blog.data().blog_text);  
+               each.find(".reminder-tag").html(blog.data().blog_like);
+               each.find(".date").html(blog.data().date.toDate().toLocaleString());
+
+               $(".blogs").prepend(each);
+               each.find(".blog-edit").click(function(){
+                   setUrlQuery("blogId", blog.id);
+                   redirect("profile-edit.html");
+               })
+               each.find(".blog-remove").click(function(){
+                    withUser(user => {
+                         each.remove(); 
+                         database.collection("users").doc(user.id).collection("blogs").doc(blog.id).delete();
+                    })
+               })
+               each.find(".blog-like").click(function(){
+                    withUser(user => {
+                        
+                        var doc = database.collection("users").doc(user.id).collection("blogs").doc(blog.id);
+                        var reminder_count = each.find(".reminder-tag").html(); //it is a string
+                            reminder_count = parseInt(reminder_count); //convert to number
+                            each.find(".reminder-tag").html(++reminder_count); //increase it, then set back to html
+                        doc.update({
+                            blog_like: firebase.firestore.FieldValue.increment(1)
+                        })
+                    })
+               })
+            
+        
+             
+               
+            });
+        }
         function getProfile() {
             withUser(user=>{
                 $('#pro-name').html(user.data().name);
@@ -205,27 +506,16 @@
 
         function showBlogs() {
             withUser(user => {
-                database.collection("profile_post_collections").get().then((blogs)=>{
+                database.collection("users").doc(user.id).collection("blogs").orderBy("date", "asc").get().then((blogs)=>{
                         blogs.docs.forEach((blog)=>{
-                         makeBlog(blog.id, blog.data());
-                         console.log("check: ", blog.data().date)
+                         makeBlog(blog);
+                        //  console.log("check: ", blog.data().date)
                      })
                
                 });
             })
         }
 
-        function makeBlog(id, box) {
-            
-            fetchTemplate("profile-blog.html", card=>{
-               let each = $(card);
-               each.find(".blog-title").html(box.blog_title);
-               each.find(".blog-content").html(box.blog_text);  
-               each.find(".date").html(box.date.toDate().toLocaleString());
-               $(".blogs").prepend(each);
-            });
-        }
-    
     </script>
 
 

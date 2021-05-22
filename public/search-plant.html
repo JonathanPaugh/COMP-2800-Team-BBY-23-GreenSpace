@@ -35,14 +35,24 @@
         .list-group-item {
             background-color: var(--color-container);
         }
-        
+
+        @media only screen and (max-width: 576px) {
+            .plant-taxonomy {
+                padding: 0.5rem 0.25rem;
+            }
+
+            .list-group-item {
+                padding: 0.25rem 0.25rem;
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 
 <body>
     <div class="container-fluid">
         <div class="card p-2 my-2">
-            <form class="search-form form-group has-search flex-grow-1">
+            <form class="search-plant search-form form-group has-search flex-grow-1">
                 <div class="input-group">
                     <input class="search-value form-control" type="text" list="search-suggestions" placeholder="Search Plants...">
                     <div class="input-group-append">
@@ -58,7 +68,6 @@
     </div>
 
     <div class="container-fluid plant-info">
-
     </div>
 
     <!-- Bundle -->
@@ -81,73 +90,48 @@
     <script src="/js/init.js"></script>
 
     <!-- Scripts -->
+    <script src="/js/search-plant.js"></script>
     <script>
         $(document).ready(() => {
-            $(".search-value").on("input", suggest);
-            $(".search-button").click(search);
-            $(".search-form").submit(search);
-
-            $(window).resize(resize);
-
+            searchInit();
             querySearch();
+            $(window).resize(resize);
         });
 
-        function querySearch() {
-            let query = getUrlQuery().get("search");
-            if (query) {
-                $(".search-value").val(query);
-                search();
-            }
+        function searchInit() {
+            searchPlantInit(searchSuccess, searchFail);
         }
 
-        function suggest() {
-            request("/find-plants", { query: $(".search-value").val() }, plants => {
-                $("#search-suggestions").empty();
-                if (!plants.length) { return; }
-                createSuggestions(new Set(plants.map(plant => plant.primaryCommonName)));
-            });
-        }
-
-        function createSuggestions(suggestions) {
-            suggestions.forEach(suggestion => {
-                createElement("option").appendTo("#search-suggestions").val(suggestion);
-            });
-        }
-
-        function search(event) {
-            if (event) {
-                event.preventDefault();
-            }
-
-            let query = $(".search-value").val();
-
+        function searchSuccess(plant, search) {
             $(".plant-info").empty();
             
-            request("/search-plant", { query: query }, plant => {
-                setUrlQuery("search", query);
-                createInfo(
-                    plant.primaryCommonName, 
-                    plant.scientificName,
-                    plant.speciesGlobal.informalTaxonomy,
-                    plant.information?.snippet,
-                    plant.information?.link,
-                    {
-                        phyllum: plant.speciesGlobal.phylum,
-                        class: plant.speciesGlobal.taxclass,
-                        order: plant.speciesGlobal.taxorder,
-                        family: plant.speciesGlobal.family,
-                        genus: plant.speciesGlobal.genus,
-                        species: plant.scientificName.replace(plant.speciesGlobal.genus, "").trim()
-                    },
-                    plant.images
-                );
-            }, error => {
-                createDiv().appendTo(".plant-info").addClass("card p-2 text-danger text-center").html(error.responseText);
-                console.log(error);
-            });
+            setUrlQuery("search", search);
+            
+            createInfo(
+                plant.primaryCommonName, 
+                plant.scientificName,
+                plant.speciesGlobal?.informalTaxonomy,
+                plant.information?.snippet,
+                plant.information?.link,
+                {
+                    phyllum: plant.speciesGlobal?.phylum,
+                    class: plant.speciesGlobal?.taxclass,
+                    order: plant.speciesGlobal?.taxorder,
+                    family: plant.speciesGlobal?.family,
+                    genus: plant.speciesGlobal?.genus,
+                    species: plant.scientificName?.replace(plant.speciesGlobal.genus, "").trim()
+                },
+                plant.images
+            );
+        }
 
-            $(".search-value").val("");
-            $("#search-suggestions").empty();
+        function searchFail(error) {
+            console.log(error);
+            $(".plant-info").empty();
+            createDiv()
+                .appendTo(".plant-info")
+                .addClass("search-error card p-2 text-danger text-center")
+                .html(error.responseText);
         }
 
         function createInfo(name, scientific, description, snippet, link, taxonomy, images) {
@@ -188,6 +172,16 @@
                     resize();
                 }
             });
+        }
+
+        function querySearch() {
+            let query = getUrlQuery().get("search");
+            if (query.startsWith("ELEMENT_GLOBAL")) {
+                searchPlantId(null, query, searchSuccess, searchFail);
+            } else {
+                $(".search-value").val(query);
+                searchPlant(null, searchSuccess, searchFail);
+            }
         }
 
         function resize() {

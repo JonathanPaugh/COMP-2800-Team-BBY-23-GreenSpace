@@ -15,6 +15,15 @@ function getUrlQuery() {
     return new URLSearchParams(window.location.search);
 }
 
+/* Used a stackoverflow.com reference to build the 2 functions setUrlQuery and clearUrlQuery
+* @author Fabio Nolasco @ stackoverflow.com
+* @see https://stackoverflow.com/questions/10970078/modifying-a-query-string-without-reloading-the-page
+*/
+
+/*
+* Reference Start
+*/
+
 // Sets Url parmeter
 function setUrlQuery(name, value) {
     let query = getUrlQuery();
@@ -28,6 +37,10 @@ function clearUrlQuery() {
     let path = `${window.location.origin}${window.location.pathname}`;
     window.history.pushState({path: path}, "", path);
 }
+
+/*
+* Reference End
+*/
 
 // Redirects the page
 function redirect(path) {
