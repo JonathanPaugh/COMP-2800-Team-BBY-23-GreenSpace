@@ -107,6 +107,7 @@
         var groups = database.collection("groups").doc("categories").collection(id);
 
         $(document).ready(function () {
+            requireLogin();
             writeImages();
         });
 

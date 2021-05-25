@@ -114,6 +114,7 @@
             .collection(id).doc(groupName).collection("gallery");
 
         $(document).ready(function () {
+            requireLogin();
             writeImages();
         });
 

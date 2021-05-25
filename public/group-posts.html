@@ -108,7 +108,7 @@
             posts.get().then(function (posts) {
                 posts.docs.forEach(async function (post) {
                     var docName = post.id;
-                    var p = await readPosts(
+                    var p = await displayPosts(
                         post.id,
                         post.data().title,
                         post.data().content,
@@ -119,11 +119,11 @@
                 });
             });
 
-            $("#back-button").attr("href", "/group-main.html?id=" + id + "#" + groupName);
-            $("#post-button").attr("href", "/group-create-post.html?id=" + id + "#" + groupName);
+            redirectToGroupMain();
+            addPost();
         });
 
-        function readPosts(docID, title, content, user, like, comment) {
+        function displayPosts(docID, title, content, user, like, comment) {
             fetchFile("/template/group-post.html", data => {
                 let group = $(data).appendTo("#posts");
                 $(".delete").hide();
@@ -146,7 +146,7 @@
                 firebase.auth().onAuthStateChanged(function (usr) {
                     database.collection("users").doc(usr.uid).get()
                         .then(function (doc) {
-                            if(doc.data().name === user) {
+                            if (doc.data().name === user) {
                                 group.find(".delete").show();
                             }
                         });
@@ -164,17 +164,24 @@
         }
 
         function deletePost(buttonID) {
-            $("#" + buttonID).click(async function(e) {
+            $("#" + buttonID).click(async function (e) {
                 e.preventDefault();
                 var id = e.target.id.substr(2);
 
                 var ale = await window.confirm("Are you sure you want to delete?");
-                
+
                 if (ale) {
                     var del = await posts.doc(id).delete();
                     location.reload();
                 }
             });
+        }
+        function redirectToGroupMain() {
+            $("#back-button").attr("href", "/group-main.html?id=" + id + "#" + groupName);
+        }
+
+        function addPost() {
+            $("#post-button").attr("href", "/group-create-post.html?id=" + id + "#" + groupName);
         }
     </script>
 </body>

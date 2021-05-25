@@ -107,6 +107,7 @@
             .collection(id).doc(groupName).collection("posts");
 
         $(document).ready(function () {
+            requireLogin();
 
             console.log(id);
             console.log(groupName);

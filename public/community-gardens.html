@@ -144,7 +144,7 @@
             <form id="search-garden" class="search-form form-group has-search flex-grow-1">
                 <div class="input-group">
                     <input class="search-value form-control" type="text"
-                        placeholder="Type the name of the garden here!">
+                        placeholder="Type the name or address of the garden here">
                     <div class="input-group-append">
                         <a class="search-button">
                             <i class="fa fa-search fa-2x ms-1 mt-1"></i>
@@ -267,8 +267,9 @@
 
                 communityGardens.filter(garden => {
                     var gardenTitles = garden.find(".community-garden-name").html().toLowerCase();
+                    var gardenAddress = garden.find(".address").html().toLowerCase();
 
-                    return gardenTitles.includes(input);
+                    return gardenTitles.includes(input) || gardenAddress.includes(input);
                 }).forEach(garden => {
                     if (garden) {
                         garden.show();
