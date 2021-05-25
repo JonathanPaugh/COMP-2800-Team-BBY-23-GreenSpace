@@ -78,7 +78,9 @@
     <div id="container">
         <h2>
             <!--Groups of 'category' goes here-->
-        </h2><br>
+        </h2>
+        <p id="community-garden-list"><a href="/community-gardens.html">Click here</a> to get information of Vancouver
+            community gardens</p><br>
         <a id="group-create-button" class="btn col-3">+ Add Group</a><br><br>
 
         <div id="group">
@@ -113,12 +115,12 @@
         var groups = database.collection("groups").doc("categories").collection(id);
 
         $(document).ready(function () {
-
+            requireLogin();
             replaceHeading();
             groups.get()
                 .then(function (groups) {
                     groups.docs.forEach(function (group) {
-                        createGroup(
+                        displayGroup(
                             group.id,
                             group.data().title,
                             group.data().description,
@@ -127,15 +129,15 @@
                     });
                 });
 
-            $("#group-create-button").attr("href", "/group-create-group.html?id=" + id);
-
+            displayCommunityGardensLink();
+            addGroup();
         });
 
         function replaceHeading() {
             $("h2").text("Groups of " + id);
         }
 
-        function createGroup(docID, title, description, img) {
+        function displayGroup(docID, title, description, img) {
             fetchFile("/template/group-info.html", data => {
                 let group = $(data).appendTo("#group");
 
@@ -144,6 +146,17 @@
                 group.find(".join-button").attr("href", "/group-main.html?id=" + id + "#" + docID);
                 group.find(".group-image").attr("src", img);
             });
+        }
+
+        function displayCommunityGardensLink() {
+            $("#community-garden-list").hide();
+            if (id === "community-garden") {
+                $("#community-garden-list").show();
+            }
+        }
+
+        function addGroup() {
+            $("#group-create-button").attr("href", "/group-create-group.html?id=" + id);
         }
 
     </script>
