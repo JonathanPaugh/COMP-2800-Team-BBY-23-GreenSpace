@@ -92,6 +92,18 @@
                 });
             });
         }
+
+        function testValidPost() {
+            $(".thread-topic").val("TestTopic");
+            $(".thread-content").val("TestContent");
+            post();
+        }
+
+        function testInvalidPost() {
+            $(".thread-topic").val("");
+            $(".thread-content").val("");
+            post();
+        }
     </script>
 </body>
 

@@ -176,6 +176,9 @@
 
         function querySearch() {
             let query = getUrlQuery().get("search");
+            if (!query) {
+                return;
+            }
             if (query.startsWith("ELEMENT_GLOBAL")) {
                 searchPlantId(null, query, searchSuccess, searchFail);
             } else {
@@ -186,6 +189,18 @@
 
         function resize() {
             $(".plant-gallery").css("grid-auto-rows", $(".plant-gallery-container").width() + "px");
+        }
+
+        function testCreateInfo() {
+            createInfo("TestName", "TestScientificName", "TestDescription", "TestSnippet", "TestLink", {
+                phyllum: "TestPhyllum",
+                class: "TestClass",
+                order: "TestOrder",
+                family: "TestFamily",
+                genus: "TestGenus",
+                species: "TestSpecies",
+            }, 
+            ["https://dummyimage.com/512x512/000/fff"]);
         }
     </script>
 </body>

@@ -376,6 +376,17 @@
         function getHeight(age, maturity, maxHeight) {
             return (Math.min(age / maturity, 1) * maxHeight).toFixed(2);
         }
+
+        function testCreateOptionContainer() {
+            let option = createElement("div").appendTo(".tracker-options").addClass("tracker-option col");
+            createElement("div").appendTo(option).addClass("card h-100").html("TestOption");
+        }
+
+        function testCreatePlantContainer() {
+            fetchTemplate("/tracker/tracker-plant.html", data => {
+                let tracked = $(data).appendTo(".tracker-plants");
+            });
+        }
     </script>
 </body>
 
