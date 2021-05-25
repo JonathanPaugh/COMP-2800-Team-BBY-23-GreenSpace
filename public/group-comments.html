@@ -188,6 +188,7 @@
         }
 
         function writeComments() {
+            requireLogin();
             let comment = document.querySelector("#comment-value").value;
 
             firebase.auth().onAuthStateChanged(function (user) {
@@ -203,14 +204,12 @@
                                 location.reload();
                             });
                         }).then(increaseComment);
-                } else {
-                    alert("You are not signed in.");
                 }
             });
-
         }
 
         function increaseLike() {
+            requireLogin();
             posts.update({
                 likes: firebase.firestore.FieldValue.increment(1)
             }).then(function () {

@@ -99,7 +99,7 @@
             posts.get().then(function (posts) {
                 posts.docs.forEach(async function (post) {
                     var docName = post.id;
-                    var p = await readPosts(
+                    var p = await displayPosts(
                         post.id,
                         post.data().title,
                         post.data().content,
@@ -110,11 +110,11 @@
                 });
             });
 
-            $("#back-button").attr("href", "/group-main.html?id=" + id + "#" + groupName);
-            $("#post-button").attr("href", "/group-create-post.html?id=" + id + "#" + groupName);
+            redirectToGroupMain();
+            addPost();
         });
 
-        function readPosts(docID, title, content, user, like, comment) {
+        function displayPosts(docID, title, content, user, like, comment) {
             fetchFile("/template/group-post.html", data => {
                 let group = $(data).appendTo("#posts");
 
@@ -140,6 +140,14 @@
             }).then(function () {
                 location.reload();
             });
+        }
+
+        function redirectToGroupMain() {
+            $("#back-button").attr("href", "/group-main.html?id=" + id + "#" + groupName);
+        }
+
+        function addPost() {
+            $("#post-button").attr("href", "/group-create-post.html?id=" + id + "#" + groupName);
         }
     </script>
 </body>

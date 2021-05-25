@@ -196,6 +196,8 @@
         }
 
         function writeComments() {
+            requireLogin();
+
             let comment = document.querySelector("#comment-value").value;
 
             firebase.auth().onAuthStateChanged(function (user) {
@@ -219,6 +221,7 @@
         }
 
         function increaseLike() {
+            requireLogin();
             posts.update({
                 likes: firebase.firestore.FieldValue.increment(1)
             }).then(function () {
