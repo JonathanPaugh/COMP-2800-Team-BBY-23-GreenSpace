@@ -47,65 +47,51 @@ function addProfileImage() {
 
 }
 
+//display collection to the specific user who has logined 
 function collection() {
     withUser(user => {
-        userCollect(user);
+        getCollect(user);
     })
 }
-function userCollect(user) {
-    // $(".history-collect").empty();
-    getCollect(user);
-}
-//http://localhost:3000/group-list.html?id=community-garden
+
+//collect user activities (such as posts and replies from Groups and Forum)
 function getCollect(user) {
     var collectList = [database.collection("groups").doc("categories").collection("community-garden"),
     database.collection("groups").doc("categories").collection("container-garden"),
     database.collection("groups").doc("categories").collection("greenhouse-garden"),
     database.collection("groups").doc("categories").collection("indoor-garden")];
 
-    var collectForumList = database.collection("threads").get().then((querySnapshot) => {
+    database.collection("threads").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-
+            //from each posts to the forum, display the posts in the user collection
             forumPosts(user, doc.id, doc.data());
-            console.log(doc.id, " => ", doc.data());
         });
     });
 
-
-    var test = database.collection("groups").doc("categories").collection("container-garden");
-    test.get().then(collection => {
-        console.log("test: ", collection);
-    })
-
     collectList.forEach(category => {
-
         category.get().then(collection => {
-
-            collection.docs.forEach(garden => { //ilk
+            collection.docs.forEach(garden => { 
                 var gardenRef = category.doc(garden.id);
+                //from each posts to gallery, display the posts in the user collection
                 gardenPosts(gardenRef, user, category);
-
             })
         })
     })
-
-
-
 }
 
+//get the user's posts from forum
 function forumPosts(user, forumRef, forumData) {
     if (forumData.user == user.id) {
         var url = "/thread.html?id=" + forumRef;
+        //make the post display in the collection
         makeForumCollection(forumData, url, user);
     }
 }
 
-
+//display the data of the user's posts from Forum to the collection
 function makeForumCollection(data, url, user) {
 
     fetchTemplate("profile-collection-forum.html", card => {
-        //card returned，appendTo
-        console.log("nameL ", user.data());
         var forum_card = $(card).appendTo(".forum-collect");
         forum_card.find(".collect-title").html(data.topic);
         forum_card.find(".card-text").html(data.content);
@@ -114,29 +100,29 @@ function makeForumCollection(data, url, user) {
     })
 }
 
+//find the data of the user's posts posted in the Group
 function gardenPosts(gardenRef, user, category) {
     gardenRef.collection("posts").where("user", "==", user.data().name).get().then((posts) => {
 
         posts.docs.forEach((post) => {
-            console.log(user.data().name);
+            //find each Group post user created in the Group
             gardenRef.collection("posts").doc(post.id).get().then(doc => {
-                console.log(doc.data());
-                console.log(doc.data().user);
                 var url = "/group-comments.html?id=" + category.id + "#" + gardenRef.id + "&" + post.id;
+                //display each Group post user posted to the collection 
                 makeCollection(doc.data(), url);
             });
         })
     })
     gardenRef.collection("posts").get().then((posts) => {
         posts.docs.forEach((post) => {
+            //find each Group comments or replies that user posted in the Group 
             var user_comment = gardenRef.collection("posts").doc(post.id).collection("comments");
             user_comment.where("user", "==", user.data().name).get().then(comments => {
                 comments.forEach((comment) => {
                     user_comment.doc(comment.id).get().then(doc => {
-                        //group id 
-                        //post id
+                        //url path based on catergory of garden, group id and post id
                         var url = "/group-comments.html?id=" + category.id + "#" + gardenRef.id + "&" + post.id;
-                        console.log("cate: ", category.id);
+                        //display the data in the collection 
                         makeCollection(doc.data(), url);
                     });
                 })
@@ -145,19 +131,21 @@ function gardenPosts(gardenRef, user, category) {
     })
     gardenRef.collection("gallery").where("user", "==", user.data().name).get().then((gallery) => {
         gallery.docs.forEach((instance) => {
+            //find each Gallery post user posted in the Group
             gardenRef.collection("gallery").doc(instance.id).get().then(doc => {
                 var url = "/group-gallery-comments.html?id=" + category.id + "#" + gardenRef.id + "&" + instance.id;
+                 //display the data in the collection
                 makeGalleryCollection(doc.data(), url);
             });
         })
     })
 }
 
-
+//display data (text and title) in the collection
+//also redirect to where user posted his/her posts
 function makeCollection(data, url) {
 
     fetchTemplate("profile-collection.html", card => {
-        //card returned，appendTo
         var history_card = $(card).appendTo(".history-collect");
         history_card.find(".collect-title").html(data.title);
         history_card.find(".card-text").html(data.content);
@@ -166,6 +154,8 @@ function makeCollection(data, url) {
     })
 }
 
+//display the gallery data in the collection (text, image and title)
+//redirect to where user posted his/her gallery posts
 function makeGalleryCollection(data, url) {
     fetchTemplate("profile-collection-gallery.html", card => {
         var history_gallery_card = $(card).appendTo(".gallery-collect");
@@ -179,6 +169,7 @@ function makeGalleryCollection(data, url) {
 }
 
 /*
+* change between sections (reminder, collection, gallery, plant tracker)
 * Reference begins: 
 * @see https://www.youtube.com/watch?v=PJe5Cc6iybQ
 */
@@ -187,7 +178,6 @@ function changeTab() {
         $(this).addClass('true').siblings().removeClass('true');
     })
 }
-// var button = document.querySelectorAll('.nav_menu ul li');
 var part_content = document.querySelectorAll('.click-part-content');
 function clickParts(i) {
     part_content.forEach(part => {
@@ -201,10 +191,13 @@ clickParts(0);
 */
 
 
-
+/**
+ * Modal starts.
+ * display a modal popup that user can create their post
+ * by filling out the title and the content 
+ */
 const modal = document.getElementById("myModal");
 function getModal() {
-    // clicks anywhere outside 
     window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = "none";
@@ -218,9 +211,13 @@ function closeTab() {
 function openTab() {
     modal.style.display = "block";
 }
+/**
+ * Modal ends
+ */
+
+//upload a image from user devices (mobile, desktop and etc)
 function selectImage() {
     withUser(user => {
-        // var images = database.collection("users").doc(user.id).collection("gallery");
         var input = document.createElement('input');
         input.type = 'file';
         input.click();
@@ -232,6 +229,7 @@ function selectImage() {
                 .put(fileSelected)
                 .then(async function (snapshot) {
                     var link = await snapshot.ref.getDownloadURL();
+                    //display the photo in the gallery page
                     createImageDiv(link);
                 });
         }
@@ -239,46 +237,43 @@ function selectImage() {
 
 }
 
-
+//a image displayed in the gallery section of the profile page
 function createImageDiv(link) {
     fetchTemplate("profile-gallery.html", card => {
-        //card returned，appendTo
         var gallery_card = $(card).appendTo(".gallery-images");
         gallery_card.find(".card-image-gallery").attr("src", link);
     })
 
 }
 
+//display all the images user uploaded to the gallery section of the profile page
 function showImages() {
     withUser(user => {
         var listRef = storage.ref().child("users/" + user.id).child("gallery");
         listRef.listAll().then(function (array) {
             array.items.forEach(function (imgRef) {
                 imgRef.getDownloadURL().then(function (url) {
+                    //for each image uploaded, display it to the gallery one by one
                     createImageDiv(url);
                 })
             })
         })
     })
 }
+
+//store the reminder's post content, title and date posted in the firestore
 function createBlog() {
     withUser(user => {
-        //add user input to firebase 
         database.collection("users").doc(user.id).collection("blogs").add({
             blog_title: $(".ph-title").val(),
             blog_text: $(".placehold").val(),
             date: firebase.firestore.Timestamp.fromDate(new Date())
         })
             .then((docRef) => {
-                console.log("Document written with ID: ", docRef.id);
-                console.log(docRef.get());
-                //get document with data above from docRef
                 docRef.get().then(doc => {
-                    console.log(doc);
                     makeBlog(doc);
                     closeTab();
                 })
-
             })
             .catch((error) => {
                 console.error("Error adding document: ", error);
@@ -286,11 +281,11 @@ function createBlog() {
     })
 }
 
+//display the reminder's blog with title, content and reminder aler tag
 function makeBlog(blog) {
 
     fetchTemplate("profile-blog.html", card => {
         let each = $(card);
-        //set the doc data to the html selector
         each.find(".blog-title").html(blog.data().blog_title);
         each.find(".blog-content").html(blog.data().blog_text);
         each.find(".reminder-tag").html(blog.data().blog_like);
@@ -325,6 +320,8 @@ function makeBlog(blog) {
 
     });
 }
+
+//user can edit the user profile information
 function getProfile() {
     withUser(user => {
         $('#pro-name').html(user.data().name);
@@ -335,14 +332,13 @@ function getProfile() {
 
 }
 
+//display all reminder user created to the profile reminder session
 function showBlogs() {
     withUser(user => {
         database.collection("users").doc(user.id).collection("blogs").orderBy("date", "asc").get().then((blogs) => {
             blogs.docs.forEach((blog) => {
                 makeBlog(blog);
-                //  console.log("check: ", blog.data().date)
             })
-
         });
     })
 }
