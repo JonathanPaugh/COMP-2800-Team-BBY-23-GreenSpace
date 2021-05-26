@@ -64,7 +64,7 @@ https://github.com/JonathanPaugh/COMP-2800-Team-BBY-23-GreenSpace.git
 2. Clone the repo to a local location using “git clone” with the link above
 3. Use cmd/terminal and navigate to repo folder
 4. Install Node.js project dependencies using “npm install”
-5. This should install express and express-rate-limit if not install them manually with the following commands.
+5. This should install express and express-rate-limit if not install them manually with the following commands:
   * “npm install express”
   * “npm install express-rate-limit”
 
