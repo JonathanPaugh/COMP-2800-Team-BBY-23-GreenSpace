@@ -6,7 +6,7 @@ Created for BCIT course COMP 2800
 
 http://green-space.us-west-1.elasticbeanstalk.com/
 
-# Projected Features #
+# Features #
 
 User Profile\
 Social Forum\
@@ -16,7 +16,7 @@ Plant Information\
 Garden Gallery\
 Plant Progress Tracker
 
-# Projected Technologies #
+# Technologies #
 
 HTML\
 JavaScript\
@@ -26,11 +26,9 @@ Firestore\
 Node.Js\
 AWS (Elastic Beanstalk, CodePipeline)\
 VSCode\
-Webstorm\
 GitHub\
 Git\
-Sourcetree\
-Figma
+Sourcetree
 
 # Packages #
 
