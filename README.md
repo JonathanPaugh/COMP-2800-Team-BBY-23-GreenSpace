@@ -50,7 +50,7 @@ Jonathan Paugh, Anna An, Angel Zhong
 # Developer Setup #
 
 ## Install ##
-Install these programs, order doesn't matter, but do this before continuing to developer setup.
+Install these programs, order doesn't matter, but do this before continuing to setup.
 
 Chrome\
 Git\
@@ -58,7 +58,7 @@ VSCode\
 Sourcetree\
 Node.js\
 
-## Developer Setup ##
+## Setup ##
 
 https://github.com/JonathanPaugh/COMP-2800-Team-BBY-23-GreenSpace.git
 
