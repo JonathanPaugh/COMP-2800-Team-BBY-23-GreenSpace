@@ -189,7 +189,10 @@ function searchInit() {
 * In case of plant search success, creates selected plant in modal
 */
 function searchPlantSuccess(plant) {
+    $(".modal-click").removeClass("btn-disabled");
+    $(".search-result").empty();
     createSelection(plant);
+    
 }
 
 /*
@@ -197,6 +200,7 @@ function searchPlantSuccess(plant) {
 */
 function searchPlantError(error) {
     console.log(error);
+    $(".modal-click").addClass("btn-disabled");
     $(".search-result").empty();
     selectedPlant = null;
     createDiv()
