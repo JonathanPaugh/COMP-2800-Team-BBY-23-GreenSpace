@@ -1,16 +1,22 @@
 // Library for site-wide general functions //
 
-// Creates a JQuery element from the given tag name
+/*
+* Creates a JQuery element from the given tag name
+*/
 function createElement(element) {
     return $(`<${element}/>`);
 }
 
-// Creates a div
+/*
+* Creates a div
+*/
 function createDiv() {
     return createElement("div");
 }
 
-// Gets Url parmeters
+/*
+* Gets Url parmeters
+*/ 
 function getUrlQuery() {
     return new URLSearchParams(window.location.search);
 }
@@ -24,7 +30,9 @@ function getUrlQuery() {
 * Reference Start
 */
 
-// Sets Url parmeter
+/*
+* Sets Url parmeter
+*/ 
 function setUrlQuery(name, value) {
     let query = getUrlQuery();
     query.set(name, value);
@@ -32,7 +40,9 @@ function setUrlQuery(name, value) {
     window.history.pushState({path: path}, "", path);
 }
 
-// Clears Url parmeters
+/*
+* Clears Url parmeters
+*/ 
 function clearUrlQuery() {
     let path = `${window.location.origin}${window.location.pathname}`;
     window.history.pushState({path: path}, "", path);
@@ -42,12 +52,16 @@ function clearUrlQuery() {
 * Reference End
 */
 
-// Redirects the page
+/*
+* Redirects the page
+*/ 
 function redirect(path) {
     window.location.assign(`${path}${window.location.search}`);
 }
 
-// Redirects to login page if not logged in
+/*
+* Redirects to login page if not logged in
+*/ 
 function requireLogin() {
     firebase.auth().onAuthStateChanged(user => {
         if (!user) {
@@ -56,7 +70,9 @@ function requireLogin() {
     });
 }
 
-// Gets user then invokes callback with user data when data is obtained
+/*
+* Gets user then invokes callback with user data when data is obtained
+*/ 
 function withUser(callback) {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
@@ -67,19 +83,25 @@ function withUser(callback) {
     });
 }
 
-// Fetches a file and returns file data
+/*
+* Fetches a file and returns file data
+*/ 
 function fetchFile(path, callback) {
     fetch(`${window.location.origin}/${path}`)
         .then(response => response.text())
         .then(callback);
 }
 
-// Fetches a file using template path
+/*
+* Fetches a file using template path
+*/ 
 function fetchTemplate(path, callback) {
     fetchFile(`template/${path}`, callback);
 }
 
-// Makes a server request
+/*
+* Makes a server request
+*/ 
 function request(path, sData, success, fail) {
     $.ajax({
         url: path,

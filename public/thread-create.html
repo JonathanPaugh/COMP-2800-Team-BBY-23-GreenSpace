@@ -11,11 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico">
     <link href="/css/forum.css" rel="stylesheet">
-    <style>
-        body {
-            min-height: 100vh;
-        }
-    </style>
 </head>
 
 <body>
@@ -56,55 +51,7 @@
     <script src="/js/init.js"></script>
 
     <!-- Scripts -->
-    <script>
-        $(document).ready(() => {
-            requireLogin();
-            $(".thread-post").click(post);
-        });
-
-        function post() {
-            requireLogin();
-
-            let invalid = false;
-            if (!$(".thread-topic").val()) {
-                $(".thread-topic").addClass("border border-danger");
-                invalid = true;
-            }
-
-            if (!$(".thread-content").val()) {
-                $(".thread-content").addClass("border border-danger");
-                invalid = true;
-            }
-
-            if (invalid) {
-                $(".thread-post").after(createDiv().html("Please fill out required fields").addClass("text-danger mx-2"));
-                return;
-            }
-
-            withUser(user => {
-                database.collection("threads").add({
-                    topic: $(".thread-topic").val(),
-                    content: $(".thread-content").val(),
-                    user: user.id
-                }).then(doc => {
-                    setUrlQuery("id", doc.id);
-                    redirect("/thread.html");
-                });
-            });
-        }
-
-        function testValidPost() {
-            $(".thread-topic").val("TestTopic");
-            $(".thread-content").val("TestContent");
-            post();
-        }
-
-        function testInvalidPost() {
-            $(".thread-topic").val("");
-            $(".thread-content").val("");
-            post();
-        }
-    </script>
+    <script src="/js/thread-create.js"></script>
 </body>
 
 </html>

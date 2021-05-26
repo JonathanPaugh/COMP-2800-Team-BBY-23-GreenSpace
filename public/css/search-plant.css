@@ -1,0 +1,35 @@
+img {
+    border: 1px solid #CCC;
+    border-radius: 3px;
+}
+
+.plant-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2vw;
+}
+
+.plant-gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.plant-taxonomy {
+    background-color: #EEE;
+}
+
+.list-group-item {
+    background-color: var(--color-container);
+}
+
+@media only screen and (max-width: 576px) {
+    .plant-taxonomy {
+        padding: 0.5rem 0.25rem;
+    }
+
+    .list-group-item {
+        padding: 0.25rem 0.25rem;
+        font-size: 0.8rem;
+    }
+}

@@ -1,6 +1,8 @@
+// Login Authentication //
+
 var login = new firebaseui.auth.AuthUI(firebase.auth());
 
-login.start('#firebaseui-auth-container', 
+login.start("#firebaseui-auth-container", 
     {
         callbacks: {
             signInSuccessWithAuthResult: result => {

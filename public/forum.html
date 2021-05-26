@@ -11,11 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico">
     <link href="/css/forum.css" rel="stylesheet">
-    <style>
-        body {
-            min-height: 100vh;
-        }
-    </style>
 </head>
 
 <body>
@@ -46,50 +41,8 @@
     <script src="/js/init.js"></script>
 
     <!-- Scripts -->
-    <script>
-        $(document).ready(() => {
-            displayThreads();
+    <script src="/js/forum.js">
 
-            $(".forum-create button").click(() => {
-                requireLogin();
-                redirect("/thread-create.html");
-            })
-        });
-
-        function displayThreads() {
-            database.collection("threads").get().then(threads => {
-                threads.docs.forEach(thread => {
-                    database.collection("threads").doc(thread.id).collection("replies").get().then(replies => {
-                        database.collection("users").doc(thread.data().user).get().then(user => {
-                            createThread(thread.id, thread.data().topic, user.data().name, replies.size);
-                        });
-                    });
-                });
-            });
-        }
-
-        function createThread(id, topic, user, count) {
-            fetchTemplate("forum-thread.html", data => {
-                let thread = $(data).appendTo(".forum-threads");
-
-                let threadId = thread.find(".thread-id");
-                threadId.attr("href", `${threadId.attr("href")}?id=${id}`);
-
-                thread.find(".thread-topic").html(topic);
-                thread.find(".thread-user").html(user);
-                thread.find(".thread-count").html(`${count} Replies`);
-            });
-        }
-
-        function logout() {
-            firebase.auth().signOut().then(() => {
-                redirect("index.html");
-            });
-        }
-
-        function testCreateThread() {
-            createThread("TestId", "TestTopic", "TestUser", "TestReplyCount");
-        }
     </script>
 </body>
 
