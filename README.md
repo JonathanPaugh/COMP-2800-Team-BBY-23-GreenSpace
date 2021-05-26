@@ -6,7 +6,7 @@ Created for BCIT course COMP 2800
 
 http://green-space.us-west-1.elasticbeanstalk.com/
 
-# Projected Features
+# Projected Features #
 
 User Profile\
 Social Forum\
@@ -16,7 +16,7 @@ Plant Information\
 Garden Gallery\
 Plant Progress Tracker
 
-# Projected Technologies
+# Projected Technologies #
 
 HTML\
 JavaScript\
@@ -32,17 +32,57 @@ Git\
 Sourcetree\
 Figma
 
-# Packages
+# Packages #
 
 express\
 express-rate-limit
 
-# APIS
+# APIS #
 
 NatureServe Explorer - https://explorer.natureserve.org/api-docs/
 
 Google Custom Search - https://developers.google.com/custom-search/v1/overview
 
-# Team Members
+# Team Members #
 
 Jonathan Paugh, Anna An, Angel Zhong
+
+# Developer Setup #
+
+## Install ##
+Install these programs, order doesn't matter, but do this before continuing to developer setup.
+
+Chrome\
+Git\
+VSCode\
+Sourcetree\
+Node.js\
+
+## Developer Setup ##
+
+https://github.com/JonathanPaugh/COMP-2800-Team-BBY-23-GreenSpace.git
+
+Ask Jonathan for write access on the git repo\
+Clone the repo to a local location using “git clone” with the link above\
+Use cmd/terminal and navigate to repo folder\
+Install Node.js project dependencies using “npm install”\
+This should install express and express-rate-limit if not install them manually with the following commands.\
+“npm install express”\
+“npm install express-rate-limit”
+
+Insert the google custom search api key into your environment variables:\
+Variable: API_GREENSPACE_GOOGLE\
+Value: AIzaSyC7xuP2DGbB4a0aBT0AcLUDOMnuxoRpGKg
+
+## Run App ##
+
+Use cmd/terminal and navigate to repo folder\
+Run command “node app.js”\
+Navigate to “http://127.0.0.1:3000/” in your development browser (Chrome)
+
+## Start Developing ##
+
+Open the repo folder using VSCode\
+Make changes\
+Push to the dev branch or make a feature branch from the dev branch to push to 
+
