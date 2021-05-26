@@ -54,33 +54,33 @@ Chrome\
 Git\
 VSCode\
 Sourcetree\
-Node.js\
+Node.js
 
 ## Setup ##
 
 https://github.com/JonathanPaugh/COMP-2800-Team-BBY-23-GreenSpace.git
 
-1. Ask Jonathan for write access on the git repo\
-2. Clone the repo to a local location using “git clone” with the link above\
-3. Use cmd/terminal and navigate to repo folder\
-4. Install Node.js project dependencies using “npm install”\
-5. This should install express and express-rate-limit if not install them manually with the following commands.\
-  * “npm install express”\
+1. Ask Jonathan for write access on the git repo
+2. Clone the repo to a local location using “git clone” with the link above
+3. Use cmd/terminal and navigate to repo folder
+4. Install Node.js project dependencies using “npm install”
+5. This should install express and express-rate-limit if not install them manually with the following commands.
+  * “npm install express”
   * “npm install express-rate-limit”
 
-6. Insert the google custom search api key into your environment variables:\
-  * Variable: API_GREENSPACE_GOOGLE\
+6. Insert the google custom search api key into your environment variables:
+  * Variable: API_GREENSPACE_GOOGLE
   * Value: AIzaSyC7xuP2DGbB4a0aBT0AcLUDOMnuxoRpGKg
 
 ## Run App ##
 
-1. Use cmd/terminal and navigate to repo folder\
-2. Run command “node app.js”\
+1. Use cmd/terminal and navigate to repo folder
+2. Run command “node app.js”
 3. Navigate to “http://127.0.0.1:3000/” in your development browser (Chrome)
 
 ## Start Developing ##
 
-1. Open the repo folder using VSCode\
-2. Make changes\
+1. Open the repo folder using VSCode
+2. Make changes
 3. Push to the dev branch or make a feature branch from the dev branch to push to 
 
