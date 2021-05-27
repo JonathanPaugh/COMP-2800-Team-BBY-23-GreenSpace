@@ -103,7 +103,7 @@ function makeReplyCollection(replyData, url) {
         if (replyData.images.length > 0) {
             (replyData.images).forEach(async function(each) {
                 let url = await storage.ref().child(each).getDownloadURL();
-                createElement("img").addClass("blog-img").appendTo(session).attr("src", url);
+                createElement("img").addClass("blog-img-forum").appendTo(session).attr("src", url);
             });
         } else {
             session.remove();
@@ -185,6 +185,7 @@ function makeCollection(data, url) {
         history_card.find(".collect-title").html(data.title);
         history_card.find(".card-text").html(data.content);
         history_card.find(".user-name").html(data.user);
+        history_card.find(".user-name").after(data.user);
         history_card.find(".link").attr("href", url);
     })
 }
@@ -377,3 +378,4 @@ function showBlogs() {
         });
     })
 }
+

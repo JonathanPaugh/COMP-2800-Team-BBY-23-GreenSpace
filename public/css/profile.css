@@ -215,7 +215,7 @@ input[type="email"], input[type="text"], .form-control {
 .blog-text-inside {
     border-style: solid;
 }
-.blog-img {
+.blog-img,.blog-img-forum {
     padding-top: 20px;
     height: 400px;
     width: 100%;
