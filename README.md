@@ -49,8 +49,6 @@ Google Custom Search - https://developers.google.com/custom-search/v1/overview
 | Anna Yujeong An | A01167165      |
 | Angel Zhong     | A01005216      |
 
-Jonathan Paugh, Anna An, Angel Zhong
-
 # Developer Setup #
 
 ## Install ##
