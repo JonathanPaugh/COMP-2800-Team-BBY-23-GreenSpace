@@ -3,12 +3,12 @@
 }
 
 body {
+    background-image: url(/image/leave4.jpeg);
     background-color: var(--color-secondary);
     color: white;
 }
 
 .head {
-    background-image: url(/image/leave4.jpeg);
     height: 30vh;
     width: 100%;
     margin-top: -75.83px;
