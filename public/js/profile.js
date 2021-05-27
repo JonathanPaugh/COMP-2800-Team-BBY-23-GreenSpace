@@ -247,6 +247,8 @@ function closeTab() {
 function openTab() {
     modal.style.display = "block";
 }
+
+
 /**
  * Modal ends
  */
@@ -372,6 +374,30 @@ function getProfile() {
 function showBlogs() {
     withUser(user => {
         database.collection("users").doc(user.id).collection("blogs").orderBy("date", "asc").get().then((blogs) => {
+            blogs.docs.forEach((blog) => {
+                makeBlog(blog);
+            })
+        });
+    })
+}
+
+function filterMost() {
+    withUser(user => {
+        $(".blogs").empty();
+
+        database.collection("users").doc(user.id).collection("blogs").orderBy("blog_like", "asc").get().then((blogs) => {
+            blogs.docs.forEach((blog) => {
+                makeBlog(blog);
+            })
+        });
+    })
+}
+
+function filterLeast() {
+    withUser(user => {
+        $(".blogs").empty();
+
+        database.collection("users").doc(user.id).collection("blogs").orderBy("blog_like", "desc").get().then((blogs) => {
             blogs.docs.forEach((blog) => {
                 makeBlog(blog);
             })

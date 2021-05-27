@@ -113,8 +113,21 @@ body {
 #pro-name {
     padding-right:30px;
 }
+.filterMost, .filterLeast{
+    margin-top: 2rem;
+}
+.most, .least {
+    color: black;
+}
+.most:hover, .least:hover {
+    color: purple;
+}
 
-input[type=button], input[type=submit], input[type=submitPost],input[submitBlog] {
+input[type=button], input[type=submit], input[submitBlog] {
+    background-color: var(--color-primary);
+    position: absolute;
+}
+input[type=button], input[type=submit],input[type=submitPost], input[submitBlog] {
     background-color: var(--color-primary);
     border: none;
     border-radius: 20px;
@@ -122,11 +135,11 @@ input[type=button], input[type=submit], input[type=submitPost],input[submitBlog]
     text-decoration: none;
     margin: 4px 2px;
     width: 150px;
-    position: absolute;
     right: 0px;
     text-align: center;
 }
 input[type=submitPost] {
+    float:right;
     margin-top: 1.5rem !important;
     background-color: #DBCFB0;
 }
@@ -262,8 +275,9 @@ hr {
  clear: both;
  margin-bottom:12px;
 }
-
-
+.section-create {
+    margin-left:30px;
+}
 .section-title, h4 {
     text-align: center;
     color: black;
