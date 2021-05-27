@@ -35,28 +35,33 @@ body {
 .row1-col1, .part1 {
     margin: 0;
     background-color: #a6b6b1;
-    /* background-color: var(--color-secondary); */
     position: relative;
     height: 460px;
 }
 
-.circle, .circle2 {
+.circle, .circle2, #profile-image  {
     display: inline-block;
     height: 300px;
     width: 300px;
+    text-align: center;
     background-size: 100% 100%;
     border-radius: 50%;
-    object-fit: contain;
-    background-image: url(/image/angel.jpg);
-    position: absolute;
-    top: 50%;
-    left: 45%;
-    transform: translateY(-50%) translateX(-45%);
+    object-fit: cover;
+    
 }
-
+#profile-image:hover {
+    filter: brightness(50%);
+}
+.part1 > i {
+    margin-left: 17rem;
+    color: rgb(104, 78, 78);
+}
+.part1 > i:hover {
+    color: rgb(131, 115, 115);
+}
 .row1-col2, .row1-page1-part2 {
     margin-top: 0px;;
-    color: black;
+    color: rgb(37, 37, 37);
     display: flex; 
     justify-content: center;
     align-items: center;
@@ -177,7 +182,6 @@ input[type="email"], input[type="text"], .form-control {
 
 .nav_menu ul li.active,
 .nav_menu ul li:hover, input[type=submit]:hover {
-    /* background-color: rgb(253, 253, 253); */
     background-color: var(--color-accent);
     color:black;
 }
@@ -185,7 +189,6 @@ input[type="email"], input[type="text"], .form-control {
 .cardA {
     margin-top:0px;
     margin-bottom: 30px;
-    /* background-color:yellow; */
     color: black;
 }
 .blogs {
@@ -261,7 +264,7 @@ hr {
 }
 
 
-.section-title {
+.section-title, h4 {
     text-align: center;
     color: black;
     font-size: 26px;
@@ -369,7 +372,6 @@ textarea {
     padding-right: 30px;
     color: #000;
     background-color: var(--color-secondary);
-    /* background-color: rgb(150, 206, 175); */
     font-weight: bold;
 }
 
@@ -387,13 +389,7 @@ textarea {
 #fp {
     margin-bottom: 10px;
 }
-/* #fp {
-    padding-right: 50px;
-}
 
-#fp-e {
-    padding-right: 100px;
-} */
 
 #logo {
     width: 50px;
@@ -410,15 +406,15 @@ textarea {
 .history-collect-space {
     height: 80px;
     width: 100%;
-<<<<<<< HEAD
-    
-=======
     background-color: var(--color-secondary);
 }
 
 .gallery {
     margin-top: 48px;
->>>>>>> 3b5a9a2dee82dfb3463656d71a52ae14f2dd7877
+}
+
+.collect-title {
+    background-color: var(--color-primary);
 }
 
 @media only screen and (max-width: 999px) {
@@ -449,7 +445,7 @@ textarea {
         grid-template-columns: 1fr 1fr;
     }
 
-    .row1, .row1A {
+    .row1A {
         display: grid;
         grid-template-rows: 100%;
         grid-template-columns: 40% 60%;
@@ -460,13 +456,7 @@ textarea {
     .center h5{
         font-size: 30px;
     }
-
-    /* .row1A {
-        height: 490px;
-        overflow: auto;
-    } */
-
-    .row1-col1, .part1 {
+    .part1 {
         grid-column: 1 /span 1;
         grid-row: 1 / span 1;
         height: auto;
@@ -478,10 +468,9 @@ textarea {
         grid-row: 1 / span 1;
     }
 
-    .row1-col2, .row1-page1-part2 {
+    .row1-page1-part2 {
         grid-column: 2 / span 1;
         grid-row: 1 / span 1;
-        /* background-color: rgb(224, 224, 224);  */
         padding-left: 20px;
         color: black;
         display: flex; 
@@ -495,11 +484,6 @@ textarea {
     #pro-bio {
         overflow: auto;
     }
-
-    .circle, .circle2 {
-        height: 360px;
-        width: 360px;
-    }
 }
 
 @media only screen and (min-width: 1360px) {
@@ -509,6 +493,9 @@ textarea {
         width:25%;
     }
 
+    .col-25A, .col-25A{
+        width:100%;
+    }
     .col-75 {
         width:75%;
     }

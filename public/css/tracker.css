@@ -1,0 +1,34 @@
+body {
+    min-height: 100vh;
+}
+
+img {
+    border: 1px solid #CCC;
+    border-radius: 3px;
+}
+
+.tracker-section  {
+    background-color: var(--color-container);
+}
+
+.tracker-plant-image {
+    width: 25vw;
+    height: 25vw;
+    object-fit: cover;
+}
+
+.time-slider {
+    width: 100%;
+    height: 8px;
+}
+
+@media only screen and (max-width: 576px) {
+    .plant-taxonomy {
+        padding: 0.5rem 0.25rem;
+    }
+
+    .list-group-item {
+        padding: 0.25rem 0.25rem;
+        font-size: 0.8rem;
+    }
+}

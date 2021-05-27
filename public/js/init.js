@@ -51,6 +51,9 @@ $(document).ready(() => {
 * Reference Start
 */
 
+/*
+* Inverts all the colors of stylings on the page
+*/
 function invert() { 
     head = document.getElementsByTagName("head")[0],
     style = document.createElement("style");

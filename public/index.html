@@ -10,79 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico">
-    <style>
-        body {
-            background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)), url('/image/bg_img_2.jpg');
-            background-repeat: no-repeat;
-            background-size: cover;
-            height: 100vh;
-            color: white; 
-        }
-
-        #main {
-            height: 72vh;
-        }
-
-        #main-text {
-            font-size: 25pt;
-            margin-top: 25%;
-            text-align: center;
-            color: white;
-        }
-
-        #sub-text {
-            font-size: 14pt;
-            margin-top: 50px;
-            text-align: center;
-            color: white;
-            font-weight: 900;
-        }
-
-        .btn {
-            width: 100%;
-            border-radius: 20px;
-            color: white;
-        }
-
-        #sign-up-button {
-            background-color: #dbcfb0;
-        }
-
-        #sign-up-button:hover {
-            background-color: white;
-        }
-
-        #login-button {
-            background-color: #66000000;
-            border: 2px solid #dbcfb0;
-        }
-
-        #login-button:hover {
-            background-color: white;
-        }
-
-        #buttons {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        @media only screen and (min-width: 800px) and (max-width: 2000px) {
-            #main-text {
-                font-size: 30pt;
-                margin-top: 10%;
-                text-align: center;
-            }
-
-            #sub-text {
-                font-size: 18pt;
-                margin-top: 50px;
-            }
-
-            #buttons {
-                width: 20%;
-            }
-        }
-    </style>
+    <link href="/css/index.css" rel="stylesheet">
 </head>
 
 <body>
@@ -109,28 +37,9 @@
     <script src="/js/general.js"></script>
     <script src="/js/firebase.js"></script>
     <script src="/js/init.js"></script>
-    <script>
-        $(document).ready(() => {
-            firebase.auth().onAuthStateChanged(user => {
-                if (user) {
-                    fetchTemplate("main-welcome.html", data => {
-                        $("#main").html(data);
-                        $(".main-logout").click(logout);
-                    });
-                } else {
-                    fetchTemplate("main-login.html", data => {
-                        $("#main").html(data);
-                    });
-                }
-            });
-        });
-        
-        function logout() {
-            firebase.auth().signOut().then(() => {
-                redirect("index.html");
-            });
-        }
-    </script>
+
+    <!-- Scripts -->
+    <script src="/js/index.js"> </script>
 </body>
 
 </html>

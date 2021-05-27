@@ -1,3 +1,6 @@
+/*
+* Sets up invert button when navbar is injected into page
+*/
 $(document).ready(() => {
     $(".invert-button").click(() => {
         if (localStorage.getItem("invert") == "true") {
