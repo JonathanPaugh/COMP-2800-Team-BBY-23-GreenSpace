@@ -67,7 +67,20 @@ function getCollect(user) {
             forumPosts(user, doc.id, doc.data());
         });
     });
-
+    database.collection("threads").get().then((threads)=>{
+        threads.docs.forEach(thread =>{
+             var user_reply = database.collection("threads").doc(thread.id).collection("replies");
+             user_reply.where("user", "==", user.id).get().then(replies =>{
+              
+                 replies.forEach((reply)=>{
+                     user_reply.doc(reply.id).get().then(doc => {
+                        var url = "/thread.html?id=" + thread.id;
+                        makeReplyCollection(doc.data(), url);
+                     })
+                 })
+             })
+        })
+    })
     collectList.forEach(category => {
         category.get().then(collection => {
             collection.docs.forEach(garden => { 
@@ -80,10 +93,32 @@ function getCollect(user) {
 }
 
 //get the user's posts from forum
+function makeReplyCollection(replyData, url) {
+    fetchTemplate("profile-forum-reply.html", card => {
+        var forum_reply_card = $(card).appendTo(".forum-collect");
+        
+        forum_reply_card.find(".card-text").html(replyData.content);
+        var session = forum_reply_card.find(".go_image");
+
+        if (replyData.images.length > 0) {
+            (replyData.images).forEach(async function(each) {
+                let url = await storage.ref().child(each).getDownloadURL();
+                createElement("img").addClass("blog-img").appendTo(session).attr("src", url);
+            });
+        } else {
+            session.remove();
+        }
+        forum_reply_card.find(".reply").click(() => {
+            redirect(url);
+        })
+    })
+}
+
+//get the user's posts from forum
 function forumPosts(user, forumRef, forumData) {
     if (forumData.user == user.id) {
         var url = "/thread.html?id=" + forumRef;
-        //make the post display in the collection
+        //make the post display in the makeCollection
         makeForumCollection(forumData, url, user);
     }
 }

@@ -9,8 +9,11 @@ $(document).ready(() => {
             makeBlog(blog);
         })
     })
+    //click to update reminder post
     $(".blog-update").on("click", updateBlog);
 })
+
+//update content of the blog 
 function updateBlog() {
     withUser(user => {
         var blogId = getUrlQuery().get("blogId");
@@ -25,6 +28,7 @@ function updateBlog() {
     })
 }
 
+//create blog and display them in the reminder session
 function makeBlog(blog) {
     $(".blog-edit").attr("id", blog.id);
     $(".blog-reminder").attr("id", blog.id);

@@ -21,32 +21,34 @@
             <div class="row1-col2">
                 <div class="pro-info">
                     <form class="user-form">
-                    <div class="form-group row pb-2">
-                        <label for="exampleFormControlInput1" class="col-25A ">Name: </label>
-                        <input type="text" class="form-control col-sm-4 col-75A name" placeholder="username">
-                      </div>
-                      <div class="form-group row pb-2">
-                        <label for="exampleFormControlInput1" class="col-25A">Email: </label>
-                        <input type="email" class="form-control col-75A email" id="exampleFormControlInput1" placeholder="name@example.com">
-                      </div>
-                      <div class="form-group row pb-2">
-                        <label for="exampleFormControlInput1" class="col-25A ">Website</label>
-                        <input type="text" class="form-control col-sm-4 col-75A web" placeholder="https://example.com">
-                      </div>
-                      <div class="form-group row pb-2">
-                        <label for="exampleFormControlTextarea1"class="col-25A">Biography: </label>
-                        <textarea class="form-control col-75A bio" id="exampleFormControlTextarea1" rows="3"></textarea>
-                      </div>
-                      <div class="row">
-                        <input type="submit" id="MyButton" value="Submit">
-                        <!-- <button type="button" id="MyButton">Click me!</button> -->
-                      </div>
+                        <div class="form-group row pb-2">
+                            <label for="exampleFormControlInput1" class="col-25A ">Name: </label>
+                            <input type="text" class="form-control col-sm-4 col-75A name" placeholder="username">
+                        </div>
+                        <div class="form-group row pb-2">
+                            <label for="exampleFormControlInput1" class="col-25A">Email: </label>
+                            <input type="email" class="form-control col-75A email" id="exampleFormControlInput1"
+                                placeholder="name@example.com">
+                        </div>
+                        <div class="form-group row pb-2">
+                            <label for="exampleFormControlInput1" class="col-25A ">Website</label>
+                            <input type="text" class="form-control col-sm-4 col-75A web"
+                                placeholder="https://example.com">
+                        </div>
+                        <div class="form-group row pb-2">
+                            <label for="exampleFormControlTextarea1" class="col-25A">Biography: </label>
+                            <textarea class="form-control col-75A bio" id="exampleFormControlTextarea1"
+                                rows="3"></textarea>
+                        </div>
+                        <div class="row">
+                            <input type="submit" id="MyButton" value="Submit">
+                        </div>
                     </form>
 
                 </div>
             </div>
         </div>
-        
+
     </div>
     <!-- Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
@@ -65,48 +67,7 @@
     <script src="/js/general.js"></script>
     <script src="/js/firebase.js"></script>
     <script src="/js/init.js"></script>
-
-    <!-- Scripts -->
-    <script>
-
-
-        $(document).ready(()=>{
-            // showBlogs();
-            readProfileA();
-            $('.user-form').submit(
-               profile);
-               $('#MyButton').click(
-               profile);
-            //    getProfile();
-        })
-
-            
-        function profile(event) {
-            event.preventDefault();
-            withUser(user => {
-              
-                database.collection("users").doc(user.id).set({
-                   
-                    name: $(".name").val(),
-                    email:$(".email").val(),
-                    website:$(".web").val(),
-                    bio:$(".bio").val(),
-                    user: user.id
-                }, { merge: true }).then(() => {
-                    redirect("/profile.html");
-                });
-            });
-        }
-   
-        function readProfileA(){
-            withUser(user => {
-                $(".name").val(user.data().name),
-                $(".email").val(user.data().email),
-                $(".web").val(user.data().website),
-                $(".bio").val(user.data().bio)
-            })
-        }
-    
+    <script src="/js/profile-2.js"></script>
     </script>
 
 

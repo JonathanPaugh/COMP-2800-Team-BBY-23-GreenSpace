@@ -35,7 +35,6 @@ body {
 .row1-col1, .part1 {
     margin: 0;
     background-color: #a6b6b1;
-    /* background-color: var(--color-secondary); */
     position: relative;
     height: 460px;
 }
@@ -51,7 +50,7 @@ body {
     
 }
 #profile-image:hover {
-    filter: brightness(150%);
+    filter: brightness(50%);
 }
 .part1 > i {
     margin-left: 17rem;
@@ -183,7 +182,6 @@ input[type="email"], input[type="text"], .form-control {
 
 .nav_menu ul li.active,
 .nav_menu ul li:hover, input[type=submit]:hover {
-    /* background-color: rgb(253, 253, 253); */
     background-color: var(--color-accent);
     color:black;
 }
@@ -191,7 +189,6 @@ input[type="email"], input[type="text"], .form-control {
 .cardA {
     margin-top:0px;
     margin-bottom: 30px;
-    /* background-color:yellow; */
     color: black;
 }
 .blogs {
@@ -267,7 +264,7 @@ hr {
 }
 
 
-.section-title {
+.section-title, h4 {
     text-align: center;
     color: black;
     font-size: 26px;
@@ -375,7 +372,6 @@ textarea {
     padding-right: 30px;
     color: #000;
     background-color: var(--color-secondary);
-    /* background-color: rgb(150, 206, 175); */
     font-weight: bold;
 }
 
@@ -460,11 +456,6 @@ textarea {
     .center h5{
         font-size: 30px;
     }
-    /* .row1A {
-        height: 490px;
-        overflow: auto;
-    } */
-/*row1-col1*/
     .part1 {
         grid-column: 1 /span 1;
         grid-row: 1 / span 1;
