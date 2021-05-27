@@ -10,15 +10,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico">
+    <link href="/css/group.css" rel="stylesheet">
     <style>
         .input-group {
             padding: 1em;
-        }
-
-        #reset-post {
-            float: right;
-            background-color: #DBCFB0;
-            margin-right: 10px;
         }
 
         #create-post {
@@ -34,23 +29,30 @@
         }
 
         @media only screen and (min-width: 0px) and (max-width: 599px) {
-            .card, #mandatory {
+
+            .card,
+            #mandatory {
                 margin: 0 1em 0 1em;
             }
 
-            #reset-post, #create-post {
+            #reset-post,
+            #create-post {
                 width: fit-content;
             }
         }
 
         @media only screen and (min-width: 600px) {
-            .card, #mandatory {
+
+            .card,
+            #mandatory {
                 margin: 0 3em 0 3em;
             }
         }
 
         @media only screen and (min-width: 1200px) {
-            .card, #mandatory {
+
+            .card,
+            #mandatory {
                 margin: 0 5em 0 5em;
             }
         }
@@ -99,54 +101,17 @@
     <script src="/js/init.js"></script>
 
     <!-- Scripts -->
+    <script src="/js/group.js"></script>
     <script>
-        const parsedUrl = new URL(window.location.href);
-        var id = parsedUrl.searchParams.get("id");
-        var groupName = window.location.hash.substr(1);
-        var posts = database.collection("groups").doc("categories")
-            .collection(id).doc(groupName).collection("posts");
-
         $(document).ready(function () {
+            // requires login, otherwise not be able to leave a comment
             requireLogin();
-
-            console.log(id);
-            console.log(groupName);
 
             $("#create-post").click((e) => {
                 e.preventDefault();
-
                 writePosts();
             })
         });
-
-        function writePosts() {
-            let postTitle = document.querySelector(".post-title");
-            let postContent = document.querySelector(".post-content");
-
-            if (postTitle.value.trim() === "") {
-                postTitle.reportValidity();
-            } else if (postContent.value.trim() === "") {
-                postContent.reportValidity();
-            } else if (postTitle.value.trim() !== "" && postContent.value.trim() !== "") {
-                firebase.auth().onAuthStateChanged(function (user) {
-                    if (user) {
-                        database.collection("users").doc(user.uid).get()
-                            .then(function (doc) {
-                                posts.add({
-                                    user: doc.data().name,
-                                    title: postTitle.value,
-                                    content: postContent.value
-                                }).then(function () {
-                                    window.location.href = "/group-posts.html?id=" + id + "#" + groupName;
-                                });
-                            });
-                    }
-                });
-            }
-
-        }
-
-
     </script>
 </body>
 

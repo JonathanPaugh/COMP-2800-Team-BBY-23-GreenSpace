@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico">
+    <link href="/css/group.css" rel="stylesheet">
     <style>
         span {
             margin: 5px;
@@ -95,16 +96,9 @@
     <script src="/js/init.js"></script>
 
     <!-- Scripts -->
+    <script src="/js/group.js"></script>
     <script>
-        const parsedUrl = new URL(window.location.href);
-        var id = parsedUrl.searchParams.get("id");
-        var groupName = window.location.hash.substr(1);
-
-        var posts = database.collection("groups").doc("categories")
-            .collection(id).doc(groupName).collection("posts");
-
         $(document).ready(function () {
-
             posts.get().then(function (posts) {
                 posts.docs.forEach(async function (post) {
                     var docName = post.id;
@@ -118,71 +112,10 @@
                     );
                 });
             });
-
             redirectToGroupMain();
             addPost();
         });
 
-        function displayPosts(docID, title, content, user, like, comment) {
-            fetchFile("/template/group-post.html", data => {
-                let group = $(data).appendTo("#posts");
-                $(".delete").hide();
-
-                group.find(".delete").attr("id", "d-" + docID);
-                group.find(".post-title").html(title);
-                group.find(".post-content").html(content);
-                group.find(".post-user").html(user);
-                group.find(".post-like").html(like);
-                group.find(".post-comment").html(comment);
-                group.find(".like-button").attr("id", docID);
-                group.find(".view-button").attr("href", "/group-comments.html?id=" + id
-                    + "#" + groupName + "&" + docID);
-
-                group.find(".like-button").click(e => {
-                    e.preventDefault();
-                    increaseLike(docID);
-                });
-
-                firebase.auth().onAuthStateChanged(function (usr) {
-                    database.collection("users").doc(usr.uid).get()
-                        .then(function (doc) {
-                            if (doc.data().name === user) {
-                                group.find(".delete").show();
-                            }
-                        });
-                });
-                deletePost("d-" + docID);
-            });
-        }
-
-        function increaseLike(likeid) {
-            posts.doc(likeid).update({
-                likes: firebase.firestore.FieldValue.increment(1)
-            }).then(function () {
-                location.reload();
-            });
-        }
-
-        function deletePost(buttonID) {
-            $("#" + buttonID).click(async function (e) {
-                e.preventDefault();
-                var id = e.target.id.substr(2);
-
-                var ale = await window.confirm("Are you sure you want to delete?");
-
-                if (ale) {
-                    var del = await posts.doc(id).delete();
-                    location.reload();
-                }
-            });
-        }
-        function redirectToGroupMain() {
-            $("#back-button").attr("href", "/group-main.html?id=" + id + "#" + groupName);
-        }
-
-        function addPost() {
-            $("#post-button").attr("href", "/group-create-post.html?id=" + id + "#" + groupName);
-        }
     </script>
 </body>
 

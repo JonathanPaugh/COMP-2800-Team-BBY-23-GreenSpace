@@ -1,0 +1,197 @@
+#main-text {
+    font-size: 18pt;
+}
+
+#categories {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    text-align: center;
+}
+
+#categories p:hover {
+    color: white;
+}
+
+@media only screen and (min-width: 800px) {
+    #categories {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr;
+    }
+}
+
+/** group-list.html */
+#group-create-button {
+    float: left;
+    background-color: #DBCFB0;
+    width: fit-content;
+}
+
+.join-button {
+    float: right;
+    width: 30%;
+    margin-bottom: 5%;
+    margin-right: 5%;
+}
+
+@media only screen and (min-width: 768px) {
+    .join-button {
+        float: right;
+        width: 30%;
+        margin-top: 10%;
+        margin-right: 30px;
+    }
+}
+
+
+
+/** group-main.html */
+#group-title {
+    margin-bottom: 20px;
+}
+
+#gallery-image {
+    overflow: auto;
+    white-space: nowrap;
+}
+
+#gallery img {
+    display: inline-block;
+    width: 110px;
+    height: 110px;
+    margin: 3px;
+}
+
+#like-image {
+    overflow: auto;
+    white-space: nowrap;
+}
+
+#likes img {
+    display: inline-block;
+    width: 110px;
+    height: 110px;
+    margin: 3px;
+}
+
+.more {
+    color: white;
+    text-decoration: underline;
+}
+
+.more:hover {
+    text-decoration: underline;
+}
+
+#post,
+#gallery,
+#likes {
+    margin-bottom: 2em;
+}
+
+li:hover {
+    text-decoration: underline;
+    color: #B2D385;
+}
+
+
+@media only screen and (min-width: 800px) {
+    #gallery img {
+        width: 150px;
+        height: 150px;
+        margin: 5px;
+    }
+
+    #likes img {
+        width: 150px;
+        height: 150px;
+        margin: 5px;
+    }
+
+    #post,
+    #gallery,
+    #likes {
+        margin: 3em 0 3em 0;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    #gallery img {
+        width: 200px;
+        height: 200px;
+        margin: 10px;
+    }
+
+    #likes img {
+        width: 200px;
+        height: 200px;
+        margin: 10px;
+    }
+
+    #post,
+    #gallery,
+    #likes {
+        margin: 5em 0 5em 0;
+    }
+
+    #main li {
+        font-size: 16pt;
+    }
+}
+
+
+/** group-create-group.html */
+.input-group {
+    padding: 1em;
+}
+
+#reset-group {
+    float: right;
+    background-color: #DBCFB0;
+    margin-right: 10px;
+}
+
+#create-group {
+    float: right;
+}
+
+/** group-comments.html */
+#comment-submit {
+    width: 100px;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+}
+
+.new-comment {
+    display: inline;
+    padding: 5px;
+}
+
+/** group-gallery.html */
+.post-images {
+    width: 100%;
+    height: 100%;
+}
+
+@media only screen and (min-width: 600px) {
+    .post-images {
+        width: 80%;
+        height: 80%;
+    }
+
+}
+
+/** group-create-gallery.html */
+#reset-group {
+    float: right;
+    background-color: #DBCFB0;
+    margin-right: 10px;
+}
+
+/** group-create-post.html */
+#reset-post {
+    float: right;
+    background-color: #DBCFB0;
+    margin-right: 10px;
+}

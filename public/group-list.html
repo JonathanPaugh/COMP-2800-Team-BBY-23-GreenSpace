@@ -9,6 +9,7 @@
         integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href="/css/group.css" rel="stylesheet">
     <style>
         #container {
             margin: 3em;
@@ -21,21 +22,8 @@
             border-top-right-radius: 20px;
         }
 
-        #group-create-button {
-            float: left;
-            background-color: #DBCFB0;
-            width: fit-content;
-        }
-
         .card {
             border-radius: 20px;
-        }
-
-        .join-button {
-            float: right;
-            width: 30%;
-            margin-bottom: 5%;
-            margin-right: 5%;
         }
 
         @media only screen and (max-width: 414px) {
@@ -56,13 +44,6 @@
                 border-top-right-radius: 0px;
                 border-bottom-left-radius: 20px;
             }
-
-            .join-button {
-                float: right;
-                width: 30%;
-                margin-top: 10%;
-                margin-right: 30px;
-            }
         }
 
         @media only screen and (min-width: 1200px) {
@@ -74,7 +55,6 @@
 </head>
 
 <body>
-
     <div id="container">
         <h2>
             <!--Groups of 'category' goes here-->
@@ -82,7 +62,6 @@
         <p id="community-garden-list"><a href="/community-gardens.html">Click here</a> to get information of Vancouver
             community gardens</p><br>
         <a id="group-create-button" class="btn col-3">+ Add Group</a><br><br>
-
         <div id="group">
             <!--Group list goes here-->
         </div>
@@ -108,13 +87,10 @@
     <script src="./js/init.js"></script>
 
     <!-- Scripts -->
+    <script src="/js/group.js"></script>
     <script>
-
-        const parsedUrl = new URL(window.location.href);
-        var id = parsedUrl.searchParams.get("id");
-        var groups = database.collection("groups").doc("categories").collection(id);
-
         $(document).ready(function () {
+            // requires login, otherwise not be able to leave a comment
             requireLogin();
             replaceHeading();
             groups.get()
@@ -128,37 +104,9 @@
                         );
                     });
                 });
-
             displayCommunityGardensLink();
             addGroup();
         });
-
-        function replaceHeading() {
-            $("h2").text("Groups of " + id);
-        }
-
-        function displayGroup(docID, title, description, img) {
-            fetchFile("/template/group-info.html", data => {
-                let group = $(data).appendTo("#group");
-
-                group.find(".group-title").html(title);
-                group.find(".group-description").html(description);
-                group.find(".join-button").attr("href", "/group-main.html?id=" + id + "#" + docID);
-                group.find(".group-image").attr("src", img);
-            });
-        }
-
-        function displayCommunityGardensLink() {
-            $("#community-garden-list").hide();
-            if (id === "community-garden") {
-                $("#community-garden-list").show();
-            }
-        }
-
-        function addGroup() {
-            $("#group-create-button").attr("href", "/group-create-group.html?id=" + id);
-        }
-
     </script>
 </body>
 

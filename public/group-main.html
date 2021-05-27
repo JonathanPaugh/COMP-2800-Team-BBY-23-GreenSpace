@@ -10,7 +10,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico">
+    <link href="/css/group.css" rel="stylesheet">
     <style>
+        #container a {
+            display: inline;
+            float: right;
+            font-size: 12pt;
+        }
+
         #container {
             margin: 0 2em 0 2em;
         }
@@ -25,59 +32,6 @@
             height: 30vh;
         }
 
-        #group-title {
-            margin-bottom: 20px;
-        }
-
-        #gallery-image {
-            overflow: auto;
-            white-space: nowrap;
-        }
-
-        #gallery img {
-            display: inline-block;
-            width: 110px;
-            height: 110px;
-            margin: 3px;
-        }
-
-        #like-image {
-            overflow: auto;
-            white-space: nowrap;
-        }
-
-        #likes img {
-            display: inline-block;
-            width: 110px;
-            height: 110px;
-            margin: 3px;
-        }
-
-        #container a {
-            display: inline;
-            float: right;
-            font-size: 12pt;
-        }
-
-        .more {
-            color: white;
-            text-decoration: underline;
-        }
-
-        .more:hover {
-            text-decoration: underline;
-        }
-
-        #post,
-        #gallery,
-        #likes {
-            margin-bottom: 2em;
-        }
-
-        li:hover {
-            text-decoration: underline;
-            color: #B2D385;
-        }
 
         @media only screen and (min-width: 800px) {
             #container {
@@ -87,24 +41,6 @@
             #top img {
                 width: 100%;
                 height: 50vh;
-            }
-
-            #gallery img {
-                width: 150px;
-                height: 150px;
-                margin: 5px;
-            }
-
-            #likes img {
-                width: 150px;
-                height: 150px;
-                margin: 5px;
-            }
-
-            #post,
-            #gallery,
-            #likes {
-                margin: 3em 0 3em 0;
             }
 
             #container li {
@@ -121,34 +57,11 @@
                 width: 100%;
                 height: 70vh;
             }
-
-            #gallery img {
-                width: 200px;
-                height: 200px;
-                margin: 10px;
-            }
-
-            #likes img {
-                width: 200px;
-                height: 200px;
-                margin: 10px;
-            }
-
-            #post,
-            #gallery,
-            #likes {
-                margin: 5em 0 5em 0;
-            }
-
-            #main li {
-                font-size: 16pt;
-            }
         }
     </style>
 </head>
 
 <body>
-
     <div id="container">
         <div id="top">
             <h1 id="group-title">
@@ -156,14 +69,13 @@
             </h1>
             <img id="main-image" alt="image">
         </div>
-
         <div id="main">
             <div id="tracker">
-                <a class="tracker" href="#"><h4><i class="fas fa-seedling"></i><b> Plant Tracker</b></h4></a>
+                <a class="tracker" href="#">
+                    <h4><i class="fas fa-seedling"></i><b> Plant Tracker</b></h4>
+                </a>
             </div>
-
             <br><br><br>
-
             <div id="post">
                 <h4><i class="fas fa-pencil-alt"></i><b> Top Posts</b><a id="post-a" class="more">see more</a></h4>
                 <ul>
@@ -172,29 +84,13 @@
                     </li>
                 </ul>
             </div>
-
             <div id="gallery">
                 <h4><i class="far fa-images"></i><b> Gallery</b><a id="gallery-a" class="more">see more</a></h4>
                 <div id="top-gallery-image">
                     <!-- Image previews of top 3 images go here -->
                 </div>
             </div>
-
-            
-
-            <!-- <div id="likes">
-                <h4><i class="fas fa-thumbs-up"></i><b> Your Likes</b><a id="likes-a" class="more">see more</a></h4>
-                <div id="like-image">
-                    <img src="/image/leave4.jpeg">
-                    <img src="/image/leave4.jpeg">
-                    <img src="/image/leave4.jpeg">
-                    <img src="/image/leave4.jpeg">
-                </div>
-
-            </div> -->
-
         </div>
-
     </div>
 
     <!-- Bundle -->
@@ -217,34 +113,27 @@
     <script src="/js/init.js"></script>
 
     <!-- Scripts -->
+    <script src="/js/group.js"></script>
     <script>
-
-        const parsedUrl = new URL(window.location.href);
-        var id = parsedUrl.searchParams.get("id");
-        var groupName = parsedUrl.hash.substr(1);
-
         var posts = database.collection("groups").doc("categories")
             .collection(id).doc(groupName);
 
         $(document).ready(function () {
-
             $(".tracker").click(function (event) {
                 event.preventDefault();
                 window.location.href = `/tracker.html?type=${id}&typeId=${groupName}`;
             });
 
-            $("#post-a").click(function () {
+            $("#post-a").click(function (event) {
+                event.preventDefault();
                 window.location.href = "/group-posts.html?id=" + id + "#" + groupName;
             });
 
-            $("#gallery-a").click(function () {
+            $("#gallery-a").click(function (event) {
+                event.preventDefault();
                 window.location.href = "/group-gallery.html?id=" + id + "#" + groupName;
             });
 
-            // $("#likes-a").click(function () {
-            //     window.location.href = "/group-likes.html?id=" + id + hash;
-            // });
-            
             readGroupTitle();
             readTopPosts();
             readMainImage();
@@ -252,57 +141,6 @@
             redirectToTopPost();
             redirectToTopImage();
         });
-
-        function readGroupTitle() {
-            posts.get().then(info => {
-                $("#group-title").html(info.data().title);
-            });
-        }
-
-        function readMainImage() {
-            posts.get().then(info => {
-                $("#main-image").attr("src", info.data().image);
-            });
-        }
-
-        function readTopPosts() {
-            
-
-            posts.collection("posts").limit(3).orderBy("likes", "desc").get()
-                .then(function (posts) {
-                    posts.docs.forEach(function (post) {
-                        $("#top-post-title").append("<li id=" + post.id + ">"
-                            + post.data().title + "</li>");
-                    });
-                });
-        }
-
-        function readTopImages() {
-            posts.collection("gallery").limit(3).orderBy("likes", "desc").get()
-                .then(function (posts) {
-                    posts.docs.forEach(function (post) {
-                        $("#top-gallery-image").append("<img class='top-images' id='" + post.id 
-                        + "' src='" + post.data().image + "'>");
-                    });
-                });
-        }
-
-        function redirectToTopPost() {
-            $("li").click(e => {
-                e.preventDefault();
-                window.location.href = "/group-comments.html?id=" + id + "#"
-                    + groupName + "&" + $(event.target).attr("id");
-            });
-        }
-
-        function redirectToTopImage() {
-            $(".top-images").click(e => {
-                e.preventDefault();
-                window.location.href = "/group-comments.html?id=" + id + "#"
-                    + groupName + "&" + $(event.target).attr("id");
-            });
-        }
-
     </script>
 </body>
 
