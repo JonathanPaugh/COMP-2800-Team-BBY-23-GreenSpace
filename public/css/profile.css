@@ -127,7 +127,7 @@ input[type=button], input[type=submit], input[submitBlog] {
     background-color: var(--color-primary);
     position: absolute;
 }
-input[type=button], input[type=submit],input[type=submitPost], input[submitBlog] {
+input[type=button],input[type=submit],input[type=submitPost], input[submitBlog] {
     background-color: var(--color-primary);
     border: none;
     border-radius: 20px;
@@ -301,8 +301,8 @@ hr {
     background-color: aqua;
 }
 .image-select {
-    padding-top: 0px;
-    
+    padding-top: 20px;
+    margin: 10px;
 }
 #selectImage {
     height: 30px;
@@ -417,14 +417,13 @@ textarea {
 #check {
     height: 80px;
 }
+.section-gallery-btn {
+    height: 80px;
+}
 .history-collect-space {
     height: 80px;
     width: 100%;
     background-color: var(--color-secondary);
-}
-
-.gallery {
-    margin-top: 48px;
 }
 
 .collect-title {
