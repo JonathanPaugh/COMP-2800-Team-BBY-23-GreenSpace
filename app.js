@@ -7,6 +7,7 @@
 const fs = require("fs");
 const https = require("https");
 const url = require("url");
+const Twit = require('twit')
 
 const express = require("express");
 
@@ -136,6 +137,32 @@ app.post("/search-plant", (req, res) => {
     });
 });
 
+/**
+ * API keys for Twitter
+ */
+var T = new Twit({
+    consumer_key: 'AlhyKbXM4gpXQL37bA4R0kkb3',
+    consumer_secret: '37adRFcR6FFtxMT6MOKYPhAkoTlqMDeyWAtV6OoCBTj2G5xLr0',
+    access_token: '1250448348433117192-bavVHWdE8FvN0BSGphdBDEOLQMO0Pd',
+    access_token_secret: 'hvap3rQYVHhAq8rga8MxYNWrQ65OUCGasbrhUtnICbU2P',
+});
+
+/**
+ * Returns data of the hash tag
+ * I found this code on GitHub
+ * 
+ * @author tombaranowicz
+ * @see https://github.com/tombaranowicz/TwitterMonitoringJavaScript/blob/master/index.js
+ */
+app.get("/get-tweets", function (req, res) {
+    T.get('search/tweets', { q: '#TeamGreenSpace23 since:2020-05-25', count: 100 }, function(err, data, response) {
+        const tweetUser = data.statuses.map(tweet => tweet.user.name)
+        const tweetContent = data.statuses.map(tweet => tweet.text)
+        const tweetDate = data.statuses.map(tweet => tweet.created_at)
+  
+        res.send({user: tweetUser, content: tweetContent, date: tweetDate});
+    });
+});
 
 /***************\
 * Data Requests *
