@@ -23,10 +23,10 @@ https://docs.google.com/spreadsheets/d/1KdybRfJBqQhcJApiRZRBhD_RVcE7FFl4ZR2aBu-F
 ## Install ##
 1. Install these programs, order doesn't matter, but do this before continuing to setup.
 
-  * Chrome\
-  * Git\
-  * VSCode\
-  * Sourcetree\
+  * Chrome
+  * Git
+  * VSCode
+  * Sourcetree
   * Node.js
 
 ## Setup ##
