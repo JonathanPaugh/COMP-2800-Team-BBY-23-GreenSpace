@@ -10,71 +10,29 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico">
-    <link href="/css/group.css" rel="stylesheet">
     <style>
-        span {
-            margin: 5px;
-        }
-
-        .post .btn {
-            float: right;
-        }
-
-        #post-button,
-        #back-button {
-            float: left;
-            margin-left: 1em;
-            width: fit-content;
-        }
-
-        #back-button {
-            background-color: #DBCFB0;
-            margin-bottom: 0.5em;
-        }
-
-        .post-title {
-            float: left;
-        }
-
-        .fa-times {
-            float: right;
-        }
-
-        @media only screen and (min-width: 0px) and (max-width: 599px) {
-            .card {
-                margin: 1em 1em 1em 1em;
-            }
+        .card, #header {
+            margin: 1em;
         }
 
         @media only screen and (min-width: 600px) {
-            .card {
+            .card, #header {
                 margin: 1em 3em 1em 3em;
-            }
-
-            #post-button,
-            #back-button {
-                margin-left: 3em;
             }
         }
 
         @media only screen and (min-width: 1200px) {
-            .card {
+            .card, #header {
                 margin: 1em 5em 1em 5em;
             }
-
-            #post-button,
-            #back-button {
-                margin-left: 5em;
-            }
         }
+
     </style>
 </head>
 
 <body>
-    <a id="back-button" class="btn col-3">Back</a><br><br>
-    <div id="posts"></div>
-    <a id="post-button" class="btn col-3">Create Post</a><br><br>
-
+    <h5 id="header">Twits of #TeamGreenSpace23</h5>
+    <div id="container"></div>
 
     <!-- Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
@@ -90,32 +48,48 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <script src="/js/general.js"></script>
     <script src="/js/firebase.js"></script>
     <script src="/js/init.js"></script>
 
     <!-- Scripts -->
-    <script src="/js/group.js"></script>
     <script>
-        $(document).ready(function () {
-            posts.get().then(function (posts) {
-                posts.docs.forEach(async function (post) {
-                    var docName = post.id;
-                    var p = await displayPosts(
-                        post.id,
-                        post.data().title,
-                        post.data().content,
-                        post.data().user,
-                        post.data().likes,
-                        post.data().comments,
-                    );
-                });
-            });
-            redirectToGroupMain();
-            addPost();
-        });
+        $(document).ready(() => {
+            getTweets();
+        })
+        function getTweets() {
+            $.ajax({
+                url: "/get-tweets",
+                dataType: "json",
+                type: "GET",
+                success: function (data) {
+                    let card = "<div>"
 
+                    for (var i = 0; i < data['user'].length; i++) {
+                        var user = data['user'][i];
+                        var content = data['content'][i];
+                        var date = data['date'][i];
+
+                        card += '<div class="card"><div class="card-body">';
+                        card += '<p>Twitted by ' + user + '</p>'
+                        card += '<p class="card-text">' + content + '</p>'
+                        card += '<p class="text-muted">' + date + '</p>'
+                        card += '</div></div>'
+                    }
+
+                    card += "</div>"
+                    $("#container").html(card);
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $(".content").text(jqXHR.statusText);
+                    console.log("ERROR:", jqXHR, textStatus, errorThrown);
+                }
+
+            });
+        }
     </script>
 </body>
 

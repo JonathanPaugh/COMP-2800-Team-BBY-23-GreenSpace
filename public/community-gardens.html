@@ -10,126 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico">
-    <style>
-        .accordion {
-            margin: 0 1em 0 1em;
-        }
-
-        .accordion-button:focus {
-            background-color: #C5EDAC;
-            color: black;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        table td {
-            border: 0.5px solid lightgray;
-            width: fit-content;
-        }
-
-        table tr:first-child td {
-            border-top: 0;
-        }
-
-        table tr td:first-child {
-            border-left: 0;
-        }
-
-        table tr:last-child td {
-            border-bottom: 0;
-        }
-
-        table tr td:last-child {
-            border-right: 0;
-        }
-
-        .year-created,
-        .address,
-        .managing-org,
-        .plots,
-        .juris,
-        .email,
-        .website {
-            text-align: center;
-        }
-
-        h1 {
-            padding: 0 1em 0 1em;
-            text-align: center;
-        }
-
-        iframe {
-            width: 100vw;
-            height: 50vh;
-            padding: 0 1em 0 1em;
-        }
-
-        .garden-header,
-        #search-header {
-            font-size: 16pt;
-        }
-
-        .garden-header {
-            margin: 0 1em 0.3em 1em;
-
-        }
-
-        .search-box {
-            width: 100vw;
-            padding: 3em 1em 1em 1em;
-        }
-
-        @media only screen and (max-width: 599px) {
-            #container {
-                font-size: 10pt;
-            }
-        }
-
-        @media only screen and (min-width: 600px) {
-
-            .accordion,
-            .accordion-body {
-                margin: 0 3em 0 3em;
-            }
-
-            .garden-header {
-                margin: 0 2em 0.3em 2em;
-            }
-
-            h1,
-            iframe {
-                padding: 0 3em 0 3em;
-            }
-
-            .search-box {
-                padding: 3em 3em 1em 3em;
-            }
-        }
-
-        @media only screen and (min-width: 1200px) {
-
-            .accordion,
-            .accordion-body {
-                margin: 0 5em 0 5em;
-            }
-
-            .garden-header {
-                margin: 0 4em 0.3em 4em;
-            }
-
-            h1,
-            iframe {
-                padding: 0 5em 0 5em;
-            }
-
-            .search-box {
-                padding: 3em 5em 1em 5em;
-            }
-        }
-    </style>
+    <link href="/css/community-garden.css" rel="stylesheet">
 </head>
 
 <body>
@@ -137,21 +18,19 @@
     <div class="garden-header"><i class="fas fa-map-pin"></i> Garden Map</div>
     <iframe
         src="https://opendata.vancouver.ca/explore/embed/dataset/community-gardens-and-food-trees/map/?location=11,49.2808,-123.0994&static=false&datasetcard=false&scrollWheelZoom=true"></iframe>
-
     <div class="container-fluid search-box">
         <div id="search-header"><i class="fas fa-search"></i> Search a garden from the list</div>
         <div class="card p-2 my-2">
             <form id="search-garden" class="search-form form-group has-search flex-grow-1">
                 <div class="input-group">
                     <input class="search-value form-control" type="text"
-                        placeholder="Type the name of the garden here!">
+                        placeholder="Type the name or address of the garden here">
                     <div class="input-group-append">
                         <a class="search-button">
                             <i class="fa fa-search fa-2x ms-1 mt-1"></i>
                         </a>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>
@@ -199,11 +78,11 @@
 
     <!-- Scripts -->
     <script src="/js/community-garden-api.js"></script>
+    <script src="/js/community-garden.js"></script>
     <script>
-        var gardens = database.collection("community-gardens");
-        var communityGardens = [];
-
         $(document).ready(function () {
+
+            // hides the easter egg in the page until triggered
             $("#easter-egg").hide();
 
             gardens.get()
@@ -222,60 +101,8 @@
                         );
                     });
                 });
-
             search();
         });
-
-        function createGarden(docID, name, year, address, org, plots, juris, email, website) {
-            fetchFile("/template/community-garden.html", data => {
-                let garden = $(data).appendTo("#container");
-
-                communityGardens.push(garden);
-
-                garden.find(".accordion-header").attr("id", "flush-" + docID);
-                garden.find(".accordion-button").attr("data-bs-target", "#A" + docID);
-                garden.find(".accordion-button").attr("aria-controls", "A" + docID);
-                garden.find(".accordion-collapse").attr("id", "A" + docID);
-                garden.find(".accordion-collapse").attr("aria-labelledby", "flush-" + docID);
-
-                garden.find(".accordion-button").html(name);
-                garden.find(".year-created").html(year);
-                garden.find(".address").html(address);
-                garden.find(".managing-org").html(org);
-                garden.find(".plots").html(plots);
-                garden.find(".juris").html(juris);
-                garden.find(".email").html(email);
-                garden.find(".website").html(website);
-                garden.find(".website").attr("href", website);
-            });
-        }
-
-        function search() {
-            document.getElementById("search-garden").addEventListener("keyup", (e) => {
-                var input = e.target.value.toLowerCase();
-
-                communityGardens.forEach(garden => {
-                    garden.hide();
-                });
-
-                if (input === "the most beautiful garden") {
-                    $("#easter-egg").show();
-                } else {
-                    $("#easter-egg").hide();
-
-                }
-
-                communityGardens.filter(garden => {
-                    var gardenTitles = garden.find(".community-garden-name").html().toLowerCase();
-
-                    return gardenTitles.includes(input);
-                }).forEach(garden => {
-                    if (garden) {
-                        garden.show();
-                    }
-                });
-            })
-        }
     </script>
 </body>
 

@@ -9,30 +9,10 @@
         integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href="/css/group.css" rel="stylesheet">
     <style>
-        #container {
-            display: grid;
-            grid-template-columns: 1fr;
-            grid-template-rows: 30vh 50vh;
-        }
-
-        #top {
-            text-align: center;
-            margin-top: 70px;
-        }
-
-        #main-text {
-            font-size: 18pt;
-        }
-
-        #categories {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            text-align: center;
-        }
-
-        .fas, .fab {
+        .fas,
+        .fab {
             margin-bottom: 15px;
         }
 
@@ -40,27 +20,25 @@
             color: black;
         }
 
-        #categories p:hover {
-            color: white;
+        #top {
+            text-align: center;
+            margin-top: 70px;
         }
 
-        @media only screen and (min-width: 800px) {
-            #categories {
-                grid-template-columns: 1fr 1fr 1fr 1fr;
-                grid-template-rows: 1fr;
-            }
+        #container {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 30vh 50vh;
         }
     </style>
 </head>
 
 <body>
-
     <div id="container">
         <div id="top">
             <p id="main-text">Select categories you are interested in</p>
             <!-- <button class="btn">or go to My Groups</button> -->
         </div>
-
         <div id="categories">
             <div>
                 <a href="#">
@@ -70,7 +48,7 @@
             </div>
             <div id="category-2">
                 <a href="#">
-                    <i id ="indoor-garden" class="fas fa-seedling fa-5x"></i>
+                    <i id="indoor-garden" class="fas fa-seedling fa-5x"></i>
                     <p id="indoor-garden">Indoor Garden</p>
                 </a>
             </div>
@@ -108,21 +86,11 @@
     <script src="./js/init.js"></script>
 
     <!-- Scripts -->
+    <script src="/js/group.js"></script>
     <script>
-
         $(document).ready(function () {
             redirect();
         })
-
-        function redirect() {
-            document.querySelectorAll("a").forEach(item => {
-                item.addEventListener('click', event => {
-                    window.location.href = "/group-list.html?id=" + $(event.target).attr("id");
-                });
-            });
-        }
-
-
     </script>
 </body>
 

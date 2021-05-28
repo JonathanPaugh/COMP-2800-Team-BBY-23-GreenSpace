@@ -15,6 +15,10 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+.btn-disabled, .btn-disabled:hover {
+    background-color: #6c757d !important;
+}
+
 button, .btn {
     background-color: var(--color-primary);
     border-radius: 20px;

@@ -10,15 +10,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico">
+    <link href="/css/group.css" rel="stylesheet">
     <style>
         .input-group {
             padding: 1em;
-        }
-
-        #reset-group {
-            float: right;
-            background-color: #DBCFB0;
-            margin-right: 10px;
         }
 
         #create-post {
@@ -34,7 +29,6 @@
         }
 
         @media only screen and (min-width: 0px) and (max-width: 599px) {
-
             .card,
             #mandatory {
                 margin: 0 1em 0 1em;
@@ -42,7 +36,6 @@
         }
 
         @media only screen and (min-width: 600px) {
-
             .card,
             #mandatory {
                 margin: 0 3em 0 3em;
@@ -50,7 +43,6 @@
         }
 
         @media only screen and (min-width: 1200px) {
-
             .card,
             #mandatory {
                 margin: 0 5em 0 5em;
@@ -106,61 +98,16 @@
     <script src="/js/init.js"></script>
 
     <!-- Scripts -->
+    <script src="/js/group.js"></script>
     <script>
-        const parsedUrl = new URL(window.location.href);
-        var id = parsedUrl.searchParams.get("id");
-        var groupName = window.location.hash.substr(1);
-        var posts = database.collection("groups").doc("categories")
-            .collection(id).doc(groupName).collection("gallery");
-
         $(document).ready(function () {
-            writeImages();
+            // requires login, otherwise not be able to leave a comment
+            requireLogin();
+            
+            uploadImages();
         });
 
-        function writePosts(url) {
-            let postTitle = document.querySelector(".post-title").value;
-            let postContent = document.querySelector(".post-content").value;
 
-            firebase.auth().onAuthStateChanged(function (user) {
-                if (user) {
-                    database.collection("users").doc(user.uid).get()
-                        .then(function (doc) {
-
-                            posts.add({
-                                user: doc.data().name,
-                                title: postTitle,
-                                content: postContent,
-                                image: url
-                            }).then(function () {
-                                window.location.href = "/group-gallery.html?id=" + id + "#" + groupName;
-                            });
-                        });
-                } else {
-                    alert("You are not signed in.");
-                }
-            });
-        }
-
-        function writeImages() {
-            $("#add-file").on("change", async function (event) {
-                event.preventDefault();
-
-                var uploadedIMG = event.target.files[0];
-
-                storage.ref().child("groups/posts/" + uploadedIMG.name).put(uploadedIMG)
-                    .then((snapshot) => {
-                        $("#create-post").click(async function (e) {
-                            e.preventDefault();
-
-                            var url = await snapshot.ref.getDownloadURL();
-
-                            console.log(snapshot.ref.getDownloadURL());
-                            console.log(snapshot);
-                            writePosts(url);
-                        })
-                    })
-            });
-        }
     </script>
 </body>
 

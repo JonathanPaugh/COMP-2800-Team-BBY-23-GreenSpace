@@ -10,43 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico">
-    <style>
-        img {
-            border: 1px solid #CCC;
-            border-radius: 3px;
-        }
-
-        .plant-gallery {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2vw;
-        }
-
-        .plant-gallery-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .plant-taxonomy {
-            background-color: #EEE;
-        }
-
-        .list-group-item {
-            background-color: var(--color-container);
-        }
-
-        @media only screen and (max-width: 576px) {
-            .plant-taxonomy {
-                padding: 0.5rem 0.25rem;
-            }
-
-            .list-group-item {
-                padding: 0.25rem 0.25rem;
-                font-size: 0.8rem;
-            }
-        }
-    </style>
+    <link href="/css/search-plant.css" rel="stylesheet">
 </head>
 
 <body>
@@ -91,103 +55,7 @@
 
     <!-- Scripts -->
     <script src="/js/search-plant.js"></script>
-    <script>
-        $(document).ready(() => {
-            searchInit();
-            querySearch();
-            $(window).resize(resize);
-        });
-
-        function searchInit() {
-            searchPlantInit(searchSuccess, searchFail);
-        }
-
-        function searchSuccess(plant, search) {
-            $(".plant-info").empty();
-            
-            setUrlQuery("search", search);
-            
-            createInfo(
-                plant.primaryCommonName, 
-                plant.scientificName,
-                plant.speciesGlobal?.informalTaxonomy,
-                plant.information?.snippet,
-                plant.information?.link,
-                {
-                    phyllum: plant.speciesGlobal?.phylum,
-                    class: plant.speciesGlobal?.taxclass,
-                    order: plant.speciesGlobal?.taxorder,
-                    family: plant.speciesGlobal?.family,
-                    genus: plant.speciesGlobal?.genus,
-                    species: plant.scientificName?.replace(plant.speciesGlobal.genus, "").trim()
-                },
-                plant.images
-            );
-        }
-
-        function searchFail(error) {
-            console.log(error);
-            $(".plant-info").empty();
-            createDiv()
-                .appendTo(".plant-info")
-                .addClass("search-error card p-2 text-danger text-center")
-                .html(error.responseText);
-        }
-
-        function createInfo(name, scientific, description, snippet, link, taxonomy, images) {
-            fetchTemplate("plant-info.html", data => {
-                let info = $(".plant-info").html(data);
-
-                info.find(".plant-name").html(name);
-                info.find(".plant-scientific").html(scientific);
-                info.find(".plant-description").html(description);
-                info.find(".plant-snippet").html(snippet);
-                info.find(".plant-link").attr("href", link);
-
-                info.find(".plant-taxonomy-phyllum").html(taxonomy.phyllum);
-                info.find(".plant-taxonomy-class").html(taxonomy.class);
-                info.find(".plant-taxonomy-order").html(taxonomy.order);
-                info.find(".plant-taxonomy-family").html(taxonomy.family);
-                info.find(".plant-taxonomy-genus").html(taxonomy.genus);
-                info.find(".plant-taxonomy-species").html(taxonomy.species);
-
-                if (images) {
-                    info.find(".plant-image").attr("src", images[0]).attr("alt", name);
-
-                    let width;
-                    images.slice(1).forEach(image => {
-                        let container = createDiv()
-                            .appendTo(info.find(".plant-gallery"))
-                            .addClass("plant-gallery-container");
-
-                        createElement("img")
-                            .appendTo(container)
-                            .addClass("plant-gallery-image")
-                            .attr("src", image)
-                            .attr("alt", name);
-
-                        width = container.width();
-                    });
-
-                    resize();
-                }
-            });
-        }
-
-        function querySearch() {
-            let query = getUrlQuery().get("search");
-            if (query.startsWith("ELEMENT_GLOBAL")) {
-                searchPlantId(null, query, searchSuccess, searchFail);
-            } else {
-                $(".search-value").val(query);
-                searchPlant(null, searchSuccess, searchFail);
-            }
-        }
-
-        function resize() {
-            $(".plant-gallery").css("grid-auto-rows", $(".plant-gallery-container").width() + "px");
-        }
-    </script>
+    <script src="/js/info-plant.js"></script>
 </body>
 
 </html>

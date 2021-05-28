@@ -10,21 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico">
+    <link href="/css/group.css" rel="stylesheet">
     <style>
-        .input-group {
-            padding: 1em;
-        }
-
-        #reset-group {
-            float: right;
-            background-color: #DBCFB0;
-            margin-right: 10px;
-        }
-
-        #create-group {
-            float: right;
-        }
-
         .container {
             margin-top: 3em;
         }
@@ -34,19 +21,22 @@
         }
 
         @media only screen and (min-width: 0px) and (max-width: 599px) {
-            .card, #mandatory {
+            .card,
+            #mandatory {
                 margin: 0 1em 0 1em;
             }
         }
 
         @media only screen and (min-width: 600px) {
-            .card, #mandatory {
+            .card,
+            #mandatory {
                 margin: 0 3em 0 3em;
             }
         }
 
         @media only screen and (min-width: 1200px) {
-            .card, #mandatory {
+            .card,
+            #mandatory {
                 margin: 0 5em 0 5em;
             }
         }
@@ -101,49 +91,14 @@
     <script src="/js/init.js"></script>
 
     <!-- Scripts -->
+    <script src="/js/group.js"></script>
     <script>
-        const parsedUrl = new URL(window.location.href);
-        var id = parsedUrl.searchParams.get("id");
-        var groups = database.collection("groups").doc("categories").collection(id);
-
         $(document).ready(function () {
+            // requires login, otherwise not be able to leave a comment
+            requireLogin();
+            
             writeImages();
         });
-
-        function writePosts(url) {
-            let groupTitle = document.querySelector(".group-title").value;
-            let groupDescription = document.querySelector(".group-description").value;
-
-            groups.add({
-                title: groupTitle,
-                description: groupDescription,
-                image: url
-            }).then(function () {
-                window.location.href = "/group-list.html?id=" + id;
-            });
-
-        }
-
-        function writeImages() {
-            $("#add-file").on("change", async function (event) {
-                event.preventDefault();
-
-                var uploadedIMG = event.target.files[0];
-
-                storage.ref().child("groups/group/" + uploadedIMG.name).put(uploadedIMG)
-                    .then((snapshot) => {
-                        $("#create-group").click(async function (e) {
-                            e.preventDefault();
-
-                            var url = await snapshot.ref.getDownloadURL();
-
-                            console.log(snapshot.ref.getDownloadURL());
-                            console.log(snapshot);
-                            writePosts(url);
-                        })
-                    })
-            });
-        }
     </script>
 </body>
 
