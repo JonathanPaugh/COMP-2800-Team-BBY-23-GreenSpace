@@ -141,10 +141,10 @@ app.post("/search-plant", (req, res) => {
  * API keys for Twitter
  */
 var T = new Twit({
-    consumer_key: 'AlhyKbXM4gpXQL37bA4R0kkb3',
-    consumer_secret: '37adRFcR6FFtxMT6MOKYPhAkoTlqMDeyWAtV6OoCBTj2G5xLr0',
-    access_token: '1250448348433117192-bavVHWdE8FvN0BSGphdBDEOLQMO0Pd',
-    access_token_secret: 'hvap3rQYVHhAq8rga8MxYNWrQ65OUCGasbrhUtnICbU2P',
+    consumer_key: process.env.TWITTER_CONSUMER_KEY_GREENSPACE,
+    consumer_secret: process.env.TWITTER_CONSUMER_SECRET_GREENSPACE,
+    access_token: process.env.TWITTER_ACCESS_TOKEN_GREENSPACE,
+    access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET_GREENSPACE,
 });
 
 /**
@@ -163,6 +163,11 @@ app.get("/get-tweets", function (req, res) {
         res.send({user: tweetUser, content: tweetContent, date: tweetDate});
     });
 });
+/**
+ * Reference end
+ */
+
+
 
 /***************\
 * Data Requests *

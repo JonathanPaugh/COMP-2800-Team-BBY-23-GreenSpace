@@ -553,3 +553,53 @@ function readGalleryPosts(docID, title, content, image, user, like, comment) {
         deletePostInComment("d-" + docID);
     });
 }
+
+// tests writing group data to firebase
+function testWriteGroup() {
+    $(".group-title").value("My Group");
+    $(".group-description").value("Hello World");
+    writeGroup(null);
+}
+
+// tests writing invaild group data
+function testWriteIvalidGroup() {
+    $(".group-title").value("");
+    $(".group-description").value("");
+    writeGroup("");
+}
+
+// tests increasing like if invalid button is clicked 
+function testInvalidLikeIncrease() {
+    increaseLikeInPosts(null);
+}
+
+// tests writing comments in posts 
+function testWriteComments() {
+    $("#comment-value").value("Test Comment");
+    writeComments();
+}
+
+// tests whether emptly comments would be written
+function testEmptyComments() {
+    $("#comment-value").value("");
+    writeComments();
+}
+
+// tests whether invalid posts would be deleted
+function testInvalidDeletePost() {
+    deletePostInComment(null);
+}
+
+// tests wrting posts 
+function testWritePosts() {
+    $(".post-title").value("Title test");
+    $(".post-content").value("Content test");
+    writePosts();
+}
+
+// tests whether invalid post will be written
+function testWriteEmptyPosts() {
+    $(".post-title").value("");
+    $(".post-content").value("");
+    writePosts();
+}
