@@ -6,16 +6,13 @@
   "dependencies": {
     "express": "^4.17.1",
     "express-rate-limit": "^5.2.6",
-<<<<<<< HEAD
     "franc": "^5.0.0",
     "node-notifier": "^10.0.0",
     "open": "^8.2.0",
     "twit": "^2.2.11",
     "twitter": "^1.7.1",
-    "unirest": "^0.6.0"
-=======
+    "unirest": "^0.6.0",
     "social-post-api": "^1.0.16"
->>>>>>> a3943237336590e2ff3d0a0ec5605889679e6667
   },
   "scripts": {
     "start": "node app.js"
