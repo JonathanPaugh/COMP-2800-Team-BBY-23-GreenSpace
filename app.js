@@ -7,7 +7,7 @@
 const fs = require("fs");
 const https = require("https");
 const url = require("url");
-const Twit = require('twit')
+const Twit = require('twit');
 
 const express = require("express");
 
