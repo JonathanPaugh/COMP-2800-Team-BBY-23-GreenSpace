@@ -1,4 +1,4 @@
-# GreenSpace
+# GreenSpace #
 
 A web application targeting people interested or involved in community gardening focusing on the social aspect to help people learn and share their experiences while providing helpful feedback.
 
@@ -17,41 +17,6 @@ https://docs.google.com/spreadsheets/d/1KdybRfJBqQhcJApiRZRBhD_RVcE7FFl4ZR2aBu-F
 | Jonathan Paugh  | A00879799      |
 | Anna Yujeong An | A01167165      |
 | Angel Zhong     | A01005216      |
-
-# Features #
-
-User Profile\
-Social Forum\
-Social Groups\
-Garden Information\
-Plant Information\
-Garden Gallery\
-Plant Progress Tracker
-
-# Technologies #
-
-HTML\
-JavaScript\
-JQuery\
-Firebase\
-Firestore\
-Node.Js\
-AWS (Elastic Beanstalk, CodePipeline)\
-VSCode\
-GitHub\
-Git\
-Sourcetree
-
-# Packages #
-
-express\
-express-rate-limit
-
-# APIS #
-
-NatureServe Explorer - https://explorer.natureserve.org/api-docs/
-
-Google Custom Search - https://developers.google.com/custom-search/v1/overview
 
 # Developer Setup #
 
