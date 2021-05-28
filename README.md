@@ -10,6 +10,14 @@ http://green-space.us-west-1.elasticbeanstalk.com/
 
 https://docs.google.com/spreadsheets/d/1KdybRfJBqQhcJApiRZRBhD_RVcE7FFl4ZR2aBu-F8sw/edit#gid=394496370
 
+# Team Members #
+
+| Name            | Student Number |
+|-----------------|----------------|
+| Jonathan Paugh  | A00879799      |
+| Anna Yujeong An | A01167165      |
+| Angel Zhong     | A01005216      |
+
 # Features #
 
 User Profile\
@@ -44,14 +52,6 @@ express-rate-limit
 NatureServe Explorer - https://explorer.natureserve.org/api-docs/
 
 Google Custom Search - https://developers.google.com/custom-search/v1/overview
-
-# Team Members #
-
-| Name            | Student Number |
-|-----------------|----------------|
-| Jonathan Paugh  | A00879799      |
-| Anna Yujeong An | A01167165      |
-| Angel Zhong     | A01005216      |
 
 # Developer Setup #
 
