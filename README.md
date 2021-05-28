@@ -23,11 +23,11 @@ https://docs.google.com/spreadsheets/d/1KdybRfJBqQhcJApiRZRBhD_RVcE7FFl4ZR2aBu-F
 ## Install ##
 1. Install these programs, order doesn't matter, but do this before continuing to setup.
 
- Chrome\
- Git\
- VSCode\
- Sourcetree\
- Node.js
+  * Chrome\
+  * Git\
+  * VSCode\
+  * Sourcetree\
+  * Node.js
 
 ## Setup ##
 
@@ -41,9 +41,12 @@ https://github.com/JonathanPaugh/COMP-2800-Team-BBY-23-GreenSpace.git
   * “npm install express”
   * “npm install express-rate-limit”
 
-7. Insert the google custom search api key into your environment variables:
-  * Variable: API_GREENSPACE_GOOGLE
-  * Value: AIzaSyC7xuP2DGbB4a0aBT0AcLUDOMnuxoRpGKg
+7. Insert the api keys into your environment variables:
+  * API_GREENSPACE_GOOGLE=AIzaSyC7xuP2DGbB4a0aBT0AcLUDOMnuxoRpGKg
+  * TWITTER_CONSUMER_KEY_GREENSPACE=AlhyKbXM4gpXQL37bA4R0kkb3
+  * TWITTER_CONSUMER_SECRET_GREENSPACE=37adRFcR6FFtxMT6MOKYPhAkoTlqMDeyWAtV6OoCBTj2G5xLr0
+  * TWITTER_ACCESS_TOKEN_GREENSPACE=1250448348433117192-bavVHWdE8FvN0BSGphdBDEOLQMO0Pd
+  * TWITTER_ACCESS_TOKEN_SECRET_GREENSPACE=hvap3rQYVHhAq8rga8MxYNWrQ65OUCGasbrhUtnICbU2P
 
 ## Run App ##
 
