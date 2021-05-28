@@ -60,3 +60,9 @@ function search() {
         });
     })
 }
+
+// tests if the function returns result regardless of case of input
+function testSearch() {
+    $("#search-garden").value("vancouver");
+    search();
+}
