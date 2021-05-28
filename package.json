@@ -6,10 +6,6 @@
   "dependencies": {
     "express": "^4.17.1",
     "express-rate-limit": "^5.2.6",
-<<<<<<< HEAD
-    "social-post-api": "^1.0.16",
-    "twit": "^2.2.11"
-=======
     "franc": "^5.0.0",
     "node-notifier": "^10.0.0",
     "open": "^8.2.0",
@@ -17,7 +13,6 @@
     "twitter": "^1.7.1",
     "unirest": "^0.6.0",
     "social-post-api": "^1.0.16"
->>>>>>> 54eefd2c54f63bad7192d5e5f84ad5884fab25b3
   },
   "scripts": {
     "start": "node app.js"
