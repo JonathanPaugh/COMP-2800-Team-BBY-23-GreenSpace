@@ -1,9 +1,5 @@
 "use strict";
 
-/*******\
-* Setup *
-\*******/
-
 const fs = require("fs");
 const https = require("https");
 const url = require("url");
@@ -14,19 +10,12 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 
-/* 
-* Limits client request to 1 per second
-* Only applied to suggestion request to prevent over usage of api
-*/
+// Used to limit requests
 const limiter = require("express-rate-limit")({
-    windowMs: 1000,
+    windowMs: 100,
     max: 1,
     skipFailedRequests: true
 });
-
-/****************\
-* Static Mapping *
-\****************/
 
 app.use("/", express.static("public/"))
 app.use("/js", express.static("public/js"))
@@ -38,53 +27,30 @@ app.use("/favicon.ico", express.static("public/favicon.ico"));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-/*****************\
-* Client Requests *
-\*****************/
-
-/* 
-* App entry point
-*/
 app.get("/", (req, res) => {
     let file = fs.readFileSync("/public/index.html", "utf-8");
     res.send(file);
 });
 
-/* 
-* Requests to get plant from unique id
-* Returns matching plant
-*/
 app.post("/get-plant", (req, res) => {
     getPlant(req.body.id, data => {
         res.send(data);
     });
 });
 
-/* 
-* Requests to find first matching plant for query
-* Returns first matching plant
-*/
 app.post("/find-plant", (req, res) => {
     findPlant(req.body.query, data => {
         res.send(data);
     });
 });
 
-/* 
-* Requests to find all plants for query
-* Returns all matching plants
-*/
 app.post("/find-plants", (req, res) => {
     findPlants(req.body.query, data => {
         res.send(data);
     });
 });
 
-/* 
-* Requests to get plant suggestions for current query
-* Returns plants with simplified data to lower data transfer consumption
-*/
-app.post("/suggest-plants", limiter, (req, res) => {
+app.post("/suggest-plants", (req, res) => {
     findPlants(req.body.query, data => {
         res.send(data?.map(function (plant) { 
             return {
@@ -95,10 +61,6 @@ app.post("/suggest-plants", limiter, (req, res) => {
     });
 });
 
-/* 
-* Request to search for a matching plant for query
-* Returns a plant with additional appended information such as 
-*/
 app.post("/search-plant", (req, res) => {
     let method;
     let body;
@@ -137,6 +99,7 @@ app.post("/search-plant", (req, res) => {
     });
 });
 
+<<<<<<< HEAD
 /**
  * API keys for Twitter
  */
@@ -171,6 +134,8 @@ app.get("/get-tweets", function (req, res) {
 /* 
 * Gets a plant from nature serve from unique nature serve id
 */
+=======
+>>>>>>> a3943237336590e2ff3d0a0ec5605889679e6667
 function getPlant(id, callback) {
     requestPlantData(`/api/data/taxon/${id}`, "GET", null, data => {
         if (callback) {
@@ -179,9 +144,6 @@ function getPlant(id, callback) {
     });
 }
 
-/* 
-* Finds the first matching plant from nature serve from a query
-*/
 function findPlant(query, callback) {
     findPlants(query, data => {
         if (callback) {
@@ -195,9 +157,6 @@ function findPlant(query, callback) {
     });
 }
 
-/* 
-* Finds matching plants from nature serve from a query
-*/
 function findPlants(query, callback) {
     requestPlantData("/api/data/speciesSearch", "POST",
         {
@@ -223,9 +182,6 @@ function findPlants(query, callback) {
     });
 }
 
-/* 
-* Finds plant images from google from a query
-*/
 function findPlantImages(query, callback) {
     requestSearch(url.format({
         protocol: "https",
@@ -234,7 +190,6 @@ function findPlantImages(query, callback) {
         query: 
         {
             key: process.env.API_GREENSPACE_GOOGLE,
-            // Google search cx
             cx: "ef88b6adf0f68d6d2",
             q: query,
             searchType: "image",
@@ -252,9 +207,6 @@ function findPlantImages(query, callback) {
     });
 }
 
-/* 
-* Finds plant information from wikipedia from a query
-*/
 function findPlantInformation(query, callback) {
     requestSearch(url.format({
         protocol: "https",
@@ -263,7 +215,6 @@ function findPlantInformation(query, callback) {
         query: 
         {
             key: process.env.API_GREENSPACE_GOOGLE,
-            // Wikipedia Cx
             cx: "6a02f3c7401460e16",
             q: query
         }
@@ -278,13 +229,6 @@ function findPlantInformation(query, callback) {
     });
 }
 
-/**************\
-* Api Requests *
-\**************/
-
-/* 
-* Issues a nature server api request
-*/
 function requestPlantData(path, method, data, callback) {
     var req = https.request({
         hostname: "explorer.natureserve.org",
@@ -307,9 +251,6 @@ function requestPlantData(path, method, data, callback) {
     req.end();
 }
 
-/* 
-* Issues a google custom search api request
-*/
 function requestSearch(url, callback) {
     var req = https.request(url, res => getResponseChunked(res, callback));
 
@@ -320,12 +261,6 @@ function requestSearch(url, callback) {
     req.end();
 }
 
-/* 
-* Parses api resposes in chunks
-* Each chunk received is appended to data
-* On request completion the data containing all the appended chunks
-*   is parsed and sent in the callback
-*/
 function getResponseChunked(res, callback) {
     let data = "";
     
@@ -341,10 +276,6 @@ function getResponseChunked(res, callback) {
         }
     });
 }
-
-/******\
-* Init *
-\******/
 
 app.listen(port, () => {
     console.log(`Server Started: ${port}`);

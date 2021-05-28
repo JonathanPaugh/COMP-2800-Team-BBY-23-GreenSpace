@@ -9,7 +9,7 @@ $(document).ready(() => {
     $('#MyButton').click(profile);
 })
 
-
+//store user profile information to firebase
 function profile(event) {
     event.preventDefault();
     withUser(user => {
@@ -27,6 +27,7 @@ function profile(event) {
     });
 }
 
+//display user information to user profile webpage
 function readProfileA() {
     withUser(user => {
         $(".name").val(user.data().name),

@@ -73,83 +73,81 @@
 
             <div class="blog-section click-part-content">
                 <div class="section-title">My Reminders</div>
-                <div class="section-create" style="height: 36px; ">
-                    <input type="submitPost" id="MyButtonPost" onclick="openTab()" style="font-size: 22px;"
-                        value=" + Add One" readonly="readonly">
+                <div class="section-create" style="height: 81px; ">
+                    <div class="btn filterMost" onclick="filterMost()">Most <i class="far fa-bell fa-lg most"></i></div>
+                    <div class="btn filterLeast" onclick="filterLeast()">Least <i class="far fa-bell fa-lg least"></i>
+                    </div>
+                    <input type="submitPost" id="MyButtonPost reminderBtn" onclick="openTab()" style="font-size: 22px;"
+                        value=" + Reminder" readonly="readonly">
                 </div>
-                <!-- The Modal -->
-                <div id="myModal" class="modal">
+            </div>
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
 
-                    <!-- Modal content -->
-                    <div class="modal-content">
-                        <p class="close" onclick="closeTab()" style="font-size: 50px;">&times;</p>
-                        <div class="modal-box">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <p class="close" onclick="closeTab()" style="font-size: 50px;">&times;</p>
+                    <div class="modal-box">
 
-                            <div class="modal-title">
-                                <input type="text" class="form-control ph-title" placeholder="Blog Title">
-                            </div>
-                            <div class="modal-text">
-                                <textarea class="form-control placehold" aria-label="With textarea"
-                                    placeholder="Write your reminder here..."></textarea>
-                                <button class="buttons-right blog-posted col-2" onclick="createBlog()"
-                                    style="font-size: 24px; float: right; margin-right: 15px; border: none;">Post</button>
-                            </div>
+                        <div class="modal-title">
+                            <input type="text" class="form-control ph-title" placeholder="Blog Title">
+                        </div>
+                        <div class="modal-text">
+                            <textarea class="form-control placehold" aria-label="With textarea"
+                                placeholder="Write your reminder here..."></textarea>
+                            <button class="buttons-right blog-posted col-2" onclick="createBlog()"
+                                style="font-size: 24px; float: right; margin-right: 15px; border: none;">Post</button>
                         </div>
                     </div>
-
                 </div>
 
-
-                <div class="blogs"></div>
             </div>
-            <div class="collection click-part-content" style="color:black;">
-                <div class="section-title">My Recent Actvities</div>
-                <div class="history-collect-space">
-                </div>
-                <div class="center" style="text-align:center;">
-                    <h4>Garden Post History</h4>
-                </div>
-                <div class="container-fluid  history-collect">
-                </div>
-                <div class="history-collect-space"></div>
-                <div class="center" style="text-align:center;">
-                    <h4>Garden Gallery History</h4>
-                </div>
-                <div class="container-fluid  gallery-collect">
-                </div>
-                <div class="history-collect-space"></div>
-                <div class="center" style="text-align:center;">
-                    <h4>Forum Post History</h4>
-                </div>
-                <div class="container-fluid forum-collect">
-                </div>
-                <div class="history-collect-space">
-                </div>
-                <div class="card post">
-                    <div class="card-header">
-                        <div class="post-title"></div>
-                        <i class="delete fas fa-times"></i>
-                    </div>
+
+
+            <div class="blogs"></div>
+        </div>
+        <div class="collection click-part-content" style="color:black;">
+            <div class="section-title">My Recent Actvities</div>
+            <div class="history-collect-space">
+            </div>
+            <div class="center" style="text-align:center;">
+                <h4>Groups Post and Reply History</h4>
+            </div>
+            <div class="container-fluid  history-collect">
+            </div>
+            <div class="history-collect-space"></div>
+            <div class="center" style="text-align:center;">
+                <h4>Groups Gallery History</h4>
+            </div>
+            <div class="container-fluid  gallery-collect">
+            </div>
+            <div class="history-collect-space"></div>
+            <div class="center" style="text-align:center;">
+                <h4>Forum Post and Reply History</h4>
+            </div>
+            <div class="container-fluid forum-collect">
+            </div>
+            <div class="history-collect-space">
+            </div>
+        </div>
+    </div>
+    <div class="gallery click-part-content">
+        <div class="col">
+            <div class="card">
+                <input class="btn image-select" onclick="selectImage()" type="button" value="Add Image">
+                <div class="card-body ">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
                 </div>
             </div>
         </div>
-        <div class="gallery click-part-content">
-            <div class="col">
-                <div class="card">
-                    <input class="btn image-select" onclick="selectImage()" type="button" value="Add Image">
-                    <div class="card-body ">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    </div>
-                </div>
-            </div>
 
-            <div class="container-fluid py-3" style="background-color: lightgrey;">
-                <div class="row gallery-images">
-                    <!-- Picture go here -->
-                </div>
+        <div class="container-fluid py-3" style="background-color: lightgrey;">
+            <div class="row gallery-images">
+                <!-- Picture go here -->
             </div>
         </div>
+    </div>
     </div>
     </div>
 
