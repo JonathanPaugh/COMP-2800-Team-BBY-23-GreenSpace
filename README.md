@@ -6,6 +6,10 @@ Created for BCIT course COMP 2800
 
 http://green-space.us-west-1.elasticbeanstalk.com/
 
+# Test Plan #
+
+https://docs.google.com/spreadsheets/d/1KdybRfJBqQhcJApiRZRBhD_RVcE7FFl4ZR2aBu-F8sw/edit#gid=394496370
+
 # Features #
 
 User Profile\
