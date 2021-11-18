@@ -15,6 +15,14 @@
             margin: 1em;
         }
 
+        .fa-exclamation-triangle {
+            font-size: 50pt;
+        }
+
+        .error {
+            margin-top: 30%;
+            text-align: center;
+        }
         @media only screen and (min-width: 600px) {
             .card, #header {
                 margin: 1em 3em 1em 3em;
@@ -31,7 +39,12 @@
 </head>
 
 <body>
-    <h5 id="header">Twits of #TeamGreenSpace23</h5>
+    <div class="error">
+        <i class="fas fa-exclamation-triangle"></i><br><br>
+        <h1>Service Currently Unavailable</h1>
+        <p>Sorry for the trouble, we are looking into this matter.</p>
+    </div>
+
     <div id="container"></div>
 
     <!-- Bundle -->
